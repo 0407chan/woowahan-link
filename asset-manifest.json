@@ -1,0 +1,13 @@
+{
+  "files": {
+    "main.css": "/woowahan-link/static/css/main.1ef3a49a.css",
+    "main.js": "/woowahan-link/static/js/main.55c158bd.js",
+    "index.html": "/woowahan-link/index.html",
+    "main.1ef3a49a.css.map": "/woowahan-link/static/css/main.1ef3a49a.css.map",
+    "main.55c158bd.js.map": "/woowahan-link/static/js/main.55c158bd.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.1ef3a49a.css",
+    "static/js/main.55c158bd.js"
+  ]
+}
