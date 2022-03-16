@@ -1,17 +1,17 @@
 import React from 'react'
-import './App.css'
+import * as S from './style'
 
-const App: React.FC = () => {
+const AppContainer: React.FC = () => {
   return (
-    <div className="App">
+    <S.Container>
       <header className="App-header">
         <p>
           Woowahan Link
           <code>Welcome</code>
         </p>
       </header>
-    </div>
+    </S.Container>
   )
 }
 
-export default App
+export default AppContainer
