@@ -1,27 +1,25 @@
 import React from 'react'
-import './App.css'
-import logo from './logo.svg'
+import { LinkType } from '../../constants/data'
+import * as S from './style'
 
-const LinkBlock: React.FC = () => {
+type Props = {
+  link: LinkType
+}
+const LinkBlock: React.FC<Props> = ({ link }) => {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit
-          <code>src/App.tsx</code>
-          and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <S.Container
+      onClick={() => {
+        window.location.href = link.url
+
+        return null
+      }}
+    >
+      <S.Title>{link.title}</S.Title>
+      <S.UrlContainer>{link.url}</S.UrlContainer>
+      {link.tags?.map((item) => (
+        <div key={item}>{item}</div>
+      ))}
+    </S.Container>
   )
 }
 
