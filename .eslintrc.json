@@ -33,6 +33,7 @@
                 "unnamedComponents": "function-expression"
             }
         ],
-        "arrow-body-style":["error", "always"]
+        "arrow-body-style":["off", "always"],
+        "import/prefer-default-export":"off"
     }
 }
