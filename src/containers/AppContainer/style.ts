@@ -3,7 +3,9 @@ import styled from 'styled-components'
 export const Header = styled.div`
   display: flex;
   width: 100%;
-  max-width: 1320px;
+  max-width: 1280px;
+  padding: 0 20px;
+  gap: 40px;
   justify-content: space-between;
   align-items: center;
   height: 60px;
@@ -38,4 +40,26 @@ export const StyledText = styled.span`
   -webkit-text-fill-color: transparent;
   background-clip: text;
   text-fill-color: transparent;
+`
+
+export const SearchInput = styled.input`
+  border: unset;
+  max-width: 620px;
+  height: 36px;
+  width: 100%;
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+  padding-left: 20px;
+  font-size: 16px;
+  transition: box-shadow 0.2s ease;
+  &:focus {
+    outline: #eeeeee solid 1px;
+    box-shadow: 0 0 16px 2px #e1d5ff !important;
+  }
+  &:hover {
+    box-shadow: 0 0 8px 2px #e1d5ff;
+  }
+  &::placeholder {
+    color: #d1d1d1;
+  }
 `
