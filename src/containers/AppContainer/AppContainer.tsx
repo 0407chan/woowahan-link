@@ -8,16 +8,13 @@ const AppContainer: React.FC = () => {
   return (
     <S.Container>
       <S.Header>
-        <GridBlock grid={1} style={{ paddingLeft: 20 }}>
+        <GridBlock grid={1}>
           <S.StyledText>우아한 링크</S.StyledText>
         </GridBlock>
         <GridBlock grid={2} style={{ justifyContent: 'center' }}>
-          <input />
+          <S.SearchInput placeholder="검색어를 입력해주세요" />
         </GridBlock>
-        <GridBlock
-          grid={1}
-          style={{ paddingRight: 20, justifyContent: 'flex-end' }}
-        >
+        <GridBlock grid={1} style={{ justifyContent: 'flex-end' }}>
           <button type="button">호호</button>
         </GridBlock>
       </S.Header>
