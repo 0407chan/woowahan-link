@@ -10,11 +10,11 @@ export const Container = styled.div`
   background-color: #ffffff;
   cursor: pointer;
 
-  transition: all 0.3s ease;
+  transition: all 0.25s ease;
 
-  /* &:hover {
-    background-color: #f5f510;
-  } */
+  &:hover {
+    box-shadow: 0 0 16px 2px #e1d5ff;
+  }
 `
 export const Title = styled.div`
   display: flex;
@@ -25,7 +25,7 @@ export const Title = styled.div`
   margin-bottom: 10px;
 `
 
-export const UrlContainer = styled.div`
+export const UrlContainer = styled.p`
   /* display: flex; */
   background: linear-gradient(
     92.85deg,
@@ -39,11 +39,12 @@ export const UrlContainer = styled.div`
   max-height: 60px;
   width: 270px;
 
-  overflow: hidden;
-  word-break: break-all;
+  /* word-break: break-all; */
   text-overflow: ellipsis;
-  display: -webkit-box;
-  -webkit-line-clamp: 2;
-  -webkit-box-orient: vertical;
-  position: relative;
+
+  overflow: hidden;
+  white-space: nowrap;
+  /* display: -webkit-box; */
+  /* -webkit-line-clamp: 2; */
+  /* -webkit-box-orient: vertical; */
 `
