@@ -4,7 +4,7 @@ export const Container = styled.div`
   display: flex;
   flex-direction: column;
   height: fit-content;
-  width: 290px;
+  width: calc(290px - 20px);
   border-radius: 10px;
   padding: 10px;
   background-color: #ffffff;
@@ -37,7 +37,7 @@ export const UrlContainer = styled.p`
   padding: 10px;
   height: fit-content;
   max-height: 60px;
-  width: 270px;
+  width: 250px;
 
   /* word-break: break-all; */
   text-overflow: ellipsis;
