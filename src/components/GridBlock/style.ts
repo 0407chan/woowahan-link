@@ -8,7 +8,7 @@ export const Container = styled.div<Props>`
   display: flex;
   align-items: center;
   width: 290px;
-  ${(props) => (props.grid === 2 ? { width: 620 } : {})}
+  ${(props) => (props.grid === 2 ? { width: 290 * 2 + 40 } : {})}
 `
 
 export const hello = styled.div``
