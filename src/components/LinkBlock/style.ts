@@ -16,6 +16,7 @@ export const Container = styled.div`
     box-shadow: 0 0 16px 2px #e1d5ff;
   }
 `
+
 export const Title = styled.div`
   display: flex;
   padding-left: 5px;
