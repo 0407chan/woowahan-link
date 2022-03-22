@@ -55,10 +55,10 @@ export const UrlData: LinkType[] = [
   },
   {
     id: uuid(),
-    url: uuid(),
-    title: tags[Math.floor(Math.random() * tags.length)],
-    service: tags[Math.floor(Math.random() * tags.length)],
-    tags: getRandomItems(Math.floor(Math.random() * tags.length))
+    url: 'https://www.digitalocean.com/community/tutorials/linting-and-formatting-with-eslint-in-vs-code',
+    title: 'format on save',
+    service: 'VsCode',
+    tags: ['eslint', 'vscode', 'format on save']
   }
 ]
 
