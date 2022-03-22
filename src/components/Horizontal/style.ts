@@ -11,8 +11,11 @@ export const Container = styled.div<Props>`
   width: 100%;
   gap: 16px;
 
-  ${(props) =>
-    props.gap !== undefined && {
-      gap: props.gap
-    }}
+  ${(props) => {
+    return (
+      props.gap !== undefined && {
+        gap: props.gap
+      }
+    )
+  }}
 `
