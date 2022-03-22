@@ -10,6 +10,36 @@ export type LinkType = {
   service?: string
 }
 
+export const tags = [
+  '링크',
+  '피자',
+  '치킨',
+  '버거',
+  '족발',
+  '카테고리',
+  '권한',
+  '신청',
+  '라이센스',
+  'MS',
+  '포토샵',
+  'photoshop',
+  '만다오',
+  '천다오',
+  '백다오',
+  '맛있다오',
+  'SCM다오',
+  '물좀다오'
+]
+
+const getRandomItems = (num: number) => {
+  const result = new Set<string>()
+  for (let index = 0; index < num + 1; index += 1) {
+    const randomElement = tags[Math.floor(Math.random() * tags.length)]
+    result.add(randomElement)
+  }
+  return Array.from(result)
+}
+
 export const UrlData: LinkType[] = [
   {
     id: uuid(),
@@ -25,20 +55,19 @@ export const UrlData: LinkType[] = [
   },
   {
     id: uuid(),
-    url: 'https://iframely.com/embed/https%3A%2F%2Fwww.figma.com%2Ffile%2F0pQwl6VAVeLXZibSNRQtN2%2F%25EC%259A%25B0%25EC%2595%2584%25ED%2595%259C-%25EB%25A7%2581%25ED%2581%25AC%3Fnode-id%3D0%253A1?_scaling=scale-down',
-    title: '테스트',
-    service: '테스트'
-  },
-  {
-    id: uuid(),
-    url: 'https://iframely.com/embed/https%3A%2F%2Fwww.figma.com%2Ffile%2F0pQwl6VAVeLXZibSNRQtN2%2F%25EC%259A%25B0%25EC%2595%2584%25ED%2595%259C-%25EB%25A7%2581%25ED%2581%25AC%3Fnode-id%3D0%253A1?_scaling=scale-down',
-    title: '테스트',
-    service: '테스트'
-  },
-  {
-    id: uuid(),
-    url: 'https://iframely.com/embed/https%3A%2F%2Fwww.figma.com%2Ffile%2F0pQwl6VAVeLXZibSNRQtN2%2F%25EC%259A%25B0%25EC%2595%2584%25ED%2595%259C-%25EB%25A7%2581%25ED%2581%25AC%3Fnode-id%3D0%253A1?_scaling=scale-down',
-    title: '테스트',
-    service: '테스트'
+    url: uuid(),
+    title: tags[Math.floor(Math.random() * tags.length)],
+    service: tags[Math.floor(Math.random() * tags.length)],
+    tags: getRandomItems(Math.floor(Math.random() * tags.length))
   }
 ]
+
+for (let index = 0; index < 30; index += 1) {
+  UrlData.push({
+    id: uuid(),
+    url: uuid(),
+    title: tags[Math.floor(Math.random() * tags.length)],
+    service: tags[Math.floor(Math.random() * tags.length)],
+    tags: getRandomItems(Math.floor(Math.random() * tags.length))
+  })
+}
