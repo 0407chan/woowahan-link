@@ -2,23 +2,28 @@ import styled from 'styled-components'
 
 export const Header = styled.div`
   display: flex;
-  width: 100%;
-  max-width: 1280px;
+  width: calc(100% - 40px);
+  max-width: calc(1320px - 40px);
   padding: 0 20px;
   gap: 40px;
   justify-content: space-between;
   align-items: center;
   height: 60px;
+  min-height: 60px;
+  max-height: 60px;
 `
 export const Body = styled.div`
   display: flex;
   width: calc(100% - 40px);
-  height: fit-content;
   max-width: calc(1320px - 40px);
+  height: fit-content;
   padding: 20px;
   gap: 40px;
+  justify-content: center;
   flex-direction: row;
   flex-wrap: wrap;
+  overflow-x: hidden;
+  overflow-y: overlay;
 `
 
 export const Container = styled.div`
