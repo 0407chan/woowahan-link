@@ -5,6 +5,9 @@ import * as S from './style'
 type Props = {
   link: LinkType
 }
+
+// const copyIcon = `${process.env.PUBLIC_URL}/images/Copy.png`
+
 const LinkBlock: React.FC<Props> = ({ link }) => {
   return (
     <S.Container
@@ -22,7 +25,14 @@ const LinkBlock: React.FC<Props> = ({ link }) => {
           ))}
         </S.TagContainer>
       )}
-      <S.UrlContainer>{link.url}</S.UrlContainer>
+      <S.UrlContainer>
+        {/* <p> */}
+        {link.url}
+        {/* </p> */}
+        {/* <button type="button" onClick={() => console.log('가자')}>
+          버튼
+        </button> */}
+      </S.UrlContainer>
     </S.Container>
   )
 }
