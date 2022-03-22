@@ -19,10 +19,20 @@ export const Container = styled.div`
 export const Title = styled.div`
   display: flex;
   padding-left: 5px;
-  font-size: 16px;
+  font-size: 17px;
   font-weight: bold;
   color: #000000;
   margin-bottom: 10px;
+`
+export const TagContainer = styled.div`
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  padding: 5px;
+  margin-bottom: 5px;
+  gap: 8px;
+  font-size: 13px;
+  color: #676767;
 `
 
 export const UrlContainer = styled.p`

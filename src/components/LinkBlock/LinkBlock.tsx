@@ -15,10 +15,14 @@ const LinkBlock: React.FC<Props> = ({ link }) => {
       }}
     >
       <S.Title>{link.title}</S.Title>
+      {(link.tags?.length ?? 0) > 0 && (
+        <S.TagContainer>
+          {link.tags?.map((item) => (
+            <div key={item}>{item}</div>
+          ))}
+        </S.TagContainer>
+      )}
       <S.UrlContainer>{link.url}</S.UrlContainer>
-      {link.tags?.map((item) => (
-        <div key={item}>{item}</div>
-      ))}
     </S.Container>
   )
 }
