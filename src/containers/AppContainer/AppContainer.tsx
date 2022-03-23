@@ -3,9 +3,11 @@ import GridBlock from '../../components/GridBlock'
 import LinkBlock from '../../components/LinkBlock'
 import { LinkType, UrlData } from '../../constants/data'
 import { IMAGES } from '../../constants/image'
+import useWindowSize from '../../hooks/useWindowSize'
 import * as S from './style'
 
 const AppContainer: React.FC = () => {
+  const { isMobile } = useWindowSize()
   const [searchKey, setSearchKey] = useState<string>('')
   const [linkList] = useState<LinkType[]>(UrlData)
 
@@ -27,7 +29,7 @@ const AppContainer: React.FC = () => {
           />
         </GridBlock>
         <GridBlock grid={1} style={{ justifyContent: 'flex-end' }}>
-          <button type="button">호호</button>
+          <S.AddButton>{isMobile() ? <img alt="add-round" src={IMAGES.addRound} /> : ('새 링크 추가')}</S.AddButton>
         </GridBlock>
       </S.Header>
       <S.Body>

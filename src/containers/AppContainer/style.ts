@@ -101,3 +101,43 @@ export const SearchInput = styled.input`
     color: #d1d1d1;
   }
 `
+
+export const AddButton = styled.button`
+  border: unset;
+  @media (max-width: 990px) {
+    width: 38px;
+    padding: unset;
+  }
+  width: fit-content;
+  padding:0px 10px;
+  height: 38px;
+  font-weight: bold;
+  cursor: pointer;
+  color: #ffffff;
+  border-radius: 6px;
+  /* background: linear-gradient(98.13deg, #F8D3D3 0%, #45A6FF 0.01%, #FD8DFF 100%); */
+  background: linear-gradient(45deg, #F8D3D3 0%, #45A6FF 0.01%, #FD8DFF 100%);
+  box-shadow: 0px 2px 6px 1px rgba(0, 0, 0, 0.25);
+  transition: all 0.2s ease;
+  &:hover{
+    /* box-shadow: 0 0 8px 2px #c8b2ff; */
+    filter: brightness(1.05);
+  }
+  &:active{
+    filter: brightness(0.95);
+  }
+  
+  &:disabled{
+    box-shadow: 0px 2px 6px 1px rgba(0, 0, 0, 0.25);
+    filter: grayscale(1);
+    cursor: not-allowed;
+  }
+
+  img{
+    position: relative;
+    color: #ffffff;
+    border-radius: 6px;
+    width: 26px;
+    height: 26px;
+  }
+`
