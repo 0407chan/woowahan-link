@@ -8,6 +8,10 @@ export const Container = styled.div<Props>`
   display: flex;
   align-items: center;
   width: 290px;
+  @media (max-width:660px){
+    width: fit-content;
+    ${(props) => (props.grid === 2 ? { width: '100%' } : {})}
+  }
   ${(props) => (props.grid === 2 ? { width: 290 * 2 + 40 } : {})}
 `
 
