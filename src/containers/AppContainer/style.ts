@@ -1,6 +1,10 @@
 import styled from 'styled-components'
 
 export const Header = styled.div`
+  @media (max-width: 990px) {
+    gap: 20px;
+  }
+
   display: flex;
   width: calc(100% - 40px);
   max-width: calc(1320px - 40px);
@@ -14,16 +18,37 @@ export const Header = styled.div`
 `
 export const Body = styled.div`
   display: flex;
-  width: calc(100% - 40px);
-  max-width: calc(1320px - 40px);
+  width: 100%;
   height: fit-content;
-  padding: 20px;
-  gap: 40px;
+  
+  /* padding: 20px; */
+  padding: 20px 0px;
+  height: calc(100% + 40px);
   justify-content: center;
-  flex-direction: row;
-  flex-wrap: wrap;
   overflow-x: hidden;
   overflow-y: overlay;
+  `
+
+export const LinkContainer = styled.div`
+  display: flex;
+  @media (max-width:660px){
+    max-width: 290px;
+  }
+  @media (min-width:660px){
+    max-width: calc(290px*2 + 40px*1);
+  }
+  @media (min-width:990px){
+    max-width: calc(290px*3 + 40px*2);
+  }
+  @media (min-width:1320px) {
+    max-width: calc(290px*4 + 40px*3);
+  }
+  width: calc(100% - 40px);
+  height: fit-content;
+  gap: 40px;
+  /* overflow: hidden; */
+  flex-direction: row;
+  flex-wrap: wrap;
 `
 
 export const Container = styled.div`
@@ -36,8 +61,12 @@ export const Container = styled.div`
 `
 
 export const StyledText = styled.span`
+  @media (max-width: 990px) {
+    display: none;
+  }
   position: relative;
   z-index: 1;
+  margin-left:10px;
   font-weight: 700;
   font-size: 30px;
   background: linear-gradient(95.03deg, #45a6ff 0%, #f03eff 100%);
@@ -45,6 +74,10 @@ export const StyledText = styled.span`
   -webkit-text-fill-color: transparent;
   background-clip: text;
   text-fill-color: transparent;
+`
+export const StyledImage = styled.img`
+  width: 38px;
+  height: 38px;
 `
 
 export const SearchInput = styled.input`
