@@ -104,7 +104,7 @@ export const SearchInput = styled.input`
 
 export const AddButton = styled.button`
   border: unset;
-  @media (max-width: 990px) {
+  @media (max-width: 660px) {
     width: 38px;
     padding: unset;
   }
