@@ -1,6 +1,7 @@
 /* eslint-disable react/no-array-index-key */
-import React from 'react'
+import React, { useRef, useState } from 'react'
 import { LinkType } from '../../constants/data'
+import { IMAGES } from '../../constants/image'
 import * as S from './style'
 
 type Props = {
@@ -8,9 +9,10 @@ type Props = {
   searchKey?:string
 }
 
-// const copyIcon = `${process.env.PUBLIC_URL}/images/Copy.png`
-
 const LinkBlock: React.FC<Props> = ({ link, searchKey }) => {
+  const copyRef = useRef<HTMLInputElement>(null)
+  const [isClipCopied, setIsClipCopied] = useState<boolean>(false)
+
   const highlightDiv = (value?: string) => {
     if (!searchKey) return value
     if (!value) return null
@@ -29,6 +31,20 @@ const LinkBlock: React.FC<Props> = ({ link, searchKey }) => {
     )
   }
 
+  const onUrlClick = (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
+    event.stopPropagation()
+    if (copyRef.current) {
+      console.log(isClipCopied)
+      copyRef.current.focus()
+      copyRef.current.select()
+      document.execCommand('copy')
+      setIsClipCopied(true)
+      setTimeout(() => {
+        setIsClipCopied(false)
+      }, 800)
+    }
+  }
+
   return (
     <S.Container
       onClick={() => {
@@ -45,13 +61,29 @@ const LinkBlock: React.FC<Props> = ({ link, searchKey }) => {
           ))}
         </S.TagContainer>
       )}
-      <S.UrlContainer>
-        {/* <p> */}
-        {highlightDiv(link.url)}
-        {/* </p> */}
-        {/* <button type="button" onClick={() => console.log('가자')}>
-          버튼
-        </button> */}
+      <input
+        type="text"
+        ref={copyRef}
+        readOnly
+        value={link.url}
+        style={{
+          position: 'relative', top: 10, left: 5, zIndex: -1, height: 1, width: 1
+        }}
+      />
+      {/* <S.InfoText
+        className={isClipCopied ? 'show' : ''}
+        style={{ marginTop: 0 }}
+      >
+        <CheckCircleFilled style={{ color: '#52c41a' }} />
+        클립보드에 복사됨
+      </S.InfoText> */}
+      <S.UrlContainer onClick={onUrlClick}>
+        <S.Url>
+          {highlightDiv(link.url)}
+        </S.Url>
+        <S.CopyButton type="button">
+          <img alt="copy-button" draggable={false} src={IMAGES.copy} />
+        </S.CopyButton>
       </S.UrlContainer>
     </S.Container>
   )
