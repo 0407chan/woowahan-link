@@ -11,6 +11,12 @@ const AppContainer: React.FC = () => {
   const [searchKey, setSearchKey] = useState<string>('')
   const [linkList] = useState<LinkType[]>(UrlData)
 
+  const onAddNewLink = () => {
+    window.open(
+      'https://forms.gle/HHcTcwjtTyhtnDvy9',
+      '_blank'
+    )
+  }
   return (
     <S.Container>
       <S.Header>
@@ -29,7 +35,7 @@ const AppContainer: React.FC = () => {
           />
         </GridBlock>
         <GridBlock grid={1} style={{ justifyContent: 'flex-end' }}>
-          <S.AddButton>{isMobile() ? <img alt="add-round" src={IMAGES.addRound} /> : ('새 링크 추가')}</S.AddButton>
+          <S.AddButton onClick={onAddNewLink}>{isMobile() ? <img alt="add-round" src={IMAGES.addRound} /> : ('새 링크 추가')}</S.AddButton>
         </GridBlock>
       </S.Header>
       <S.Body>

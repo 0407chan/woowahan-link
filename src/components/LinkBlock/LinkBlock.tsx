@@ -48,7 +48,10 @@ const LinkBlock: React.FC<Props> = ({ link, searchKey }) => {
   return (
     <S.Container
       onClick={() => {
-        window.location.href = link.url
+        window.open(
+          link.url,
+          '_blank'
+        )
 
         return null
       }}
