@@ -7,7 +7,7 @@ export const Container = styled.div`
   width: calc(290px - 20px);
   border-radius: 10px;
   padding: 10px;
-  background-color: ${({ theme }) => theme.background};
+  background-color: ${({ theme }) => theme.blockBackground};
   cursor: pointer;
 
   transition: all 0.25s ease;
@@ -27,7 +27,7 @@ export const Title = styled.div`
   padding-left: 5px;
   font-size: 17px;
   font-weight: bold;
-  color: #000000;
+  color: ${({ theme }) => theme.text};
   margin-bottom: 10px;
 `
 export const TagContainer = styled.div`
@@ -38,7 +38,7 @@ export const TagContainer = styled.div`
   margin-bottom: 5px;
   gap: 8px;
   font-size: 13px;
-  color: #676767;
+  color: ${({ theme }) => theme.textSecondary};
 `
 
 export const UrlContainer = styled.div`
@@ -46,11 +46,13 @@ export const UrlContainer = styled.div`
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
-  background: linear-gradient(
+  /* background: linear-gradient(
     92.85deg,
     rgba(224, 227, 255, 0.32) 0%,
     rgba(254, 218, 255, 0.26) 100%
-  );
+  ); */
+  background-color: ${({ theme }) => theme.background};
+  color: ${({ theme }) => theme.textSecondary};
   border-radius: 5px;
   padding: 10px;
   height: fit-content;

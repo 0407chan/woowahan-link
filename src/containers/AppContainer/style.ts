@@ -56,7 +56,8 @@ export const Container = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: flex-start;
-  background: linear-gradient(104.97deg, #fef9ff 0%, #f2f6ff 100%);
+  /* background: linear-gradient(104.97deg, #fef9ff 0%, #f2f6ff 100%); */
+  background-color: ${({ theme }) => theme.background};
   height: 100vh;
 `
 
@@ -85,6 +86,7 @@ export const SearchInput = styled.input`
   max-width: 620px;
   height: 36px;
   width: 100%;
+  background-color: ${({ theme }) => theme.blockBackground};
   box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
   border-radius: 10px;
   padding-left: 20px;
