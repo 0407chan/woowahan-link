@@ -1,13 +1,13 @@
 {
   "files": {
     "main.css": "/woowahan-link/static/css/main.cd2e1085.css",
-    "main.js": "/woowahan-link/static/js/main.94bfb580.js",
+    "main.js": "/woowahan-link/static/js/main.08d22534.js",
     "index.html": "/woowahan-link/index.html",
     "main.cd2e1085.css.map": "/woowahan-link/static/css/main.cd2e1085.css.map",
-    "main.94bfb580.js.map": "/woowahan-link/static/js/main.94bfb580.js.map"
+    "main.08d22534.js.map": "/woowahan-link/static/js/main.08d22534.js.map"
   },
   "entrypoints": [
     "static/css/main.cd2e1085.css",
-    "static/js/main.94bfb580.js"
+    "static/js/main.08d22534.js"
   ]
 }
