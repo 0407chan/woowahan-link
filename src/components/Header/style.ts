@@ -4,7 +4,7 @@ export const Container = styled.div`
   @media (max-width: 990px) {
     gap: 20px;
   }
-  background-color: ${({ theme }) => theme.blockBackground};
+  background-color: ${({ theme }) => theme.backgroundSecond};
   display: flex;
   width: calc(100% - 80px);
   padding: 0 40px;
