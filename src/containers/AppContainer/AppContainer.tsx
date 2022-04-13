@@ -25,6 +25,7 @@ const AppContainer: React.FC = () => {
         <Header
           searchKey={searchKey}
           onSearch={handleSearch}
+          theme={theme}
           themeToggler={themeToggler}
         />
         <S.Body>
