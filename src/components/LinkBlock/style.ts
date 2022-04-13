@@ -7,7 +7,7 @@ export const Container = styled.div`
   width: calc(290px - 20px);
   border-radius: 10px;
   padding: 10px;
-  background-color: ${({ theme }) => theme.blockBackground};
+  background-color: ${({ theme }) => theme.backgroundSecond};
   cursor: pointer;
 
   transition: all 0.25s ease;
