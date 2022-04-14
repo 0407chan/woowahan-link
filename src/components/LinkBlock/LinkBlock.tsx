@@ -57,20 +57,14 @@ const LinkBlock: React.FC<Props> = ({ link, searchKey }) => {
       }}
     >
       <S.Title>{highlightDiv(link.title)}</S.Title>
-      {(link.tags?.length ?? 0) > 0 && (
-        <S.TagContainer>
-          {link.tags?.map((item) => (
-            <div key={item}>{highlightDiv(item)}</div>
-          ))}
-        </S.TagContainer>
-      )}
+
       <input
         type="text"
         ref={copyRef}
         readOnly
         value={link.url}
         style={{
-          position: 'relative', top: 10, left: 5, zIndex: -1, height: 1, width: 1
+          position: 'relative', top: 5, left: 5, zIndex: -1, height: 1, width: 1
         }}
       />
       {/* <S.InfoText
@@ -88,6 +82,17 @@ const LinkBlock: React.FC<Props> = ({ link, searchKey }) => {
           <img alt="copy-button" draggable={false} src={IMAGES.copy} />
         </S.CopyButton>
       </S.UrlContainer>
+
+      {(link.tags?.length ?? 0) > 0 && (
+        <S.TagContainer>
+          {link.tags?.map((item, index) => (
+            <>
+              <div key={item}>{highlightDiv(item)}</div>
+              {(link.tags?.length ?? 0) - 1 !== index && <div>·</div>}
+            </>
+          ))}
+        </S.TagContainer>
+      )}
     </S.Container>
   )
 }
