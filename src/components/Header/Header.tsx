@@ -28,7 +28,7 @@ const Header:React.FC<Props> = ({
   return (
     <S.Container>
       <GridBlock grid={1}>
-        <S.StyledImage alt="logo" src={IMAGES.logo} />
+        <S.StyledImage alt="logo" src={IMAGES.logo} draggable="false" />
         <S.StyledText>우아한 링크</S.StyledText>
       </GridBlock>
       <GridBlock grid={2} style={{ justifyContent: 'center' }}>

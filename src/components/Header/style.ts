@@ -33,8 +33,8 @@ export const StyledText = styled.span`
   text-fill-color: transparent;
 `
 export const StyledImage = styled.img`
-  width: 38px;
-  height: 38px;
+  width: 32px;
+  height: 32px;
 `
 
 export const SearchInput = styled.input`
