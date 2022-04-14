@@ -23,10 +23,10 @@ export const StyledText = styled.span`
   }
   position: relative;
   z-index: 1;
-  margin-left:10px;
-  font-weight: 700;
-  font-size: 30px;
-  background: linear-gradient(95.03deg, #45a6ff 0%, #f03eff 100%);
+  margin-left: 10px;
+  font-size: 22px;
+  font-weight: bold;
+  background: linear-gradient(95.03deg, #9A83FF 0%, #8BB4FF 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
