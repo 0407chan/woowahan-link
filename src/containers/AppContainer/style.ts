@@ -1,5 +1,8 @@
 import styled from 'styled-components'
 
+const LINKBLOCK_WIDTH = 305
+const GAP = 20
+
 export const Body = styled.div`
   display: flex;
   width: 100%;
@@ -19,17 +22,17 @@ export const LinkContainer = styled.div`
     max-width: 290px;
   }
   @media (min-width:660px){
-    max-width: calc(290px*2 + 40px*1);
+    max-width: calc(${LINKBLOCK_WIDTH}px*2 + ${GAP}px*1);
   }
   @media (min-width:990px){
-    max-width: calc(290px*3 + 40px*2);
+    max-width: calc(${LINKBLOCK_WIDTH}px*3 + ${GAP}px*2);
   }
   @media (min-width:1320px) {
-    max-width: calc(290px*4 + 40px*3);
+    max-width: calc(${LINKBLOCK_WIDTH}px*4 + ${GAP}px*3);
   }
   width: calc(100% - 40px);
   height: fit-content;
-  gap: 40px;
+  gap: 20px;
   /* overflow: hidden; */
   flex-direction: row;
   flex-wrap: wrap;
