@@ -71,15 +71,14 @@ export const AddButton = styled.button`
     width: 38px;
     padding: unset;
   }
-  width: fit-content;
+  width: 86px;
   padding:0px 10px;
   height: 38px;
   font-weight: bold;
   cursor: pointer;
   color: #ffffff;
-  border-radius: 6px;
-  /* background: linear-gradient(98.13deg, #F8D3D3 0%, #45A6FF 0.01%, #FD8DFF 100%); */
-  background: linear-gradient(45deg, #F8D3D3 0%, #45A6FF 0.01%, #FD8DFF 100%);
+  border-radius: 19px;
+  background: linear-gradient(95.03deg, #9A83FF 0%, #8BB4FF 100%);
   box-shadow: 0px 2px 6px 1px rgba(0, 0, 0, 0.25);
   transition: all 0.2s ease;
   &:hover{
