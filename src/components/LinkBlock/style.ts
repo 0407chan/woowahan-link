@@ -4,9 +4,9 @@ export const Container = styled.div`
   display: flex;
   flex-direction: column;
   height: fit-content;
-  width: calc(290px - 20px);
+  width: calc(305px - 40px);
   border-radius: 10px;
-  padding: 10px;
+  padding: 20px;
   background-color: ${({ theme }) => theme.backgroundSecond};
   cursor: pointer;
 
@@ -17,7 +17,6 @@ export const Container = styled.div`
     
     button{
       display: block;
-      /* filter: drop-shadow(0 0 0.2rem orange); */
     }
   }
 `
@@ -30,12 +29,13 @@ export const Title = styled.div`
   color: ${({ theme }) => theme.text};
   margin-bottom: 10px;
 `
+
 export const TagContainer = styled.div`
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
-  padding: 5px;
-  margin-bottom: 5px;
+  margin-left: 13px ;
+  margin-top: 16px;
   gap: 8px;
   font-size: 13px;
   color: ${({ theme }) => theme.textSecondary};
@@ -46,19 +46,14 @@ export const UrlContainer = styled.div`
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
-  /* background: linear-gradient(
-    92.85deg,
-    rgba(224, 227, 255, 0.32) 0%,
-    rgba(254, 218, 255, 0.26) 100%
-  ); */
   background-color: ${({ theme }) => theme.background};
   color: ${({ theme }) => theme.textSecondary};
   border-radius: 5px;
-  padding: 10px;
+  padding: 13px;
   height: fit-content;
   height: 24px;
   max-height: 60px;
-  width: 250px;
+  width: calc(265px - 26px);
   z-index: 1;
   &:hover{
     box-shadow: 0 0 8px 1px #e1d5ff;
