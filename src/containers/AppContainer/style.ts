@@ -14,7 +14,32 @@ export const Body = styled.div`
   justify-content: center;
   overflow-x: hidden;
   overflow-y: overlay;
-  `
+
+  /* width */
+  &::-webkit-scrollbar {
+    width: 10px;
+    left: -2px;
+  }
+
+  /* Track */
+  &::-webkit-scrollbar-track {
+    background: unset;
+  }
+
+  /* Handle */
+  &::-webkit-scrollbar-thumb {
+    border-radius: 4px;
+    background: ${({ theme }) => theme.scrollBarColor};
+    opacity: 0.9;
+    margin-right: 3px;
+  }
+
+  /* Handle on hover */
+  &::-webkit-scrollbar-thumb:hover {
+    opacity: 0.9;
+    background: ${({ theme }) => theme.scrollBarHoverColor};
+  }
+`
 
 export const LinkContainer = styled.div`
   display: flex;
@@ -34,7 +59,7 @@ export const LinkContainer = styled.div`
   height: fit-content;
   gap: 20px;
   /* overflow: hidden; */
-  flex-direction: row;
+  flex-direction: column;
   flex-wrap: wrap;
 `
 
@@ -48,42 +73,8 @@ export const Container = styled.div`
   height: 100vh;
 `
 
-export const AddButton = styled.button`
-  border: unset;
-  @media (max-width: 660px) {
-    width: 38px;
-    padding: unset;
-  }
-  width: fit-content;
-  padding:0px 10px;
-  height: 38px;
+export const TeamName = styled.div`
+  font-size: 18px;
   font-weight: bold;
-  cursor: pointer;
-  color: #ffffff;
-  border-radius: 6px;
-  /* background: linear-gradient(98.13deg, #F8D3D3 0%, #45A6FF 0.01%, #FD8DFF 100%); */
-  background: linear-gradient(45deg, #F8D3D3 0%, #45A6FF 0.01%, #FD8DFF 100%);
-  box-shadow: 0px 2px 6px 1px rgba(0, 0, 0, 0.25);
-  transition: all 0.2s ease;
-  &:hover{
-    /* box-shadow: 0 0 8px 2px #c8b2ff; */
-    filter: brightness(1.05);
-  }
-  &:active{
-    filter: brightness(0.95);
-  }
-  
-  &:disabled{
-    box-shadow: 0px 2px 6px 1px rgba(0, 0, 0, 0.25);
-    filter: grayscale(1);
-    cursor: not-allowed;
-  }
-
-  img{
-    position: relative;
-    color: #ffffff;
-    border-radius: 6px;
-    width: 26px;
-    height: 26px;
-  }
+  color: ${({ theme }) => theme.text};
 `

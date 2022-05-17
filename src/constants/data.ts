@@ -1,13 +1,16 @@
 import { v4 as uuid } from 'uuid'
 
 export type ServiceType = 'SCM' | '만다오' | '기타'
+export type TeamType = '만족스럽조'|'뿌듯하조'|'잘썼조'|'찢었조'|'기타'
 
 export type LinkType = {
   id: string
   title?: string
   tags?: string[]
   url: string
-  service?: string
+  name?:string
+  team?: TeamType
+  service?:string
 }
 
 export const tags = [
@@ -31,10 +34,20 @@ export const tags = [
   '물좀다오'
 ]
 
+export const teams:TeamType[] = [
+  '만족스럽조',
+  '뿌듯하조',
+  '잘썼조',
+  '찢었조',
+]
+
 const getRandomItems = (num: number) => {
   const result = new Set<string>()
   for (let index = 0; index < num + 1; index += 1) {
     const randomElement = tags[Math.floor(Math.random() * tags.length)]
+
+    if (Array.from(result).length > 7) break
+
     result.add(randomElement)
   }
   return Array.from(result)
