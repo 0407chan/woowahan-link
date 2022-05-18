@@ -24,10 +24,16 @@ export const Container = styled.div`
 export const Title = styled.div`
   display: flex;
   padding-left: 5px;
-  font-size: 17px;
+  font-size: 14px;
   font-weight: bold;
   color: ${({ theme }) => theme.text};
-  margin-bottom: 10px;
+`
+
+export const Name = styled.div`
+  display: flex;
+  padding-left: 5px;
+  font-size: 14px;
+  color: ${({ theme }) => theme.textSecondary};
 `
 
 export const TagContainer = styled.div`
@@ -61,7 +67,7 @@ export const UrlContainer = styled.div`
 `
 
 export const Url = styled.p`
-  font-size: 14px;
+  font-size: 13px;
   width: calc(100% - 4px - 24px);
 
   text-overflow: ellipsis;
