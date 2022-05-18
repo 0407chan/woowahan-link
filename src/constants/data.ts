@@ -53,34 +53,55 @@ const getRandomItems = (num: number) => {
   return Array.from(result)
 }
 
-export const UrlData: LinkType[] = [
-  {
-    id: uuid(),
-    url: 'https://www.naver.com',
-    title: '네이버 홈',
-    service: '네이버'
-  },
-  {
-    id: uuid(),
-    url: 'https://www.daum.net',
-    title: '다음 홈',
-    service: '다음'
-  },
-  {
-    id: uuid(),
-    url: 'https://www.digitalocean.com/community/tutorials/linting-and-formatting-with-eslint-in-vs-code',
-    title: 'format on save',
-    service: 'VsCode',
-    tags: ['eslint', 'vscode', 'format on save']
-  }
-]
-
-for (let index = 0; index < 30; index += 1) {
-  UrlData.push({
+const linkGenerator = (name:string, team?:TeamType) => {
+  return {
     id: uuid(),
     url: uuid(),
     title: tags[Math.floor(Math.random() * tags.length)],
-    service: tags[Math.floor(Math.random() * tags.length)],
+    team: team || teams[Math.floor(Math.random() * teams.length)],
+    name,
     tags: getRandomItems(Math.floor(Math.random() * tags.length))
-  })
+  }
 }
+
+export const UrlData: LinkType[] = [
+  linkGenerator('이예지', '만족스럽조'),
+  linkGenerator('박지성', '만족스럽조'),
+  linkGenerator('이구현', '만족스럽조'),
+  linkGenerator('박찬희', '만족스럽조'),
+  linkGenerator('최현준', '만족스럽조'),
+  linkGenerator('이재원', '만족스럽조'),
+
+  linkGenerator('고우혁', '뿌듯하조'),
+  linkGenerator('김의중', '뿌듯하조'),
+  linkGenerator('송요창', '뿌듯하조'),
+  linkGenerator('이윤희', '뿌듯하조'),
+  linkGenerator('조은현', '뿌듯하조'),
+  linkGenerator('황윤서', '뿌듯하조'),
+
+  linkGenerator('김대현', '잘썼조'),
+  linkGenerator('임보영', '잘썼조'),
+  linkGenerator('최승훈', '잘썼조'),
+  linkGenerator('서그림', '잘썼조'),
+  linkGenerator('김동희', '잘썼조'),
+  linkGenerator('이찬호', '잘썼조'),
+  linkGenerator('신성환', '잘썼조'),
+
+  linkGenerator('권기석', '찢었조'),
+  linkGenerator('김정혁', '찢었조'),
+  linkGenerator('김하루', '찢었조'),
+  linkGenerator('박재용', '찢었조'),
+  linkGenerator('신호승', '찢었조'),
+  linkGenerator('이정민', '찢었조'),
+  linkGenerator('전수현', '찢었조'),
+]
+
+// for (let index = 0; index < 13; index += 1) {
+//   UrlData.push({
+//     id: uuid(),
+//     url: uuid(),
+//     title: tags[Math.floor(Math.random() * tags.length)],
+//     team: teams[Math.floor(Math.random() * teams.length)],
+//     tags: getRandomItems(Math.floor(Math.random() * tags.length))
+//   })
+// }
