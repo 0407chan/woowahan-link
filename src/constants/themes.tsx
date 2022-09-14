@@ -7,7 +7,9 @@ export const lightTheme = {
   hoverFilter: 'brightness(0.95)',
   activeFilter: 'brightness(0.9)',
   scrollBarColor: '#d0cfcf',
-  scrollBarHoverColor: '#bab8b8'
+  scrollBarHoverColor: '#bab8b8',
+
+  primary: '#ab94ff',
 }
 
 export const darkTheme = {
@@ -19,5 +21,7 @@ export const darkTheme = {
   hoverFilter: 'brightness(1.1)',
   activeFilter: 'brightness(1.3)',
   scrollBarColor: '#4d4e54',
-  scrollBarHoverColor: '#636469'
+  scrollBarHoverColor: '#636469',
+
+  primary: '#9c85ef',
 }
