@@ -12,6 +12,7 @@
   },
   "homepage": "https://0407chan.github.io/woowahan-link",
   "dependencies": {
+    "@ant-design/icons": "^4.7.0",
     "@testing-library/jest-dom": "^5.16.2",
     "@testing-library/react": "^12.1.4",
     "@testing-library/user-event": "^13.5.0",
