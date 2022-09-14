@@ -13,6 +13,7 @@ type Props = {
     theme: ModeType
     themeToggler: () => void
 }
+
 const Header:React.FC<Props> = ({
   searchKey, onSearch, theme, themeToggler
 }) => {

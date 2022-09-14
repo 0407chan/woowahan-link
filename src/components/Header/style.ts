@@ -1,3 +1,4 @@
+import Button from 'antd/lib/button'
 import styled from 'styled-components'
 
 export const Container = styled.div`
@@ -6,7 +7,7 @@ export const Container = styled.div`
   }
   background-color: ${({ theme }) => theme.backgroundSecond};
   display: flex;
-  width: calc(100% - 80px);
+  width: 100%;
   padding: 0 40px;
   gap: 40px;
   justify-content: space-between;
@@ -26,11 +27,7 @@ export const StyledText = styled.span`
   margin-left: 10px;
   font-size: 22px;
   font-weight: bold;
-  background: linear-gradient(95.03deg, #9A83FF 0%, #8BB4FF 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-  text-fill-color: transparent;
+  color: ${({ theme }) => theme.primary};
 `
 export const StyledImage = styled.img`
   width: 32px;
@@ -65,7 +62,7 @@ export const SearchInput = styled.input`
   }
 `
 
-export const AddButton = styled.button`
+export const AddButton = styled(Button)`
   border: unset;
   @media (max-width: 660px) {
     width: 38px;
@@ -78,15 +75,23 @@ export const AddButton = styled.button`
   cursor: pointer;
   color: #ffffff;
   border-radius: 19px;
-  background: linear-gradient(95.03deg, #9A83FF 0%, #8BB4FF 100%);
+  background-color: ${({ theme }) => theme.primary};
+  /* background: linear-gradient(95.03deg, #9A83FF 0%, #8BB4FF 100%); */
   box-shadow: 0px 2px 6px 1px rgba(0, 0, 0, 0.25);
   transition: all 0.2s ease;
   &:hover{
     /* box-shadow: 0 0 8px 2px #c8b2ff; */
+    color: #ffffff;
+    background-color: ${({ theme }) => theme.primary};
     filter: brightness(1.05);
   }
   &:active{
     filter: brightness(0.95);
+  }
+
+  &:focus{
+    color: #ffffff;
+    background-color: ${({ theme }) => theme.primary};
   }
   
   &:disabled{
