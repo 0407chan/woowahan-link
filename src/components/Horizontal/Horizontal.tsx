@@ -5,10 +5,14 @@ import * as S from './style'
 type Props = {
   gap?: number
   style?: CSSProperties
+  className?: string | undefined
+
 }
-const Horizontal: React.FC<Props> = ({ gap, style, children }) => {
+const Horizontal: React.FC<Props> = ({
+  gap, style, className, children
+}) => {
   return (
-    <S.Container gap={gap} style={style}>
+    <S.Container className={className} gap={gap} style={style}>
       {children}
     </S.Container>
   )
