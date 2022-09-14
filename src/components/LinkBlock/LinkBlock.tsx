@@ -1,7 +1,9 @@
 /* eslint-disable react/no-array-index-key */
+import { ExportOutlined } from '@ant-design/icons'
 import React, { useRef, useState } from 'react'
 import { LinkType } from '../../constants/data'
 import { IMAGES } from '../../constants/image'
+import Vertical from '../Vertical'
 import * as S from './style'
 
 type Props = {
@@ -31,7 +33,7 @@ const LinkBlock: React.FC<Props> = ({ link, searchKey }) => {
     )
   }
 
-  const onUrlClick = (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
+  const handleCopyUrl = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     event.stopPropagation()
     if (copyRef.current) {
       console.log(isClipCopied)
@@ -52,38 +54,31 @@ const LinkBlock: React.FC<Props> = ({ link, searchKey }) => {
           link.url,
           '_blank'
         )
-
         return null
       }}
     >
-      <S.Title>{highlightDiv(link.title)}</S.Title>
+      <Vertical gap={12} style={{ width: '100%' }}>
+        <S.Title>{highlightDiv(link.title)}</S.Title>
+        {/* <input
+          type="text"
+          ref={copyRef}
+          readOnly
+          value={link.url}
+          style={{
+            position: 'absolute',
+            top: 5,
+            left: 5,
+            zIndex: -1,
+            height: 1,
+            width: 1,
+          }}
+        /> */}
 
-      <input
-        type="text"
-        ref={copyRef}
-        readOnly
-        value={link.url}
-        style={{
-          position: 'relative', top: 5, left: 5, zIndex: -1, height: 1, width: 1
-        }}
-      />
-      {/* <S.InfoText
-        className={isClipCopied ? 'show' : ''}
-        style={{ marginTop: 0 }}
-      >
-        <CheckCircleFilled style={{ color: '#52c41a' }} />
-        클립보드에 복사됨
-      </S.InfoText> */}
-      <S.UrlContainer onClick={onUrlClick}>
-        <S.Url>
+        <S.UrlContainer>
           {highlightDiv(link.url)}
-        </S.Url>
-        <S.CopyButton type="button">
-          <img alt="copy-button" draggable={false} src={IMAGES.copy} />
-        </S.CopyButton>
-      </S.UrlContainer>
+        </S.UrlContainer>
 
-      {(link.tags?.length ?? 0) > 0 && (
+        {(link.tags?.length ?? 0) > 0 && (
         <S.TagContainer>
           {link.tags?.map((item, index) => (
             <>
@@ -92,7 +87,16 @@ const LinkBlock: React.FC<Props> = ({ link, searchKey }) => {
             </>
           ))}
         </S.TagContainer>
-      )}
+        )}
+      </Vertical>
+      <S.ButtonWrapper
+        className="button-wrapper"
+      >
+        <S.CopyButton type="button" onClick={(event) => handleCopyUrl(event)}>
+          <img alt="copy-button" draggable={false} src={IMAGES.copy} />
+        </S.CopyButton>
+        <ExportOutlined />
+      </S.ButtonWrapper>
     </S.Container>
   )
 }
