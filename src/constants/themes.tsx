@@ -10,6 +10,7 @@ export const lightTheme = {
   scrollBarHoverColor: '#bab8b8',
 
   primary: '#ab94ff',
+  boxShadow: '#b6a1ec',
 }
 
 export const darkTheme = {
@@ -24,4 +25,5 @@ export const darkTheme = {
   scrollBarHoverColor: '#636469',
 
   primary: '#9c85ef',
+  boxShadow: '#e1d5ff',
 }
