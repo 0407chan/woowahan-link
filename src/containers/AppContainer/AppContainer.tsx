@@ -41,11 +41,6 @@ const AppContainer: React.FC = () => {
     return Array.from(result)
   }
 
-  // useEffect(() => {
-  //   console.log(getListByTeam())
-  //   console.log(filterdList)
-  // }, [filterdList])
-
   return (
     <ThemeProvider theme={theme === 'LIGHT' ? lightTheme : darkTheme}>
       <S.Container>
