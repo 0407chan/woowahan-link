@@ -21,7 +21,7 @@ const AppContainer: React.FC = () => {
   || item.team?.toLowerCase().includes((searchKey ?? '').toLowerCase())
   || item.url.toLowerCase().includes((searchKey ?? '').toLowerCase()))
 
-  const { data } = useGoogleSheets({
+  const { data: sheets, loading: isLoading, error: isError } = useGoogleSheets({
     apiKey: process.env.REACT_APP_GOOGLE_API_KEY || '',
     sheetId: process.env.REACT_APP_GOOGLE_SHEETS_ID || '',
     sheetsOptions: [{
@@ -53,8 +53,8 @@ const AppContainer: React.FC = () => {
   }
 
   useEffect(() => {
-    if (data.length > 0) {
-      const newList = data[0].data.map((item:any):LinkType => {
+    if (sheets.length > 0) {
+      const newList = sheets[0].data.map((item:any):LinkType => {
         return {
           ...item as LinkType,
           tags: (item.tags as string).split(',')
@@ -62,7 +62,7 @@ const AppContainer: React.FC = () => {
       })
       setLinkList(newList)
     }
-  }, [data])
+  }, [sheets])
 
   return (
     <ThemeProvider theme={theme === 'LIGHT' ? lightTheme : darkTheme}>
