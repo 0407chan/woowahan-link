@@ -1,6 +1,6 @@
 /* eslint-disable react/no-array-index-key */
 import React, { useRef, useState } from 'react'
-import { LinkType } from '../../constants/data'
+import { LinkType } from '../../types/link'
 import Vertical from '../Vertical'
 import * as S from './style'
 
