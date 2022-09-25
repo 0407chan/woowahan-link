@@ -3,7 +3,7 @@ import { ThemeProvider } from 'styled-components'
 import useGoogleSheets from 'use-google-sheets'
 import Header from '../../components/Header'
 import LinkBlock from '../../components/LinkBlock'
-import { LinkType, TeamType, UrlData } from '../../constants/data'
+import { LinkType, TeamType } from '../../constants/data'
 import { darkTheme, lightTheme } from '../../constants/themes'
 import { useDarkMode } from '../../hooks/useDarkMode'
 import * as S from './style'
@@ -12,7 +12,7 @@ const AppContainer: React.FC = () => {
   const { theme, themeToggler } = useDarkMode()
 
   const [searchKey, setSearchKey] = useState<string>('')
-  const [linkList] = useState<LinkType[]>(UrlData)
+  const [linkList, setLinkList] = useState<LinkType[]>([])
 
   const filterdList = linkList
     .filter((item) => item.title?.toLowerCase().includes((searchKey ?? '').toLowerCase())
@@ -53,7 +53,15 @@ const AppContainer: React.FC = () => {
   }
 
   useEffect(() => {
-    console.log(data)
+    if (data.length > 0) {
+      const newList = data[0].data.map((item:any):LinkType => {
+        return {
+          ...item as LinkType,
+          tags: (item.tags as string).split(',')
+        }
+      })
+      setLinkList(newList)
+    }
   }, [data])
 
   return (
