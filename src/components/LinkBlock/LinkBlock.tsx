@@ -81,10 +81,10 @@ const LinkBlock: React.FC<Props> = ({ link, searchKey }) => {
         {(link.tags?.length ?? 0) > 0 && (
         <S.TagContainer>
           {link.tags?.map((item, index) => (
-            <>
+            <React.Fragment key={item}>
               <div key={item}>{highlightDiv(item)}</div>
               {(link.tags?.length ?? 0) - 1 !== index && <div>·</div>}
-            </>
+            </React.Fragment>
           ))}
         </S.TagContainer>
         )}
