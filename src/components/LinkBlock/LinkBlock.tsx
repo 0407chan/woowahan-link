@@ -1,8 +1,6 @@
 /* eslint-disable react/no-array-index-key */
-import { ExportOutlined } from '@ant-design/icons'
 import React, { useRef, useState } from 'react'
 import { LinkType } from '../../constants/data'
-import { IMAGES } from '../../constants/image'
 import Vertical from '../Vertical'
 import * as S from './style'
 
@@ -74,9 +72,11 @@ const LinkBlock: React.FC<Props> = ({ link, searchKey }) => {
           }}
         /> */}
 
-        <S.UrlContainer>
-          {highlightDiv(link.url)}
-        </S.UrlContainer>
+        {link.url !== '' ? (
+          <S.UrlContainer>
+            {highlightDiv(link.url)}
+          </S.UrlContainer>
+        ) : null}
 
         {(link.tags?.length ?? 0) > 0 && (
         <S.TagContainer>
@@ -89,14 +89,14 @@ const LinkBlock: React.FC<Props> = ({ link, searchKey }) => {
         </S.TagContainer>
         )}
       </Vertical>
-      <S.ButtonWrapper
+      {/* <S.ButtonWrapper
         className="button-wrapper"
       >
         <S.CopyButton type="button" onClick={(event) => handleCopyUrl(event)}>
           <img alt="copy-button" draggable={false} src={IMAGES.copy} />
         </S.CopyButton>
         <ExportOutlined />
-      </S.ButtonWrapper>
+      </S.ButtonWrapper> */}
     </S.Container>
   )
 }
