@@ -1,5 +1,6 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { ThemeProvider } from 'styled-components'
+import useGoogleSheets from 'use-google-sheets'
 import Header from '../../components/Header'
 import LinkBlock from '../../components/LinkBlock'
 import { LinkType, TeamType, UrlData } from '../../constants/data'
@@ -15,8 +16,18 @@ const AppContainer: React.FC = () => {
 
   const filterdList = linkList
     .filter((item) => item.title?.toLowerCase().includes((searchKey ?? '').toLowerCase())
-          || item.tags?.find((tag) => tag.toLowerCase().includes((searchKey ?? '').toLowerCase()))
-          || item.url.toLowerCase().includes((searchKey ?? '').toLowerCase()))
+  || item.tags?.find((tag) => tag.toLowerCase().includes((searchKey ?? '').toLowerCase()))
+  || item.name?.toLowerCase().includes((searchKey ?? '').toLowerCase())
+  || item.team?.toLowerCase().includes((searchKey ?? '').toLowerCase())
+  || item.url.toLowerCase().includes((searchKey ?? '').toLowerCase()))
+
+  const { data } = useGoogleSheets({
+    apiKey: process.env.REACT_APP_GOOGLE_API_KEY || '',
+    sheetId: process.env.REACT_APP_GOOGLE_SHEETS_ID || '',
+    sheetsOptions: [{
+      id: 'sheet1'
+    }]
+  })
 
   const handleSearch = (newSearchKey:string) => {
     setSearchKey(
@@ -40,6 +51,10 @@ const AppContainer: React.FC = () => {
 
     return Array.from(result)
   }
+
+  useEffect(() => {
+    console.log(data)
+  }, [data])
 
   return (
     <ThemeProvider theme={theme === 'LIGHT' ? lightTheme : darkTheme}>
