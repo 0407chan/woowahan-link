@@ -1,8 +1,7 @@
-import { Button } from 'antd'
 import { GoogleSpreadsheet } from 'google-spreadsheet'
 import React from 'react'
-import { v4 as uuid } from 'uuid'
 import { useGetLinks } from '../../apis/links'
+import { UrlData } from '../../constants/data'
 import { IMAGES } from '../../constants/image'
 import { ModeType } from '../../hooks/useDarkMode'
 import useWindowSize from '../../hooks/useWindowSize'
@@ -23,7 +22,7 @@ const Header:React.FC<Props> = ({
 }) => {
   const { isMobile } = useWindowSize()
 
-  const { refetch } = useGetLinks({
+  const { refetch, isLoading } = useGetLinks({
     options: { enabled: false }
   })
 
@@ -43,20 +42,17 @@ const Header:React.FC<Props> = ({
     await doc.loadInfo()
     const sheets = doc.sheetsByIndex[0]
 
-    const newLink = {
-      id: uuid(),
-      url: 'https://www.youtube.com',
-      title: '유튜브',
-      tags: ['유튜브', '영상', '재밌어'],
-    }
+    const newLink = UrlData[Math.floor(Math.random() * UrlData.length)]
+
     const addedRow = await sheets.addRow({
       id: newLink.id,
       url: newLink.url,
-      title: newLink.title,
-      tags: newLink.tags.join(',')
+      team: newLink.team || '',
+      service: newLink.service || '',
+      title: newLink.title || '',
+      tags: newLink.tags?.join(',') || ''
     })
 
-    console.log('등록 테스트', addedRow)
     refetch()
   }
 
@@ -76,8 +72,20 @@ const Header:React.FC<Props> = ({
       </GridBlock>
       <GridBlock grid={1} style={{ gap: 18, justifyContent: 'flex-end' }}>
         <ThemeButton theme={theme} onThemeToggler={themeToggler} />
-        <Button onClick={handleAddLink}>테스트</Button>
-        <S.AddButton onClick={onAddNewLink}>{isMobile() ? <img alt="add-round" src={IMAGES.addRound} /> : ('새 링크 추가')}</S.AddButton>
+        <S.AddButton onClick={handleAddLink}>
+          {
+            isMobile()
+              ? <img alt="add-round" src={IMAGES.addRound} />
+              : ('새 링크 추가')
+          }
+        </S.AddButton>
+        {/* <S.AddButton onClick={onAddNewLink}>
+          {
+            isMobile()
+              ? <img alt="add-round" src={IMAGES.addRound} />
+              : ('새 링크 추가')
+          }
+        </S.AddButton> */}
       </GridBlock>
     </S.Container>
   )
