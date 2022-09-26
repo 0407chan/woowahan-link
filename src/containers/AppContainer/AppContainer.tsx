@@ -1,8 +1,7 @@
 import { Button, Spin } from 'antd'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { ThemeProvider } from 'styled-components'
-import { useGetLinks } from '../../apis/links'
-// import useGoogleSheets from 'use-google-sheets'
+import useGoogleSheets from 'use-google-sheets'
 import Header from '../../components/Header'
 import LinkBlock from '../../components/LinkBlock'
 import Text from '../../components/Text'
@@ -27,14 +26,26 @@ const AppContainer: React.FC = () => {
   || item.url.toLowerCase().includes((searchKey ?? '').toLowerCase()))
 
   const {
-    isLoading, isError, refetch
-  } = useGetLinks({
-    options: {
-      onSuccess: (data) => {
-        setLinkList(data)
-      }
-    }
+    data: links, error, loading, refetch
+  } = useGoogleSheets({
+    apiKey: process.env.REACT_APP_GOOGLE_API_KEY || '',
+    sheetId: process.env.REACT_APP_GOOGLE_SHEETS_ID || '',
+    sheetsOptions: [{
+      id: 'sheet1'
+    }]
   })
+
+  useEffect(() => {
+    if (links.length > 0) {
+      const newList = links[0].data.map((item:any):LinkType => {
+        return {
+          ...item as LinkType,
+          tags: (item.tags as string).split(',')
+        }
+      })
+      setLinkList(newList)
+    }
+  }, [links])
 
   const handleSearch = (newSearchKey:string) => {
     setSearchKey(
@@ -59,7 +70,7 @@ const AppContainer: React.FC = () => {
     return Array.from(result)
   }
 
-  if (isLoading) {
+  if (loading) {
     return (
       <ThemeProvider theme={theme === 'LIGHT' ? lightTheme : darkTheme}>
         <S.Container>
@@ -67,6 +78,7 @@ const AppContainer: React.FC = () => {
             searchKey={searchKey}
             onSearch={handleSearch}
             theme={theme}
+            onRefetch={refetch}
             themeToggler={themeToggler}
           />
           <S.Body>
@@ -80,7 +92,7 @@ const AppContainer: React.FC = () => {
     )
   }
 
-  if (isError) {
+  if (error) {
     return (
       <ThemeProvider theme={theme === 'LIGHT' ? lightTheme : darkTheme}>
         <S.Container>
@@ -88,6 +100,7 @@ const AppContainer: React.FC = () => {
             searchKey={searchKey}
             onSearch={handleSearch}
             theme={theme}
+            onRefetch={refetch}
             themeToggler={themeToggler}
           />
           <S.Body>
@@ -109,6 +122,7 @@ const AppContainer: React.FC = () => {
           searchKey={searchKey}
           onSearch={handleSearch}
           theme={theme}
+          onRefetch={refetch}
           themeToggler={themeToggler}
         />
         <S.Body>

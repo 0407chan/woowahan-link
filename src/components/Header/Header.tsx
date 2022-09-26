@@ -1,6 +1,5 @@
 import { GoogleSpreadsheet } from 'google-spreadsheet'
 import React from 'react'
-import { useGetLinks } from '../../apis/links'
 import { UrlData } from '../../constants/data'
 import { IMAGES } from '../../constants/image'
 import { ModeType } from '../../hooks/useDarkMode'
@@ -10,21 +9,18 @@ import ThemeButton from '../ThemeButton'
 import * as S from './style'
 
 type Props = {
-    searchKey:string
-    // eslint-disable-next-line no-unused-vars
-    onSearch: (newSearchKey: string) => void
-    theme: ModeType
-    themeToggler: () => void
+  searchKey:string
+  // eslint-disable-next-line no-unused-vars
+  onSearch: (newSearchKey: string) => void
+  theme: ModeType
+  themeToggler: () => void
+  onRefetch:()=>void
 }
 
 const Header:React.FC<Props> = ({
-  searchKey, onSearch, theme, themeToggler
+  searchKey, onSearch, theme, themeToggler, onRefetch
 }) => {
   const { isMobile } = useWindowSize()
-
-  const { refetch, isLoading } = useGetLinks({
-    options: { enabled: false }
-  })
 
   const onAddNewLink = () => {
     window.open(
@@ -53,7 +49,7 @@ const Header:React.FC<Props> = ({
       tags: newLink.tags?.join(',') || ''
     })
 
-    refetch()
+    onRefetch()
   }
 
   return (
