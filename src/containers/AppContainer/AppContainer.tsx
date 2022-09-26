@@ -1,11 +1,16 @@
-import React, { useEffect, useState } from 'react'
+import { Button, Spin } from 'antd'
+import React, { useState } from 'react'
 import { ThemeProvider } from 'styled-components'
-import useGoogleSheets from 'use-google-sheets'
+import { useGetLinks } from '../../apis/links'
+// import useGoogleSheets from 'use-google-sheets'
 import Header from '../../components/Header'
 import LinkBlock from '../../components/LinkBlock'
-import { LinkType, TeamType } from '../../constants/data'
+import Text from '../../components/Text'
+import Vertical from '../../components/Vertical'
+import { IMAGES } from '../../constants/image'
 import { darkTheme, lightTheme } from '../../constants/themes'
 import { useDarkMode } from '../../hooks/useDarkMode'
+import { LinkType, TeamType } from '../../types/link'
 import * as S from './style'
 
 const AppContainer: React.FC = () => {
@@ -21,12 +26,14 @@ const AppContainer: React.FC = () => {
   || item.team?.toLowerCase().includes((searchKey ?? '').toLowerCase())
   || item.url.toLowerCase().includes((searchKey ?? '').toLowerCase()))
 
-  const { data: sheets, loading: isLoading, error: isError } = useGoogleSheets({
-    apiKey: process.env.REACT_APP_GOOGLE_API_KEY || '',
-    sheetId: process.env.REACT_APP_GOOGLE_SHEETS_ID || '',
-    sheetsOptions: [{
-      id: 'sheet1'
-    }]
+  const {
+    isLoading, isError, refetch
+  } = useGetLinks({
+    options: {
+      onSuccess: (data) => {
+        setLinkList(data)
+      }
+    }
   })
 
   const handleSearch = (newSearchKey:string) => {
@@ -52,17 +59,48 @@ const AppContainer: React.FC = () => {
     return Array.from(result)
   }
 
-  useEffect(() => {
-    if (sheets.length > 0) {
-      const newList = sheets[0].data.map((item:any):LinkType => {
-        return {
-          ...item as LinkType,
-          tags: (item.tags as string).split(',')
-        }
-      })
-      setLinkList(newList)
-    }
-  }, [sheets])
+  if (isLoading) {
+    return (
+      <ThemeProvider theme={theme === 'LIGHT' ? lightTheme : darkTheme}>
+        <S.Container>
+          <Header
+            searchKey={searchKey}
+            onSearch={handleSearch}
+            theme={theme}
+            themeToggler={themeToggler}
+          />
+          <S.Body>
+            <Vertical style={{ width: '100%', alignItems: 'center' }}>
+              <Spin size="large" />
+              <Text isTitle>링크를 불러오고 있어요.</Text>
+            </Vertical>
+          </S.Body>
+        </S.Container>
+      </ThemeProvider>
+    )
+  }
+
+  if (isError) {
+    return (
+      <ThemeProvider theme={theme === 'LIGHT' ? lightTheme : darkTheme}>
+        <S.Container>
+          <Header
+            searchKey={searchKey}
+            onSearch={handleSearch}
+            theme={theme}
+            themeToggler={themeToggler}
+          />
+          <S.Body>
+            <Vertical style={{ width: '100%', alignItems: 'center' }}>
+              <img src={IMAGES.error_her} alt="her" draggable={false} style={{ width: 300 }} />
+              <Text isTitle>헉! 링크를 불러오는데 오류가 발생했어요.</Text>
+              <Button onClick={() => refetch()}>다시 불러보기</Button>
+            </Vertical>
+          </S.Body>
+        </S.Container>
+      </ThemeProvider>
+    )
+  }
 
   return (
     <ThemeProvider theme={theme === 'LIGHT' ? lightTheme : darkTheme}>
