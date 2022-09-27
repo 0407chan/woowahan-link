@@ -21,7 +21,7 @@ const CreateLinkModal: React.FC<CreateLinkModalProps> = ({
   onConfirm,
   onCancel
 }) => {
-  const [link, setLink] = useState<Partial<LinkType> | undefined>()
+  const [link, setLink] = useState<Partial<LinkType> | undefined>({})
   const [checkData] = useState<Partial<LinkType> | undefined>(link)
 
   const isEditing = () => {
@@ -144,7 +144,11 @@ const CreateLinkModal: React.FC<CreateLinkModalProps> = ({
             placeholder="태그를 입력하세요."
             dropdownStyle={{ display: 'none' }}
             onChange={(value) => {
-              setLink({ ...link, tags: (value as string[]).splice(0, 10) })
+              const tags = value as string[]
+              setLink({
+                ...link,
+                tags: tags.length === 0 ? undefined : tags.splice(0, 10)
+              })
             }}
             value={link?.tags}
             tokenSeparators={[',', ' ']}
