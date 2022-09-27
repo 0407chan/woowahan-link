@@ -57,7 +57,13 @@ const Header: React.FC<Props> = ({
       </GridBlock>
       <GridBlock grid={1} style={{ gap: 18, justifyContent: 'flex-end' }}>
         <ThemeButton theme={theme} onThemeToggler={themeToggler} />
-        <S.AddButton onClick={onOpenAddModal}>새 링크 추가</S.AddButton>
+        <S.AddButton onClick={onOpenAddModal}>
+          {isMobile() ? (
+            <img alt="add-round" src={IMAGES.addRound} />
+          ) : (
+            '새 링크 추가'
+          )}
+        </S.AddButton>
       </GridBlock>
       {showAddModal ? (
         <CreateLinkModal
