@@ -2,21 +2,11 @@ import Input from 'antd/lib/input'
 import styled from 'styled-components'
 
 export const StyledInput = styled(Input)`
-  border: unset;
+  border: 1px solid ${({ theme }) => theme.backgroundSecond};
   background-color: ${({ theme }) => theme.background};
   border-radius: 24px;
   padding-left: 20px;
   transition: all 0.2s ease;
-
-  &:focus {
-    outline: #eeeeee solid 1px;
-    box-shadow: 0 0 12px 2px ${({ theme }) => theme.boxShadow} !important;
-  }
-
-  &:hover {
-    box-shadow: 0 0px 6px 1px ${({ theme }) => theme.boxShadow};
-    /* box-shadow: 0 0 8px 2px #e1d5ff; */
-  }
 
   &::placeholder {
     color: ${({ theme }) => theme.textSecondary};
@@ -34,5 +24,4 @@ export const StyledInput = styled(Input)`
       color: ${({ theme }) => theme.text};
     }
   }
-  /* } */
 `
