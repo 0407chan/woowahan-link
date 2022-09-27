@@ -99,7 +99,7 @@ const CreateLinkModal: React.FC<CreateLinkModalProps> = ({
             style={{ width: '100%' }}
             mode="tags"
             size="large"
-            placeholder="검색어를 입력해주세요"
+            placeholder="태그를 입력하세요."
             dropdownStyle={{ display: 'none' }}
             onChange={(value) => {
               setLink({ ...link, tags: (value as string[]).splice(0, 10) })

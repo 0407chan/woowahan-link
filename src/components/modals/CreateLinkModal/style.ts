@@ -31,6 +31,13 @@ export const StyledSelect = styled(Select)`
         color: ${({ theme }) => theme.textSecondary} !important;
       }
     }
+
+    .ant-select-selection-placeholder {
+      padding-left: 10px;
+    }
+    .ant-select-selection-overflow {
+      padding-left: 10px;
+    }
   }
   .ant-select-clear {
     background-color: ${({ theme }) => theme.backgroundSecond} !important;
