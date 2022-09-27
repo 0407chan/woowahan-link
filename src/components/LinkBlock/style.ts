@@ -13,7 +13,7 @@ export const Container = styled.div`
   &:hover {
     box-shadow: 0 1px 12px 1px ${({ theme }) => theme.boxShadow};
     transform: scale(1.03);
-    div.button-wrapper{
+    div.button-wrapper {
       display: block;
     }
   }
@@ -23,7 +23,7 @@ export const Title = styled.div`
   display: flex;
   padding-left: 5px;
   font-size: 17px;
-  font-weight: bold;
+  /* font-weight: bold; */
   color: ${({ theme }) => theme.text};
 `
 
@@ -31,7 +31,7 @@ export const TagContainer = styled.div`
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
-  margin-left: 5px ;
+  margin-left: 5px;
   gap: 8px;
   font-size: 13px;
   color: ${({ theme }) => theme.textSecondary};
@@ -66,20 +66,20 @@ export const CopyButton = styled.button`
   transition: all 0.2s ease;
 
   /* filter: drop-shadow(0 0 1px #45A6FF); */
-  
-  &:hover{
+
+  &:hover {
     filter: brightness(1.05);
   }
-  &:active{
+  &:active {
     filter: brightness(0.95);
   }
-  
-  &:disabled{
+
+  &:disabled {
     filter: grayscale(1);
     cursor: not-allowed;
   }
 
-  img{
+  img {
     filter: brightness(2);
     /* position: relative; */
     border-radius: 6px;
@@ -105,9 +105,10 @@ export const InfoText = styled.span<{ warn?: boolean }>`
     opacity: 1;
   }
 
-  ${({ warn }) => warn && {
-    color: '#ff5050'
-  }}
+  ${({ warn }) =>
+    warn && {
+      color: '#ff5050'
+    }}
 `
 
 export const ButtonWrapper = styled.div`
@@ -120,5 +121,5 @@ export const ButtonWrapper = styled.div`
   /* justify-content: flex-end;
   align-items: center; */
   /* height: 24; */
-  gap:8
+  gap: 8;
 `

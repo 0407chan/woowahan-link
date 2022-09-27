@@ -26,7 +26,7 @@ export const StyledText = styled.span`
   z-index: 1;
   margin-left: 10px;
   font-size: 22px;
-  font-weight: bold;
+  /* font-weight: bold; */
   color: ${({ theme }) => theme.primary};
 `
 export const StyledImage = styled.img`
@@ -46,16 +46,16 @@ export const SearchInput = styled.input`
   font-size: 16px;
   transition: all 0.2s ease;
   color: ${({ theme }) => theme.text};
-  
+
   &:focus {
     outline: #eeeeee solid 1px;
     box-shadow: 0 0 16px 2px #e1d5ff !important;
   }
-  
+
   &:hover {
     box-shadow: 0 0 8px 2px #e1d5ff;
   }
-  
+
   &::placeholder {
     font-size: 14px;
     color: ${({ theme }) => theme.textSecondary};
@@ -69,9 +69,9 @@ export const AddButton = styled(Button)`
     padding: unset;
   }
   width: 86px;
-  padding:0px 10px;
+  padding: 0px 10px;
   height: 38px;
-  font-weight: bold;
+  /* font-weight: bold; */
   cursor: pointer;
   color: #ffffff;
   border-radius: 19px;
@@ -79,28 +79,28 @@ export const AddButton = styled(Button)`
   /* background: linear-gradient(95.03deg, #9A83FF 0%, #8BB4FF 100%); */
   box-shadow: 0px 2px 6px 1px rgba(0, 0, 0, 0.25);
   transition: all 0.2s ease;
-  &:hover{
+  &:hover {
     /* box-shadow: 0 0 8px 2px #c8b2ff; */
     color: #ffffff;
     background-color: ${({ theme }) => theme.primary};
     filter: brightness(1.05);
   }
-  &:active{
+  &:active {
     filter: brightness(0.95);
   }
 
-  &:focus{
+  &:focus {
     color: #ffffff;
     background-color: ${({ theme }) => theme.primary};
   }
-  
-  &:disabled{
+
+  &:disabled {
     box-shadow: 0px 2px 6px 1px rgba(0, 0, 0, 0.25);
     filter: grayscale(1);
     cursor: not-allowed;
   }
 
-  img{
+  img {
     position: relative;
     color: #ffffff;
     border-radius: 6px;

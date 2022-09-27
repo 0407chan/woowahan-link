@@ -2,38 +2,46 @@ import { GoogleSpreadsheet } from 'google-spreadsheet'
 import React from 'react'
 import { UrlData } from '../../constants/data'
 import { IMAGES } from '../../constants/image'
+import useBoolean from '../../hooks/useBoolean'
 import { ModeType } from '../../hooks/useDarkMode'
 import useWindowSize from '../../hooks/useWindowSize'
 import GridBlock from '../GridBlock'
 import ThemeButton from '../ThemeButton'
+import WLInput from '../WLInput'
+import WLModal from '../WLModal'
 import * as S from './style'
 
 type Props = {
-  searchKey:string
+  searchKey: string
   // eslint-disable-next-line no-unused-vars
   onSearch: (newSearchKey: string) => void
   theme: ModeType
   themeToggler: () => void
-  onRefetch:()=>void
+  onRefetch: () => void
 }
 
-const Header:React.FC<Props> = ({
-  searchKey, onSearch, theme, themeToggler, onRefetch
+const Header: React.FC<Props> = ({
+  searchKey,
+  onSearch,
+  theme,
+  themeToggler,
+  onRefetch
 }) => {
+  const [showAddModal, onOpenAddModal, onCloseAddModal] = useBoolean()
   const { isMobile } = useWindowSize()
 
   const onAddNewLink = () => {
-    window.open(
-      'https://forms.gle/HHcTcwjtTyhtnDvy9',
-      '_blank'
-    )
+    window.open('https://forms.gle/HHcTcwjtTyhtnDvy9', '_blank')
   }
 
   const handleAddLink = async () => {
-    const doc = new GoogleSpreadsheet(process.env.REACT_APP_GOOGLE_SHEETS_ID || '')
+    const doc = new GoogleSpreadsheet(
+      process.env.REACT_APP_GOOGLE_SHEETS_ID || ''
+    )
     await doc.useServiceAccountAuth({
       client_email: process.env.REACT_APP_CLIENT_EMAIL || '',
-      private_key: process.env.REACT_APP_PRIVATE_KEY?.replace(/\\n/g, '\n') || '',
+      private_key:
+        process.env.REACT_APP_PRIVATE_KEY?.replace(/\\n/g, '\n') || ''
     })
     await doc.loadInfo()
     const sheets = doc.sheetsByIndex[0]
@@ -69,12 +77,13 @@ const Header:React.FC<Props> = ({
       <GridBlock grid={1} style={{ gap: 18, justifyContent: 'flex-end' }}>
         <ThemeButton theme={theme} onThemeToggler={themeToggler} />
         <S.AddButton onClick={handleAddLink}>
-          {
-            isMobile()
-              ? <img alt="add-round" src={IMAGES.addRound} />
-              : ('새 링크 추가')
-          }
+          {isMobile() ? (
+            <img alt="add-round" src={IMAGES.addRound} />
+          ) : (
+            '새 링크 추가'
+          )}
         </S.AddButton>
+        {/* <S.AddButton onClick={onOpenAddModal}>모달열기</S.AddButton> */}
         {/* <S.AddButton onClick={onAddNewLink}>
           {
             isMobile()
@@ -83,6 +92,11 @@ const Header:React.FC<Props> = ({
           }
         </S.AddButton> */}
       </GridBlock>
+      {showAddModal ? (
+        <WLModal title="링크 등록" onCancel={onCloseAddModal}>
+          <WLInput />
+        </WLModal>
+      ) : null}
     </S.Container>
   )
 }
