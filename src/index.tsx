@@ -3,7 +3,8 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import { QueryClient, QueryClientProvider } from 'react-query'
 import AppContainer from './containers/AppContainer'
-import './index.css'
+import { GlobalStyle } from './globals.styles'
+import './index.less'
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -18,6 +19,7 @@ const queryClient = new QueryClient({
 ReactDOM.render(
   <React.StrictMode>
     <QueryClientProvider client={queryClient}>
+      <GlobalStyle />
       <AppContainer />
     </QueryClientProvider>
   </React.StrictMode>,
