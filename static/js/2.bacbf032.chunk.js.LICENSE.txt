@@ -11,6 +11,11 @@ object-assign
 */
 
 /*!
+   * mustache.js - Logic-less {{mustache}} templates with JavaScript
+   * http://github.com/janl/mustache.js
+   */
+
+/*!
  * The buffer module from node.js, for the browser.
  *
  * @author   Feross Aboukhadijeh <feross@feross.org> <http://feross.org>
