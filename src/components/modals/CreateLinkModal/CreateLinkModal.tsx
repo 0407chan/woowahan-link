@@ -1,13 +1,16 @@
+/* eslint-disable react/jsx-wrap-multilines */
 import { message, Select } from 'antd'
+import fastDeepEqual from 'fast-deep-equal'
 import { useState } from 'react'
 import { v4 as uuid } from 'uuid'
 import { useAddLinkMutation } from '../../../apis/links'
 import { LinkType } from '../../../types/link'
+import MandaoDialog from '../../../utils/mandao-dialog'
 import Horizontal from '../../Horizontal'
 import Vertical from '../../Vertical'
 import WLInput from '../../WLInput'
 import WLModal from '../../WLModal'
-import { StyledSelect, Text, Title } from './style'
+import { StyledSelect, SubLabel, Text, Title } from './style'
 
 export type CreateLinkModalProps = {
   onConfirm: () => void
@@ -18,7 +21,12 @@ const CreateLinkModal: React.FC<CreateLinkModalProps> = ({
   onConfirm,
   onCancel
 }) => {
-  const [link, setLink] = useState<Partial<LinkType>>()
+  const [link, setLink] = useState<Partial<LinkType> | undefined>()
+  const [checkData] = useState<Partial<LinkType> | undefined>(link)
+
+  const isEditing = () => {
+    return !fastDeepEqual(JSON.stringify(link), JSON.stringify(checkData))
+  }
 
   const addLinkMutation = useAddLinkMutation()
 
@@ -29,6 +37,20 @@ const CreateLinkModal: React.FC<CreateLinkModalProps> = ({
       onConfirm()
     } catch (error) {
       message.warn('링크를 등록을 실패했습니다', 2)
+    }
+  }
+
+  const handleCloseModal = async () => {
+    if (isEditing()) {
+      const isClose = await new MandaoDialog().confirm(
+        '[링크 등록]을 닫으시겠습니까?',
+        '변경사항이 저장되지 않습니다.'
+      )
+      if (isClose) {
+        onCancel()
+      }
+    } else {
+      onCancel()
     }
   }
 
@@ -51,7 +73,12 @@ const CreateLinkModal: React.FC<CreateLinkModalProps> = ({
 
   return (
     <WLModal
-      title="링크 등록"
+      title={
+        <>
+          <span>링크 등록</span>
+          <SubLabel className={isEditing() ? 'editing' : ''}>- 편집됨</SubLabel>
+        </>
+      }
       open
       okText="등록"
       cancelText="취소"
@@ -59,7 +86,7 @@ const CreateLinkModal: React.FC<CreateLinkModalProps> = ({
         disabled: isDisabled(),
         loading: addLinkMutation.isLoading
       }}
-      onCancel={onCancel}
+      onCancel={handleCloseModal}
       onOk={() => handleAddLink({ ...link, id: uuid(), url: link?.url || '' })}
     >
       <Vertical gap={16}>
@@ -88,6 +115,21 @@ const CreateLinkModal: React.FC<CreateLinkModalProps> = ({
             maxLength={100}
             allowClear
             placeholder="링크를 입력하세요."
+            onChange={({ target: { name, value } }) => {
+              handleUpdateLink({ name, value })
+            }}
+          />
+        </Vertical>
+        <Vertical gap={4}>
+          <Title>팀</Title>
+          <WLInput
+            value={link?.team}
+            name="team"
+            size="large"
+            showCount
+            maxLength={20}
+            allowClear
+            placeholder="팀을 입력하세요."
             onChange={({ target: { name, value } }) => {
               handleUpdateLink({ name, value })
             }}

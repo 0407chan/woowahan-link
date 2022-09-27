@@ -78,3 +78,20 @@ export const Title = styled.div<{ required?: boolean }>`
 export const Text = styled.span`
   color: ${({ theme }) => theme.text};
 `
+
+export const SubLabel = styled.span<{ warn?: boolean }>`
+  font-size: 14px;
+  opacity: 0;
+  margin-left: 8px;
+  color: ${({ theme }) => theme.textSecondary};
+  transition: all 0.3s ease;
+  &.editing {
+    opacity: 1;
+  }
+
+  ${(props) =>
+    props.warn && {
+      color: '#ff5050',
+      fontSize: 13
+    }}
+`
