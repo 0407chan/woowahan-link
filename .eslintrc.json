@@ -33,7 +33,7 @@
         "implicit-arrow-linebreak":"warn",
         "import/no-unresolved":"off",
         "import/extensions":"off",
-
+        "object-curly-newline": "off",
         "react/function-component-definition": [2, 
             { 
                 "namedComponents": ["function-declaration" , "function-expression" , "arrow-function"], 
