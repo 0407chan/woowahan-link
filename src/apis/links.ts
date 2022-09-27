@@ -1,19 +1,28 @@
-import { GoogleSpreadsheet } from 'google-spreadsheet'
-import { useQuery, UseQueryOptions, UseQueryResult } from 'react-query'
+import { GoogleSpreadsheet, GoogleSpreadsheetRow } from 'google-spreadsheet'
+import {
+  useMutation,
+  UseMutationResult,
+  useQuery,
+  UseQueryOptions,
+  UseQueryResult
+} from 'react-query'
 import { LinkType } from '../types/link'
 
 export const getLinks = async (): Promise<LinkType[]> => {
   try {
-    const doc = new GoogleSpreadsheet(process.env.REACT_APP_GOOGLE_SHEETS_ID || '')
+    const doc = new GoogleSpreadsheet(
+      process.env.REACT_APP_GOOGLE_SHEETS_ID || ''
+    )
     doc.useServiceAccountAuth({
       client_email: process.env.REACT_APP_CLIENT_EMAIL || '',
-      private_key: process.env.REACT_APP_PRIVATE_KEY?.replace(/\\n/g, '\n') || '',
+      private_key:
+        process.env.REACT_APP_PRIVATE_KEY?.replace(/\\n/g, '\n') || ''
     })
     await doc.loadInfo()
     const sheets = doc.sheetsByTitle.sheet1
 
-    const rows = await sheets.getRows() as any[]
-    const newLinkList:LinkType[] = []
+    const rows = (await sheets.getRows()) as any[]
+    const newLinkList: LinkType[] = []
 
     rows.forEach((item) => {
       newLinkList.push({
@@ -35,13 +44,8 @@ export const getLinks = async (): Promise<LinkType[]> => {
 export const useGetLinks = ({
   options
 }: {
-    options?: UseQueryOptions<
-      LinkType[],
-      unknown,
-      LinkType[],
-      string[]
-    >
-  }): UseQueryResult<LinkType[], unknown> => {
+  options?: UseQueryOptions<LinkType[], unknown, LinkType[], string[]>
+}): UseQueryResult<LinkType[], unknown> => {
   return useQuery(
     ['getLinks'],
     async () => {
@@ -52,4 +56,40 @@ export const useGetLinks = ({
       enabled: options?.enabled
     }
   )
+}
+
+const addLink = async (link?: LinkType): Promise<GoogleSpreadsheetRow> => {
+  const doc = new GoogleSpreadsheet(
+    process.env.REACT_APP_GOOGLE_SHEETS_ID || ''
+  )
+  try {
+    await doc.useServiceAccountAuth({
+      client_email: process.env.REACT_APP_CLIENT_EMAIL || '',
+      private_key:
+        process.env.REACT_APP_PRIVATE_KEY?.replace(/\\n/g, '\n') || ''
+    })
+    await doc.loadInfo()
+    const sheets = doc.sheetsByIndex[0]
+
+    const result = await sheets.addRow({
+      id: link?.id || '',
+      url: link?.url || '',
+      team: link?.team || '',
+      service: link?.service || '',
+      title: link?.title || '',
+      tags: link?.tags?.join(',') || ''
+    })
+    return result
+  } catch (error) {
+    return Promise.reject(error)
+  }
+}
+
+export const useAddLinkMutation = (): UseMutationResult<
+  GoogleSpreadsheetRow,
+  unknown,
+  { link?: LinkType },
+  unknown
+> => {
+  return useMutation(({ link }) => addLink(link))
 }
