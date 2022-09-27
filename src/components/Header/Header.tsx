@@ -1,14 +1,12 @@
-import { GoogleSpreadsheet } from 'google-spreadsheet'
+import { message } from 'antd'
 import React from 'react'
-import { UrlData } from '../../constants/data'
 import { IMAGES } from '../../constants/image'
 import useBoolean from '../../hooks/useBoolean'
 import { ModeType } from '../../hooks/useDarkMode'
 import useWindowSize from '../../hooks/useWindowSize'
 import GridBlock from '../GridBlock'
+import CreateLinkModal from '../modals/CreateLinkModal'
 import ThemeButton from '../ThemeButton'
-import WLInput from '../WLInput'
-import WLModal from '../WLModal'
 import * as S from './style'
 
 type Props = {
@@ -34,30 +32,13 @@ const Header: React.FC<Props> = ({
     window.open('https://forms.gle/HHcTcwjtTyhtnDvy9', '_blank')
   }
 
-  const handleAddLink = async () => {
-    const doc = new GoogleSpreadsheet(
-      process.env.REACT_APP_GOOGLE_SHEETS_ID || ''
-    )
-    await doc.useServiceAccountAuth({
-      client_email: process.env.REACT_APP_CLIENT_EMAIL || '',
-      private_key:
-        process.env.REACT_APP_PRIVATE_KEY?.replace(/\\n/g, '\n') || ''
-    })
-    await doc.loadInfo()
-    const sheets = doc.sheetsByIndex[0]
-
-    const newLink = UrlData[Math.floor(Math.random() * UrlData.length)]
-
-    const addedRow = await sheets.addRow({
-      id: newLink.id,
-      url: newLink.url,
-      team: newLink.team || '',
-      service: newLink.service || '',
-      title: newLink.title || '',
-      tags: newLink.tags?.join(',') || ''
-    })
-
-    onRefetch()
+  const handleConfirmModal = () => {
+    try {
+      onRefetch()
+      onCloseAddModal()
+    } catch (error) {
+      message.warn('링크를 등록을 실패했습니다', 2)
+    }
   }
 
   return (
@@ -76,26 +57,13 @@ const Header: React.FC<Props> = ({
       </GridBlock>
       <GridBlock grid={1} style={{ gap: 18, justifyContent: 'flex-end' }}>
         <ThemeButton theme={theme} onThemeToggler={themeToggler} />
-        <S.AddButton onClick={handleAddLink}>
-          {isMobile() ? (
-            <img alt="add-round" src={IMAGES.addRound} />
-          ) : (
-            '새 링크 추가'
-          )}
-        </S.AddButton>
-        {/* <S.AddButton onClick={onOpenAddModal}>모달열기</S.AddButton> */}
-        {/* <S.AddButton onClick={onAddNewLink}>
-          {
-            isMobile()
-              ? <img alt="add-round" src={IMAGES.addRound} />
-              : ('새 링크 추가')
-          }
-        </S.AddButton> */}
+        <S.AddButton onClick={onOpenAddModal}>새 링크 추가</S.AddButton>
       </GridBlock>
       {showAddModal ? (
-        <WLModal title="링크 등록" onCancel={onCloseAddModal}>
-          <WLInput />
-        </WLModal>
+        <CreateLinkModal
+          onConfirm={handleConfirmModal}
+          onCancel={onCloseAddModal}
+        />
       ) : null}
     </S.Container>
   )

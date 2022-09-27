@@ -26,7 +26,7 @@ export const StyledText = styled.span`
   z-index: 1;
   margin-left: 10px;
   font-size: 22px;
-  /* font-weight: bold; */
+  font-weight: 500;
   color: ${({ theme }) => theme.primary};
 `
 export const StyledImage = styled.img`
@@ -71,7 +71,7 @@ export const AddButton = styled(Button)`
   width: 86px;
   padding: 0px 10px;
   height: 38px;
-  /* font-weight: bold; */
+  font-weight: 500;
   cursor: pointer;
   color: #ffffff;
   border-radius: 19px;
