@@ -47,6 +47,7 @@
         "implicit-arrow-linebreak":"off",
         "react/react-in-jsx-scope":"off",
         "react/jsx-curly-newline":"off",
+        "function-paren-newline":"off",
         "no-unused-vars":"warn",
         "no-use-before-define": "off",
         "@typescript-eslint/no-use-before-define": ["error"]

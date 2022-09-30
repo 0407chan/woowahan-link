@@ -10,6 +10,7 @@ import { IMAGES } from '../../constants/image'
 import { darkTheme, lightTheme } from '../../constants/themes'
 import { useDarkMode } from '../../hooks/useDarkMode'
 import { LinkType, TeamType } from '../../types/link'
+import { highlightDiv } from '../../utils'
 import * as S from './style'
 
 const AppContainer: React.FC = () => {
@@ -18,28 +19,37 @@ const AppContainer: React.FC = () => {
   const [searchKey, setSearchKey] = useState<string>('')
   const [linkList, setLinkList] = useState<LinkType[]>([])
 
-  const filterdList = linkList
-    .filter((item) => item.title?.toLowerCase().includes((searchKey ?? '').toLowerCase())
-  || item.tags?.find((tag) => tag.toLowerCase().includes((searchKey ?? '').toLowerCase()))
-  || item.name?.toLowerCase().includes((searchKey ?? '').toLowerCase())
-  || item.team?.toLowerCase().includes((searchKey ?? '').toLowerCase())
-  || item.url.toLowerCase().includes((searchKey ?? '').toLowerCase()))
+  const filterdList = linkList.filter(
+    (item) =>
+      item.title?.toLowerCase().includes((searchKey ?? '').toLowerCase()) ||
+      item.tags?.find((tag) =>
+        tag.toLowerCase().includes((searchKey ?? '').toLowerCase())
+      ) ||
+      item.name?.toLowerCase().includes((searchKey ?? '').toLowerCase()) ||
+      item.team?.toLowerCase().includes((searchKey ?? '').toLowerCase()) ||
+      item.url.toLowerCase().includes((searchKey ?? '').toLowerCase())
+  )
 
   const {
-    data: links, error, loading, refetch
+    data: links,
+    error,
+    loading,
+    refetch
   } = useGoogleSheets({
     apiKey: process.env.REACT_APP_GOOGLE_API_KEY || '',
     sheetId: process.env.REACT_APP_GOOGLE_SHEETS_ID || '',
-    sheetsOptions: [{
-      id: 'sheet1'
-    }]
+    sheetsOptions: [
+      {
+        id: 'sheet1'
+      }
+    ]
   })
 
   useEffect(() => {
     if (links.length > 0) {
-      const newList = links[0].data.map((item:any):LinkType => {
+      const newList = links[0].data.map((item: any): LinkType => {
         return {
-          ...item as LinkType,
+          ...(item as LinkType),
           tags: (item.tags as string).split(',')
         }
       })
@@ -47,10 +57,8 @@ const AppContainer: React.FC = () => {
     }
   }, [links])
 
-  const handleSearch = (newSearchKey:string) => {
-    setSearchKey(
-      newSearchKey
-    )
+  const handleSearch = (newSearchKey: string) => {
+    setSearchKey(newSearchKey)
   }
 
   const getListByTeam = () => {
@@ -63,7 +71,7 @@ const AppContainer: React.FC = () => {
         return
       }
 
-      const list = [...result.get(link.team) || [], link]
+      const list = [...(result.get(link.team) || []), link]
       result.set(link.team, list)
     })
 
@@ -105,7 +113,12 @@ const AppContainer: React.FC = () => {
           />
           <S.Body>
             <Vertical style={{ width: '100%', alignItems: 'center' }}>
-              <img src={IMAGES.error_her} alt="her" draggable={false} style={{ width: 300 }} />
+              <img
+                src={IMAGES.error_her}
+                alt="her"
+                draggable={false}
+                style={{ width: 300 }}
+              />
               <Text isTitle>헉! 링크를 불러오는데 오류가 발생했어요.</Text>
               <Button onClick={() => refetch()}>다시 불러보기</Button>
             </Vertical>
@@ -137,20 +150,17 @@ const AppContainer: React.FC = () => {
                     display: 'flex',
                     flexWrap: 'wrap',
                     marginTop: 30,
-                    gap: 20,
+                    gap: 20
                   }}
                 >
                   <div style={{ width: '100%' }}>
-                    <S.TeamName>{title}</S.TeamName>
+                    <S.TeamName>
+                      {highlightDiv({ value: title, searchKey })}
+                    </S.TeamName>
                   </div>
-                  {list
-                    .map((url) => (
-                      <LinkBlock
-                        key={url.id}
-                        link={url}
-                        searchKey={searchKey}
-                      />
-                    ))}
+                  {list.map((url) => (
+                    <LinkBlock key={url.id} link={url} searchKey={searchKey} />
+                  ))}
                 </div>
               )
             })}
