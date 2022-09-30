@@ -1,8 +1,9 @@
 export const lightTheme = {
-  background: '#F6F7FB',
-  backgroundSecond: '#FFFFFF',
+  // background: '#F6F7FB',
+  background: '#f3f4f7',
+  backgroundSecond: '#ffffff',
   text: '#000000',
-  textSecondary: '#7B8595',
+  textSecondary: '#7b8595',
   brightness: 'brightness(0.6)',
   hoverFilter: 'brightness(0.95)',
   activeFilter: 'brightness(0.9)',
@@ -10,14 +11,14 @@ export const lightTheme = {
   scrollBarHoverColor: '#bab8b8',
 
   primary: '#ab94ff',
-  boxShadow: '#b6a1ec',
+  boxShadow: '#b6a1ec'
 }
 
 export const darkTheme = {
-  background: '#292C35',
+  background: '#262931',
   backgroundSecond: '#2F353F',
-  text: '#FFFFFF',
-  textSecondary: '#7B8595',
+  text: '#ffffff',
+  textSecondary: '#7b8595',
   brightness: 'brightness(1)',
   hoverFilter: 'brightness(1.1)',
   activeFilter: 'brightness(1.3)',
@@ -25,5 +26,5 @@ export const darkTheme = {
   scrollBarHoverColor: '#636469',
 
   primary: '#9c85ef',
-  boxShadow: '#e1d5ff',
+  boxShadow: '#e1d5ff'
 }
