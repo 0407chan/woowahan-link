@@ -31,7 +31,6 @@
         "react/jsx-props-no-spreading": "off",
         "comma-dangle":"off",
         "operator-linebreak":"off",
-        "implicit-arrow-linebreak":"warn",
         "import/no-unresolved":"off",
         "import/extensions":"off",
         "object-curly-newline": "off",
@@ -44,7 +43,8 @@
         "arrow-body-style":["off", "always"],
         "import/prefer-default-export":"off",
         "react/require-default-props":"off",
-        
+        "react/no-array-index-key":"off",
+        "implicit-arrow-linebreak":"off",
         "react/react-in-jsx-scope":"off",
         "react/jsx-curly-newline":"off",
         "no-unused-vars":"warn",
