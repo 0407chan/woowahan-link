@@ -1,5 +1,5 @@
 /* eslint-disable react/no-array-index-key */
-import React, { useRef, useState } from 'react'
+import React from 'react'
 import { LinkType } from '../../types/link'
 import { highlightDiv } from '../../utils'
 import Vertical from '../Vertical'
@@ -11,24 +11,24 @@ type Props = {
 }
 
 const LinkBlock: React.FC<Props> = ({ link, searchKey }) => {
-  const copyRef = useRef<HTMLInputElement>(null)
-  const [isClipCopied, setIsClipCopied] = useState<boolean>(false)
+  // const copyRef = useRef<HTMLInputElement>(null)
+  // const [isClipCopied, setIsClipCopied] = useState<boolean>(false)
 
-  const handleCopyUrl = (
-    event: React.MouseEvent<HTMLButtonElement, MouseEvent>
-  ) => {
-    event.stopPropagation()
-    if (copyRef.current) {
-      console.log(isClipCopied)
-      copyRef.current.focus()
-      copyRef.current.select()
-      document.execCommand('copy')
-      setIsClipCopied(true)
-      setTimeout(() => {
-        setIsClipCopied(false)
-      }, 800)
-    }
-  }
+  // const handleCopyUrl = (
+  //   event: React.MouseEvent<HTMLButtonElement, MouseEvent>
+  // ) => {
+  //   event.stopPropagation()
+  //   if (copyRef.current) {
+  //     console.log(isClipCopied)
+  //     copyRef.current.focus()
+  //     copyRef.current.select()
+  //     document.execCommand('copy')
+  //     setIsClipCopied(true)
+  //     setTimeout(() => {
+  //       setIsClipCopied(false)
+  //     }, 800)
+  //   }
+  // }
 
   return (
     <S.Container
