@@ -19,11 +19,9 @@ export const Container = styled.div`
   }
 `
 
-export const Title = styled.div`
-  display: flex;
+export const Title = styled.span`
   padding-left: 5px;
   font-size: 17px;
-  /* font-weight: bold; */
   color: ${({ theme }) => theme.text};
 `
 
