@@ -2,12 +2,13 @@ import styled from 'styled-components'
 
 const LINKBLOCK_WIDTH = 305
 const GAP = 20
+const BODY_PADDING = 20
 
 export const Body = styled.div`
   display: flex;
   width: 100%;
   height: fit-content;
-  
+
   /* padding: 20px; */
   padding: 20px 0px;
   height: calc(100% + 40px);
@@ -43,21 +44,21 @@ export const Body = styled.div`
 
 export const LinkContainer = styled.div`
   display: flex;
-  @media (max-width:660px){
-    max-width: 290px;
+  @media (max-width: calc(${LINKBLOCK_WIDTH}px*2 + ${GAP}px*1 + ${BODY_PADDING}px*2)) {
+    max-width: ${LINKBLOCK_WIDTH}px;
   }
-  @media (min-width:660px){
+  @media (min-width: calc(${LINKBLOCK_WIDTH}px*2 + ${GAP}px*1 + ${BODY_PADDING}px*2)) {
     max-width: calc(${LINKBLOCK_WIDTH}px*2 + ${GAP}px*1);
   }
-  @media (min-width:990px){
+  @media (min-width: calc(${LINKBLOCK_WIDTH}px*3 + ${GAP}px*2 + ${BODY_PADDING}px*2)) {
     max-width: calc(${LINKBLOCK_WIDTH}px*3 + ${GAP}px*2);
   }
-  @media (min-width:1320px) {
-    max-width: calc(${LINKBLOCK_WIDTH}px*4 + ${GAP}px*3);
+  @media (min-width: calc(${LINKBLOCK_WIDTH}px*4 + ${GAP}px*3 + ${BODY_PADDING}px*2)) {
+    max-width: calc(${LINKBLOCK_WIDTH}px*4 + ${GAP}px*3 + ${BODY_PADDING}px*2);
   }
-  width: calc(100% - 40px);
+  width: calc(100% - ${BODY_PADDING}px);
   height: fit-content;
-  gap: 20px;
+  gap: ${GAP}px;
   /* overflow: hidden; */
   flex-direction: column;
   flex-wrap: wrap;
