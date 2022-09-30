@@ -4,21 +4,24 @@ import styled from 'styled-components'
 
 export const StyledSelect = styled(Select)`
   /* background-color: ${({ theme }) => theme.background}; */
+
   border-radius: 24px;
-  /* padding-left: 20px; */
   transition: all 0.2s ease;
 
   &::placeholder {
     color: ${({ theme }) => theme.textSecondary};
   }
 
-  /* .ant-select {
+  .ant-select {
     background-color: ${({ theme }) => theme.background};
     color: ${({ theme }) => theme.text};
-  } */
+    transition: all 0.2s ease;
+  }
   .ant-select-selector {
     border-radius: 24px !important;
-    border: 1px solid ${({ theme }) => theme.backgroundSecond} !important;
+    &:not(.ant-select-customize-input) {
+      border: 1px solid ${({ theme }) => theme.backgroundSecond};
+    }
     background-color: ${({ theme }) => theme.background} !important;
     color: ${({ theme }) => theme.text} !important;
     .ant-select-selection-item {
@@ -39,9 +42,10 @@ export const StyledSelect = styled(Select)`
       padding-left: 10px;
     }
   }
+
   .ant-select-clear {
     background-color: ${({ theme }) => theme.backgroundSecond} !important;
-    color: ${({ theme }) => theme.text};
+    color: ${({ theme }) => theme.textSecondary};
   }
 
   .ant-select-suffix {
