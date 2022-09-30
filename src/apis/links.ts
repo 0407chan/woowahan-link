@@ -59,10 +59,10 @@ export const useGetLinks = ({
 }
 
 const addLink = async (link?: LinkType): Promise<GoogleSpreadsheetRow> => {
-  const doc = new GoogleSpreadsheet(
-    process.env.REACT_APP_GOOGLE_SHEETS_ID || ''
-  )
   try {
+    const doc = new GoogleSpreadsheet(
+      process.env.REACT_APP_GOOGLE_SHEETS_ID || ''
+    )
     await doc.useServiceAccountAuth({
       client_email: process.env.REACT_APP_CLIENT_EMAIL || '',
       private_key:
@@ -73,11 +73,12 @@ const addLink = async (link?: LinkType): Promise<GoogleSpreadsheetRow> => {
 
     const result = await sheets.addRow({
       id: link?.id || '',
-      url: link?.url || '',
-      team: link?.team || '',
+      createdAt: link?.createdAt || '',
       service: link?.service || '',
+      tags: link?.tags?.join(',') || '',
+      team: link?.team || '',
       title: link?.title || '',
-      tags: link?.tags?.join(',') || ''
+      url: link?.url || ''
     })
     return result
   } catch (error) {

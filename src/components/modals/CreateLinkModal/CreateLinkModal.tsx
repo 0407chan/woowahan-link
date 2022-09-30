@@ -1,6 +1,7 @@
 /* eslint-disable indent */
 /* eslint-disable react/jsx-wrap-multilines */
 import { message, Select } from 'antd'
+import dayjs from 'dayjs'
 import fastDeepEqual from 'fast-deep-equal'
 import { useState } from 'react'
 import { v4 as uuid } from 'uuid'
@@ -11,6 +12,7 @@ import MandaoDialog from '../../../utils/mandao-dialog'
 import Horizontal from '../../Horizontal'
 import Vertical from '../../Vertical'
 import WarnText from '../../WarnText'
+import WLButton from '../../WLButton'
 import WLInput from '../../WLInput'
 import WLModal from '../../WLModal'
 import { StyledSelect, SubLabel, Text, Title } from './style'
@@ -87,14 +89,29 @@ const CreateLinkModal: React.FC<CreateLinkModalProps> = ({
         </>
       }
       open
-      okText="등록"
-      cancelText="취소"
-      okButtonProps={{
-        disabled: isDisabled(),
-        loading: addLinkMutation.isLoading
-      }}
       onCancel={handleCloseModal}
-      onOk={() => handleAddLink({ ...link, id: uuid(), url: link?.url || '' })}
+      footer={[
+        <WLButton key="close-button" onClick={handleCloseModal}>
+          취소
+        </WLButton>,
+        <WLButton
+          key="confirm-button"
+          type="primary"
+          disabled={isDisabled()}
+          loading={addLinkMutation.isLoading}
+          onClick={() =>
+            // eslint-disable-next-line implicit-arrow-linebreak
+            handleAddLink({
+              ...link,
+              id: uuid(),
+              url: link?.url || '',
+              createdAt: dayjs().format('YYYY-MM-DD HH:mm:ss')
+            })
+          }
+        >
+          등록
+        </WLButton>
+      ]}
     >
       <Vertical gap={16}>
         <Vertical gap={4}>
