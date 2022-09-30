@@ -37,7 +37,7 @@ const CreateLinkModal: React.FC<CreateLinkModalProps> = ({
 
   const handleAddLink = async (newLink?: LinkType) => {
     try {
-      const result = await addLinkMutation.mutateAsync({ link: newLink })
+      await addLinkMutation.mutateAsync({ link: newLink })
       message.success(`[${newLink?.title}] 링크를 등록했습니다`, 2)
       onConfirm()
     } catch (error) {
