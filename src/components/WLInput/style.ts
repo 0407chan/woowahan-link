@@ -3,7 +3,8 @@ import styled from 'styled-components'
 
 export const StyledInput = styled(Input)`
   border: 1px solid ${({ theme }) => theme.backgroundSecond};
-  background-color: ${({ theme }) => theme.background};
+  background-color: ${({ theme }) => theme.background} !important;
+  color: ${({ theme }) => theme.text} !important;
   border-radius: 24px;
   padding-left: 20px;
   transition: all 0.2s ease;
@@ -16,9 +17,10 @@ export const StyledInput = styled(Input)`
     background-color: ${({ theme }) => theme.background};
     color: ${({ theme }) => theme.text};
   }
+
   .ant-input-suffix {
     .ant-input-clear-icon {
-      color: ${({ theme }) => theme.text};
+      color: ${({ theme }) => theme.textSecondary};
     }
     .ant-input-show-count-suffix {
       color: ${({ theme }) => theme.text};
