@@ -30,6 +30,7 @@
         "react/jsx-filename-extension":"off",
         "react/jsx-props-no-spreading": "off",
         "comma-dangle":"off",
+        "operator-linebreak":"off",
         "implicit-arrow-linebreak":"warn",
         "import/no-unresolved":"off",
         "import/extensions":"off",

@@ -1,13 +1,16 @@
+/* eslint-disable indent */
 /* eslint-disable react/jsx-wrap-multilines */
 import { message, Select } from 'antd'
 import fastDeepEqual from 'fast-deep-equal'
 import { useState } from 'react'
 import { v4 as uuid } from 'uuid'
+import isURL from 'validator/lib/isURL'
 import { useAddLinkMutation } from '../../../apis/links'
 import { LinkType } from '../../../types/link'
 import MandaoDialog from '../../../utils/mandao-dialog'
 import Horizontal from '../../Horizontal'
 import Vertical from '../../Vertical'
+import WarnText from '../../WarnText'
 import WLInput from '../../WLInput'
 import WLModal from '../../WLModal'
 import { StyledSelect, SubLabel, Text, Title } from './style'
@@ -68,7 +71,11 @@ const CreateLinkModal: React.FC<CreateLinkModalProps> = ({
   }
 
   const isDisabled = () => {
-    return link?.title === undefined || link.url === undefined
+    return (
+      link?.title === undefined ||
+      link.url === undefined ||
+      !isURL(link.url || '')
+    )
   }
 
   return (
@@ -112,6 +119,14 @@ const CreateLinkModal: React.FC<CreateLinkModalProps> = ({
             name="url"
             size="large"
             showCount
+            status={
+              // eslint-disable-next-line no-nested-ternary
+              link?.url === undefined
+                ? undefined
+                : link?.url && isURL(link.url)
+                ? undefined
+                : 'error'
+            }
             maxLength={100}
             allowClear
             placeholder="링크를 입력하세요."
@@ -119,6 +134,11 @@ const CreateLinkModal: React.FC<CreateLinkModalProps> = ({
               handleUpdateLink({ name, value })
             }}
           />
+          <WarnText
+            warn={link?.url === undefined ? false : !isURL(link?.url || '')}
+          >
+            url 형식을 확인해주세요.
+          </WarnText>
         </Vertical>
         <Vertical gap={4}>
           <Title>팀</Title>
