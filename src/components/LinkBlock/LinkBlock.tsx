@@ -1,37 +1,22 @@
 /* eslint-disable react/no-array-index-key */
 import React, { useRef, useState } from 'react'
 import { LinkType } from '../../types/link'
+import { highlightDiv } from '../../utils'
 import Vertical from '../Vertical'
 import * as S from './style'
 
 type Props = {
   link: LinkType
-  searchKey?:string
+  searchKey?: string
 }
 
 const LinkBlock: React.FC<Props> = ({ link, searchKey }) => {
   const copyRef = useRef<HTMLInputElement>(null)
   const [isClipCopied, setIsClipCopied] = useState<boolean>(false)
 
-  const highlightDiv = (value?: string) => {
-    if (!searchKey) return value
-    if (!value) return null
-
-    const parts = value.split(new RegExp(`(${searchKey})`, 'gi'))
-    return (
-      <>
-        {parts.map((part, idx) => (part.toLowerCase() === searchKey.toLowerCase() ? (
-          <span key={idx} className="highlight">
-            {part}
-          </span>
-        ) : (
-          <span key={idx}>{part}</span>
-        )))}
-      </>
-    )
-  }
-
-  const handleCopyUrl = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+  const handleCopyUrl = (
+    event: React.MouseEvent<HTMLButtonElement, MouseEvent>
+  ) => {
     event.stopPropagation()
     if (copyRef.current) {
       console.log(isClipCopied)
@@ -48,15 +33,12 @@ const LinkBlock: React.FC<Props> = ({ link, searchKey }) => {
   return (
     <S.Container
       onClick={() => {
-        window.open(
-          link.url,
-          '_blank'
-        )
+        window.open(link.url, '_blank')
         return null
       }}
     >
       <Vertical gap={12} style={{ width: '100%' }}>
-        <S.Title>{highlightDiv(link.title)}</S.Title>
+        <S.Title>{highlightDiv({ value: link.title, searchKey })}</S.Title>
         {/* <input
           type="text"
           ref={copyRef}
@@ -74,19 +56,19 @@ const LinkBlock: React.FC<Props> = ({ link, searchKey }) => {
 
         {link.url !== '' ? (
           <S.UrlContainer>
-            {highlightDiv(link.url)}
+            {highlightDiv({ value: link.url, searchKey })}
           </S.UrlContainer>
         ) : null}
 
         {(link.tags?.length ?? 0) > 0 && (
-        <S.TagContainer>
-          {link.tags?.map((item, index) => (
-            <React.Fragment key={item}>
-              <div key={item}>{highlightDiv(item)}</div>
-              {(link.tags?.length ?? 0) - 1 !== index && <div>·</div>}
-            </React.Fragment>
-          ))}
-        </S.TagContainer>
+          <S.TagContainer>
+            {link.tags?.map((tag, index) => (
+              <React.Fragment key={tag}>
+                <div>{highlightDiv({ value: tag, searchKey })}</div>
+                {(link.tags?.length ?? 0) - 1 !== index && <div>·</div>}
+              </React.Fragment>
+            ))}
+          </S.TagContainer>
         )}
       </Vertical>
       {/* <S.ButtonWrapper
