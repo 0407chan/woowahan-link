@@ -6,6 +6,10 @@ export const StyledModal = styled(Modal)`
 
   .ant-modal-content {
     background-color: ${({ theme }) => theme.backgroundSecond};
+
+    .ant-modal-close-x {
+      color: ${({ theme }) => theme.textSecondary};
+    }
   }
 
   .ant-modal-header {
@@ -13,9 +17,6 @@ export const StyledModal = styled(Modal)`
     .ant-modal-title {
       color: ${({ theme }) => theme.text};
       font-weight: bold;
-    }
-    .ant-modal-close-x {
-      color: ${({ theme }) => theme.text};
     }
     border-bottom: unset;
   }
