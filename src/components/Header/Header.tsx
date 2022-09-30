@@ -28,10 +28,6 @@ const Header: React.FC<Props> = ({
   const [showAddModal, onOpenAddModal, onCloseAddModal] = useBoolean()
   const { isMobile } = useWindowSize()
 
-  const onAddNewLink = () => {
-    window.open('https://forms.gle/HHcTcwjtTyhtnDvy9', '_blank')
-  }
-
   const handleConfirmModal = () => {
     try {
       onRefetch()
