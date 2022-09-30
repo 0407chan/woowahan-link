@@ -2,6 +2,8 @@ import Modal from 'antd/lib/modal'
 import styled from 'styled-components'
 
 export const StyledModal = styled(Modal)`
+  top: 80px;
+
   .ant-modal-content {
     background-color: ${({ theme }) => theme.backgroundSecond};
   }
