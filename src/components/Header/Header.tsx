@@ -11,16 +11,16 @@ import WLButton from '../WLButton'
 import * as S from './style'
 
 type Props = {
-  searchKey: string
+  searchKeys: string[]
   // eslint-disable-next-line no-unused-vars
-  onSearch: (newSearchKey: string) => void
+  onSearch: (newSearchKeys: string[]) => void
   theme: ModeType
   themeToggler: () => void
   onRefetch: () => void
 }
 
 const Header: React.FC<Props> = ({
-  searchKey,
+  searchKeys,
   onSearch,
   theme,
   themeToggler,
@@ -45,11 +45,20 @@ const Header: React.FC<Props> = ({
         <S.StyledText>우아한 링크</S.StyledText>
       </GridBlock>
       <GridBlock grid={2} style={{ justifyContent: 'center' }}>
-        <S.SearchInput
-          type="text"
-          value={searchKey}
-          onChange={(e) => onSearch(e.target.value)}
-          placeholder="검색어를 입력해주세요"
+        <S.XlargeSelect
+          allowClear
+          mode="tags"
+          size="large"
+          maxTagCount="responsive"
+          placeholder="검색어를 입력하세요."
+          value={searchKeys}
+          style={{ width: '100%' }}
+          dropdownStyle={{ display: 'none' }}
+          onChange={(value) => {
+            const keys = value as string[]
+            onSearch(keys.splice(0, 5))
+          }}
+          tokenSeparators={[',', ' ']}
         />
       </GridBlock>
       <GridBlock grid={1} style={{ gap: 18, justifyContent: 'flex-end' }}>

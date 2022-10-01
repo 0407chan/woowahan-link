@@ -1,16 +1,17 @@
 /* eslint-disable react/no-array-index-key */
 import React from 'react'
+import Highlighter from 'react-highlight-words'
 import { LinkType } from '../../types/link'
-import { highlightDiv } from '../../utils'
 import Vertical from '../Vertical'
 import * as S from './style'
 
 type Props = {
   link: LinkType
   searchKey?: string
+  searchKeys: string[]
 }
 
-const LinkBlock: React.FC<Props> = ({ link, searchKey }) => {
+const LinkBlock: React.FC<Props> = ({ link, searchKey, searchKeys }) => {
   // const copyRef = useRef<HTMLInputElement>(null)
   // const [isClipCopied, setIsClipCopied] = useState<boolean>(false)
 
@@ -38,7 +39,14 @@ const LinkBlock: React.FC<Props> = ({ link, searchKey }) => {
       }}
     >
       <Vertical gap={12} style={{ width: '100%' }}>
-        <S.Title>{highlightDiv({ value: link.title, searchKey })}</S.Title>
+        <S.Title>
+          <Highlighter
+            highlightClassName="highlight"
+            searchWords={searchKeys}
+            autoEscape
+            textToHighlight={link?.title || ''}
+          />
+        </S.Title>
         {/* <input
           type="text"
           ref={copyRef}
@@ -56,7 +64,12 @@ const LinkBlock: React.FC<Props> = ({ link, searchKey }) => {
 
         {link.url !== '' ? (
           <S.UrlContainer>
-            {highlightDiv({ value: link.url, searchKey })}
+            <Highlighter
+              highlightClassName="highlight"
+              searchWords={searchKeys}
+              autoEscape
+              textToHighlight={link?.url || ''}
+            />
           </S.UrlContainer>
         ) : null}
 
@@ -64,7 +77,14 @@ const LinkBlock: React.FC<Props> = ({ link, searchKey }) => {
           <S.TagContainer>
             {link.tags?.map((tag, index) => (
               <React.Fragment key={tag}>
-                <div>{highlightDiv({ value: tag, searchKey })}</div>
+                <div>
+                  <Highlighter
+                    highlightClassName="highlight"
+                    searchWords={searchKeys}
+                    autoEscape
+                    textToHighlight={tag}
+                  />
+                </div>
                 {(link.tags?.length ?? 0) - 1 !== index && <div>·</div>}
               </React.Fragment>
             ))}

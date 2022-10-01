@@ -1,5 +1,6 @@
 import { Button, Spin } from 'antd'
 import React, { useEffect, useState } from 'react'
+import Highlighter from 'react-highlight-words'
 import { ThemeProvider } from 'styled-components'
 import useGoogleSheets from 'use-google-sheets'
 import Header from '../../components/Header'
@@ -10,25 +11,13 @@ import { IMAGES } from '../../constants/image'
 import { darkTheme, lightTheme } from '../../constants/themes'
 import { useDarkMode } from '../../hooks/useDarkMode'
 import { LinkType, TeamType } from '../../types/link'
-import { highlightDiv } from '../../utils'
 import * as S from './style'
 
 const AppContainer: React.FC = () => {
   const { theme, themeToggler } = useDarkMode()
 
-  const [searchKey, setSearchKey] = useState<string>('')
+  const [searchKeys, setSearchKeys] = useState<string[]>([])
   const [linkList, setLinkList] = useState<LinkType[]>([])
-
-  const filterdList = linkList.filter(
-    (item) =>
-      item.title?.toLowerCase().includes((searchKey ?? '').toLowerCase()) ||
-      item.tags?.find((tag) =>
-        tag.toLowerCase().includes((searchKey ?? '').toLowerCase())
-      ) ||
-      item.name?.toLowerCase().includes((searchKey ?? '').toLowerCase()) ||
-      item.team?.toLowerCase().includes((searchKey ?? '').toLowerCase()) ||
-      item.url.toLowerCase().includes((searchKey ?? '').toLowerCase())
-  )
 
   const {
     data: links,
@@ -57,14 +46,54 @@ const AppContainer: React.FC = () => {
     }
   }, [links])
 
-  const handleSearch = (newSearchKey: string) => {
-    setSearchKey(newSearchKey)
+  const handleSearch = (newSearchKeys: string[]) => {
+    setSearchKeys(newSearchKeys)
+  }
+
+  const getFilterdList = () => {
+    if (searchKeys.length === 0) {
+      return linkList
+    }
+
+    let searchList: LinkType[] = []
+    searchKeys.forEach((key) => {
+      const list = linkList.filter(
+        (item) =>
+          item.title?.toLowerCase().includes(key.toLowerCase()) ||
+          item.tags?.find((tag) =>
+            tag.toLowerCase().includes(key.toLowerCase())
+          ) ||
+          item.name?.toLowerCase().includes(key.toLowerCase()) ||
+          item.team?.toLowerCase().includes(key.toLowerCase()) ||
+          item.url.toLowerCase().includes(key.toLowerCase())
+      )
+
+      searchList = [...searchList, ...list]
+    })
+
+    const counts: Record<string, number> = {}
+    searchList.forEach((link) => {
+      counts[link.id] = (counts[link.id] || 0) + 1
+    })
+
+    const result = Array.from(new Set(searchList)).map((link) => {
+      if (counts[link.id]) {
+        return {
+          ...link,
+          count: counts[link.id]
+        }
+      }
+
+      return link
+    })
+
+    return result.sort((a, b) => (b.count ?? 0) - (a.count ?? 0))
   }
 
   const getListByTeam = () => {
     const result = new Map<TeamType, LinkType[]>()
 
-    filterdList.forEach((link) => {
+    getFilterdList().forEach((link) => {
       if (!link.team) {
         const others = [...(result.get('기타') || []), link]
         result.set('기타', others)
@@ -83,7 +112,7 @@ const AppContainer: React.FC = () => {
       <ThemeProvider theme={theme === 'LIGHT' ? lightTheme : darkTheme}>
         <S.Container>
           <Header
-            searchKey={searchKey}
+            searchKeys={searchKeys}
             onSearch={handleSearch}
             theme={theme}
             onRefetch={refetch}
@@ -105,7 +134,7 @@ const AppContainer: React.FC = () => {
       <ThemeProvider theme={theme === 'LIGHT' ? lightTheme : darkTheme}>
         <S.Container>
           <Header
-            searchKey={searchKey}
+            searchKeys={searchKeys}
             onSearch={handleSearch}
             theme={theme}
             onRefetch={refetch}
@@ -132,7 +161,7 @@ const AppContainer: React.FC = () => {
     <ThemeProvider theme={theme === 'LIGHT' ? lightTheme : darkTheme}>
       <S.Container>
         <Header
-          searchKey={searchKey}
+          searchKeys={searchKeys}
           onSearch={handleSearch}
           theme={theme}
           onRefetch={refetch}
@@ -155,11 +184,20 @@ const AppContainer: React.FC = () => {
                 >
                   <div style={{ width: '100%' }}>
                     <S.TeamName>
-                      {highlightDiv({ value: title, searchKey })}
+                      <Highlighter
+                        highlightClassName="highlight"
+                        searchWords={searchKeys}
+                        autoEscape
+                        textToHighlight={title}
+                      />
                     </S.TeamName>
                   </div>
                   {list.map((url) => (
-                    <LinkBlock key={url.id} link={url} searchKey={searchKey} />
+                    <LinkBlock
+                      key={url.id}
+                      link={url}
+                      searchKeys={searchKeys}
+                    />
                   ))}
                 </div>
               )
