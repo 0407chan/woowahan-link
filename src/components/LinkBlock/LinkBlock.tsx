@@ -7,11 +7,10 @@ import * as S from './style'
 
 type Props = {
   link: LinkType
-  searchKey?: string
   searchKeys: string[]
 }
 
-const LinkBlock: React.FC<Props> = ({ link, searchKey, searchKeys }) => {
+const LinkBlock: React.FC<Props> = ({ link, searchKeys }) => {
   // const copyRef = useRef<HTMLInputElement>(null)
   // const [isClipCopied, setIsClipCopied] = useState<boolean>(false)
 
