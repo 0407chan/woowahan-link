@@ -1,16 +1,15 @@
 import { Button, Spin } from 'antd'
 import React, { useEffect, useState } from 'react'
-import Highlighter from 'react-highlight-words'
 import { ThemeProvider } from 'styled-components'
 import useGoogleSheets from 'use-google-sheets'
 import Header from '../../components/Header'
-import LinkBlock from '../../components/LinkBlock'
 import Text from '../../components/Text'
 import Vertical from '../../components/Vertical'
 import { IMAGES } from '../../constants/image'
 import { darkTheme, lightTheme } from '../../constants/themes'
 import { useDarkMode } from '../../hooks/useDarkMode'
-import { LinkType, TeamType } from '../../types/link'
+import { LinkType } from '../../types/link'
+import LinkContainer from '../LinkContainer'
 import * as S from './style'
 
 const AppContainer: React.FC = () => {
@@ -90,23 +89,6 @@ const AppContainer: React.FC = () => {
     return result.sort((a, b) => (b.count ?? 0) - (a.count ?? 0))
   }
 
-  const getListByTeam = () => {
-    const result = new Map<TeamType, LinkType[]>()
-
-    getFilterdList().forEach((link) => {
-      if (!link.team) {
-        const others = [...(result.get('기타') || []), link]
-        result.set('기타', others)
-        return
-      }
-
-      const list = [...(result.get(link.team) || []), link]
-      result.set(link.team, list)
-    })
-
-    return Array.from(result)
-  }
-
   if (loading) {
     return (
       <ThemeProvider theme={theme === 'LIGHT' ? lightTheme : darkTheme}>
@@ -168,41 +150,11 @@ const AppContainer: React.FC = () => {
           themeToggler={themeToggler}
         />
         <S.Body>
-          <S.LinkContainer>
-            {getListByTeam().map((team) => {
-              const title = team[0]
-              const list = team[1]
-              return (
-                <div
-                  key={title}
-                  style={{
-                    display: 'flex',
-                    flexWrap: 'wrap',
-                    marginTop: 30,
-                    gap: 20
-                  }}
-                >
-                  <div style={{ width: '100%' }}>
-                    <S.TeamName>
-                      <Highlighter
-                        highlightClassName="highlight"
-                        searchWords={searchKeys}
-                        autoEscape
-                        textToHighlight={title}
-                      />
-                    </S.TeamName>
-                  </div>
-                  {list.map((url) => (
-                    <LinkBlock
-                      key={url.id}
-                      link={url}
-                      searchKeys={searchKeys}
-                    />
-                  ))}
-                </div>
-              )
-            })}
-          </S.LinkContainer>
+          <LinkContainer
+            linkList={getFilterdList()}
+            handleSearch={handleSearch}
+            searchKeys={searchKeys}
+          />
         </S.Body>
       </S.Container>
     </ThemeProvider>
