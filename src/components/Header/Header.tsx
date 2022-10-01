@@ -7,6 +7,7 @@ import useWindowSize from '../../hooks/useWindowSize'
 import DarkModeButton from '../DarkModeButton'
 import GridBlock from '../GridBlock'
 import CreateLinkModal from '../modals/CreateLinkModal'
+import WLButton from '../WLButton'
 import * as S from './style'
 
 type Props = {
@@ -53,13 +54,18 @@ const Header: React.FC<Props> = ({
       </GridBlock>
       <GridBlock grid={1} style={{ gap: 18, justifyContent: 'flex-end' }}>
         <DarkModeButton theme={theme} onThemeToggler={themeToggler} />
-        <S.AddButton onClick={onOpenAddModal}>
+        <WLButton
+          type="primary"
+          size="large"
+          style={{ padding: isMobile() ? 6 : '' }}
+          onClick={onOpenAddModal}
+        >
           {isMobile() ? (
-            <img alt="add-round" src={IMAGES.addRound} />
+            <img alt="add-round" width={26} src={IMAGES.addRound} />
           ) : (
             '새 링크 추가'
           )}
-        </S.AddButton>
+        </WLButton>
       </GridBlock>
       {showAddModal ? (
         <CreateLinkModal
