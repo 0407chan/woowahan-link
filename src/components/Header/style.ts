@@ -1,5 +1,6 @@
 import Button from 'antd/lib/button'
 import styled from 'styled-components'
+import WLSelect from '../WLSelect'
 
 export const Container = styled.div`
   @media (max-width: 990px) {
@@ -16,6 +17,13 @@ export const Container = styled.div`
   height: 80px;
   min-height: 80px;
   max-height: 80px;
+`
+
+export const XlargeSelect = styled(WLSelect)`
+  height: 48px;
+  .ant-select-selector {
+    height: 48px;
+  }
 `
 
 export const StyledText = styled.span`

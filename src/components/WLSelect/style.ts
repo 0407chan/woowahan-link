@@ -5,10 +5,6 @@ export const StyledSelect = styled(Select<SelectProps>)`
   border-radius: 36px;
   transition: all 0.2s ease;
 
-  &::placeholder {
-    color: ${({ theme }) => theme.textSecondary};
-  }
-
   .ant-select {
     background-color: ${({ theme }) => theme.background};
     color: ${({ theme }) => theme.text};
@@ -34,6 +30,8 @@ export const StyledSelect = styled(Select<SelectProps>)`
 
     .ant-select-selection-placeholder {
       padding-left: 10px;
+      color: ${({ theme }) => theme.textSecondary};
+      font-size: 14px;
     }
     .ant-select-selection-overflow {
       padding-left: 10px;
