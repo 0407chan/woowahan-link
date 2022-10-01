@@ -4,9 +4,9 @@ import { IMAGES } from '../../constants/image'
 import useBoolean from '../../hooks/useBoolean'
 import { ModeType } from '../../hooks/useDarkMode'
 import useWindowSize from '../../hooks/useWindowSize'
+import DarkModeButton from '../DarkModeButton'
 import GridBlock from '../GridBlock'
 import CreateLinkModal from '../modals/CreateLinkModal'
-import ThemeButton from '../ThemeButton'
 import * as S from './style'
 
 type Props = {
@@ -52,7 +52,7 @@ const Header: React.FC<Props> = ({
         />
       </GridBlock>
       <GridBlock grid={1} style={{ gap: 18, justifyContent: 'flex-end' }}>
-        <ThemeButton theme={theme} onThemeToggler={themeToggler} />
+        <DarkModeButton theme={theme} onThemeToggler={themeToggler} />
         <S.AddButton onClick={onOpenAddModal}>
           {isMobile() ? (
             <img alt="add-round" src={IMAGES.addRound} />
