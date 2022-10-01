@@ -2,7 +2,7 @@ import Button from 'antd/lib/button'
 import styled from 'styled-components'
 
 export const StyledButton = styled(Button)`
-  border-radius: 16px;
+  border-radius: 32px;
   border: 1px solid ${({ theme }) => theme.backgroundSecond};
   background-color: ${({ theme }) => theme.backgroundSecond};
   color: ${({ theme }) => theme.text};
