@@ -6,7 +6,7 @@ export const StyledModal = styled(Modal)`
 
   .ant-modal-content {
     background-color: ${({ theme }) => theme.backgroundSecond};
-
+    border-radius: 20px;
     .ant-modal-close-x {
       color: ${({ theme }) => theme.textSecondary};
     }
@@ -14,6 +14,8 @@ export const StyledModal = styled(Modal)`
 
   .ant-modal-header {
     background-color: ${({ theme }) => theme.backgroundSecond};
+    border-top-left-radius: 20px;
+    border-top-right-radius: 20px;
     .ant-modal-title {
       color: ${({ theme }) => theme.text};
       font-weight: bold;
@@ -28,6 +30,8 @@ export const StyledModal = styled(Modal)`
   }
   .ant-modal-footer {
     background-color: ${({ theme }) => theme.backgroundSecond};
+    border-bottom-left-radius: 20px;
+    border-bottom-right-radius: 20px;
     .ant-modal-title {
       color: ${({ theme }) => theme.text};
     }
