@@ -9,13 +9,13 @@ export const StyledInput = styled(Input)`
   padding-left: 20px;
   transition: all 0.2s ease;
 
-  &::placeholder {
-    color: ${({ theme }) => theme.textSecondary};
-  }
-
   .ant-input {
     background-color: ${({ theme }) => theme.background};
     color: ${({ theme }) => theme.text};
+    &::placeholder {
+      color: ${({ theme }) => theme.textSecondary};
+      font-size: 14px;
+    }
   }
 
   .ant-input-suffix {
@@ -23,7 +23,8 @@ export const StyledInput = styled(Input)`
       color: ${({ theme }) => theme.textSecondary};
     }
     .ant-input-show-count-suffix {
-      color: ${({ theme }) => theme.text};
+      color: ${({ theme }) => theme.textSecondary};
+      font-size: 14px;
     }
   }
 `

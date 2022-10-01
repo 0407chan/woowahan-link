@@ -23,7 +23,8 @@ export const Title = styled.div<{ required?: boolean }>`
   }
 `
 export const Text = styled.span`
-  color: ${({ theme }) => theme.text};
+  color: ${({ theme }) => theme.textSecondary};
+  margin-right: 11px;
 `
 
 export const SubLabel = styled.span<{ warn?: boolean }>`
