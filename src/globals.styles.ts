@@ -8,5 +8,6 @@ export const GlobalStyle = createGlobalStyle`
     .highlight{
         background-color: #d0c8ff;
         color: #000000;
+        padding:0px;
     }
 `
