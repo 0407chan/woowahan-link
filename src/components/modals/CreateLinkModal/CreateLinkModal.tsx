@@ -15,7 +15,8 @@ import WarnText from '../../WarnText'
 import WLButton from '../../WLButton'
 import WLInput from '../../WLInput'
 import WLModal from '../../WLModal'
-import { StyledSelect, SubLabel, Text, Title } from './style'
+import WLSelect from '../../WLSelect'
+import { SubLabel, Text, Title } from './style'
 
 export type CreateLinkModalProps = {
   onConfirm: () => void
@@ -174,7 +175,7 @@ const CreateLinkModal: React.FC<CreateLinkModalProps> = ({
         </Vertical>
         <Vertical gap={4}>
           <Title>태그</Title>
-          <StyledSelect
+          <WLSelect
             style={{ width: '100%' }}
             mode="tags"
             size="large"
@@ -196,7 +197,7 @@ const CreateLinkModal: React.FC<CreateLinkModalProps> = ({
                 {tag}
               </Select.Option>
             ))}
-          </StyledSelect>
+          </WLSelect>
           <Horizontal style={{ justifyContent: 'flex-end' }}>
             <Text>{`${link?.tags?.length ?? 0} / 10`}</Text>
           </Horizontal>
