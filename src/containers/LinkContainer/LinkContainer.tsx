@@ -102,6 +102,8 @@ const LinkContainer: React.FC<LinkContainerProps> = ({
       {getListByTeam().map((team) => {
         const title = team[0]
         const list = team[1]
+          .sort((a, b) => (a.title || '').localeCompare(b.title || ''))
+          .sort((a, b) => (b.count ?? 0) - (a.count ?? 0))
         return (
           <div
             key={title}
