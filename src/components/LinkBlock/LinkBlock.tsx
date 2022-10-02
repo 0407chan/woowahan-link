@@ -1,6 +1,7 @@
 /* eslint-disable react/no-array-index-key */
 import React from 'react'
 import Highlighter from 'react-highlight-words'
+import { ModeType } from '../../hooks/useDarkMode'
 import { LinkType } from '../../types/link'
 import Vertical from '../Vertical'
 import * as S from './style'
@@ -9,9 +10,10 @@ import ManageButtons from './units/ManageButtons'
 type Props = {
   link: LinkType
   searchKeys: string[]
+  theme: ModeType
 }
 
-const LinkBlock: React.FC<Props> = ({ link, searchKeys }) => {
+const LinkBlock: React.FC<Props> = ({ link, searchKeys, theme }) => {
   // const copyRef = useRef<HTMLInputElement>(null)
   // const [isClipCopied, setIsClipCopied] = useState<boolean>(false)
 
@@ -103,7 +105,7 @@ const LinkBlock: React.FC<Props> = ({ link, searchKeys }) => {
         className="button-wrapper"
         onClick={(event) => event.stopPropagation()}
       >
-        <ManageButtons />
+        <ManageButtons link={link} theme={theme} />
       </S.ButtonWrapper>
     </S.Container>
   )

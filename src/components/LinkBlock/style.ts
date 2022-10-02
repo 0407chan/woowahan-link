@@ -8,10 +8,12 @@ export const Container = styled.div`
   border-radius: 10px;
   padding: 20px;
   background-color: ${({ theme }) => theme.backgroundSecond};
+  z-index: 0;
   cursor: pointer;
   transition: all 0.2s ease;
   &:hover {
-    box-shadow: 0 1px 12px 1px ${({ theme }) => theme.boxShadow};
+    z-index: 1;
+    box-shadow: 0 1px 10px 1px ${({ theme }) => theme.boxShadow};
     transform: scale(1.03);
     div.button-wrapper {
       opacity: 1;
@@ -44,7 +46,6 @@ export const UrlContainer = styled.p`
   height: fit-content;
   width: 100%;
   font-size: 14px;
-  z-index: 1;
   margin-bottom: 0;
   text-overflow: ellipsis;
   overflow: hidden;
@@ -123,6 +124,6 @@ export const ButtonWrapper = styled.div`
   color: ${({ theme }) => theme.text};
   backdrop-filter: blur(3px) saturate(1.7);
   transform: translateX(15%);
-  z-index: 1;
+  /* z-index: 1; */
   transition: 0.2s all ease;
 `
