@@ -18,6 +18,11 @@ export const StyledInput = styled(Input)`
     }
   }
 
+  input:-webkit-autofill,
+  input:-webkit-autofill:focus {
+    transition: background-color 600000s 0s, color 600000s 0s;
+  }
+
   .ant-input-suffix {
     .ant-input-clear-icon {
       color: ${({ theme }) => theme.textSecondary};
