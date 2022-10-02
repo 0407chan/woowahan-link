@@ -4,6 +4,7 @@ import Highlighter from 'react-highlight-words'
 import { LinkType } from '../../types/link'
 import Vertical from '../Vertical'
 import * as S from './style'
+import ManageButtons from './units/ManageButtons'
 
 type Props = {
   link: LinkType
@@ -98,6 +99,12 @@ const LinkBlock: React.FC<Props> = ({ link, searchKeys }) => {
         </S.CopyButton>
         <ExportOutlined />
       </S.ButtonWrapper> */}
+      <S.ButtonWrapper
+        className="button-wrapper"
+        onClick={(event) => event.stopPropagation()}
+      >
+        <ManageButtons />
+      </S.ButtonWrapper>
     </S.Container>
   )
 }

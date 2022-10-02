@@ -14,7 +14,8 @@ export const Container = styled.div`
     box-shadow: 0 1px 12px 1px ${({ theme }) => theme.boxShadow};
     transform: scale(1.03);
     div.button-wrapper {
-      display: block;
+      opacity: 1;
+      transform: translateX(0%);
     }
   }
 `
@@ -110,14 +111,18 @@ export const InfoText = styled.span<{ warn?: boolean }>`
 `
 
 export const ButtonWrapper = styled.div`
-  /* display: block; */
+  display: block;
   position: absolute;
   width: fit-content;
-  display: none;
-  top: 16px;
-  right: 16px;
-  /* justify-content: flex-end;
-  align-items: center; */
-  /* height: 24; */
-  gap: 8;
+  border-radius: 10px;
+  padding: 8px;
+  top: 4px;
+  right: 4px;
+  opacity: 0;
+  background-color: ${({ theme }) => theme.wapperBackground};
+  color: ${({ theme }) => theme.text};
+  backdrop-filter: blur(3px) saturate(1.7);
+  transform: translateX(15%);
+  z-index: 1;
+  transition: 0.2s all ease;
 `

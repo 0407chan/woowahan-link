@@ -2,6 +2,7 @@ export const lightTheme = {
   // background: '#F6F7FB',
   background: '#f3f4f7',
   backgroundSecond: '#ffffff',
+  wapperBackground: '#e7e9ed87',
   text: '#000000',
   textSecondary: '#7b8595',
   brightness: 'brightness(0.6)',
@@ -17,6 +18,7 @@ export const lightTheme = {
 export const darkTheme = {
   background: '#262931',
   backgroundSecond: '#2F353F',
+  wapperBackground: '#444d5b80',
   text: '#ffffff',
   textSecondary: '#7b8595',
   brightness: 'brightness(1)',
