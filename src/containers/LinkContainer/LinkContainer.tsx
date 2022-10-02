@@ -6,6 +6,7 @@ import Text from '../../components/Text'
 import Vertical from '../../components/Vertical'
 import WLButton from '../../components/WLButton'
 import { IMAGES } from '../../constants/image'
+import { ModeType } from '../../hooks/useDarkMode'
 import { LinkType, TeamType } from '../../types/link'
 import * as S from './style'
 
@@ -14,12 +15,14 @@ type LinkContainerProps = {
   searchKeys: string[]
   // eslint-disable-next-line no-unused-vars
   handleSearch: (newSearchKeys: string[]) => void
+  theme: ModeType
 }
 
 const LinkContainer: React.FC<LinkContainerProps> = ({
   linkList,
   searchKeys,
-  handleSearch
+  handleSearch,
+  theme
 }) => {
   const getListByTeam = () => {
     const result = new Map<TeamType, LinkType[]>()
@@ -97,7 +100,12 @@ const LinkContainer: React.FC<LinkContainerProps> = ({
               </S.TeamName>
             </div>
             {list.map((url) => (
-              <LinkBlock key={url.id} link={url} searchKeys={searchKeys} />
+              <LinkBlock
+                key={url.id}
+                link={url}
+                theme={theme}
+                searchKeys={searchKeys}
+              />
             ))}
           </div>
         )

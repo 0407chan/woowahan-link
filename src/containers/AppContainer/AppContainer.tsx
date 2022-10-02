@@ -154,6 +154,7 @@ const AppContainer: React.FC = () => {
             linkList={getFilterdList()}
             handleSearch={handleSearch}
             searchKeys={searchKeys}
+            theme={theme}
           />
         </S.Body>
       </S.Container>
