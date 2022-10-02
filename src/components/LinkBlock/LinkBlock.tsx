@@ -36,21 +36,6 @@ const LinkBlock: React.FC<Props> = ({
             textToHighlight={link?.title || ''}
           />
         </S.Title>
-        {/* <input
-          type="text"
-          ref={copyRef}
-          readOnly
-          value={link.url}
-          style={{
-            position: 'absolute',
-            top: 5,
-            left: 5,
-            zIndex: -1,
-            height: 1,
-            width: 1,
-          }}
-        /> */}
-
         {link.url !== '' ? (
           <S.UrlContainer>
             <Highlighter
@@ -80,14 +65,6 @@ const LinkBlock: React.FC<Props> = ({
           </S.TagContainer>
         )}
       </Vertical>
-      {/* <S.ButtonWrapper
-        className="button-wrapper"
-      >
-        <S.CopyButton type="button" onClick={(event) => handleCopyUrl(event)}>
-          <img alt="copy-button" draggable={false} src={IMAGES.copy} />
-        </S.CopyButton>
-        <ExportOutlined />
-      </S.ButtonWrapper> */}
       <S.ButtonWrapper
         className="button-wrapper"
         onClick={(event) => event.stopPropagation()}
