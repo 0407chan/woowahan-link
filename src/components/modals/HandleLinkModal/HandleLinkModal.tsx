@@ -6,7 +6,7 @@ import fastDeepEqual from 'fast-deep-equal'
 import { useState } from 'react'
 import { v4 as uuid } from 'uuid'
 import isURL from 'validator/lib/isURL'
-import { useAddLinkMutation } from '../../../apis/links'
+import { useAddLinkMutation, useUpdateLinkMutation } from '../../../apis/links'
 import { LinkType } from '../../../types/link'
 import MandaoDialog from '../../../utils/mandao-dialog'
 import Horizontal from '../../Horizontal'
@@ -18,16 +18,20 @@ import WLModal from '../../WLModal'
 import WLSelect from '../../WLSelect'
 import { SubLabel, Text, Title } from './style'
 
-export type CreateLinkModalProps = {
+export type HandleLinkModalProps = {
+  currentLink?: LinkType | undefined
   onConfirm: () => void
   onCancel: () => void
 }
 
-const CreateLinkModal: React.FC<CreateLinkModalProps> = ({
+const HandleLinkModal: React.FC<HandleLinkModalProps> = ({
+  currentLink,
   onConfirm,
   onCancel
 }) => {
-  const [link, setLink] = useState<Partial<LinkType> | undefined>({})
+  const isUpdate = currentLink !== undefined
+
+  const [link, setLink] = useState<Partial<LinkType> | undefined>(currentLink)
   const [checkData] = useState<Partial<LinkType> | undefined>(link)
 
   const isEditing = () => {
@@ -35,6 +39,7 @@ const CreateLinkModal: React.FC<CreateLinkModalProps> = ({
   }
 
   const addLinkMutation = useAddLinkMutation()
+  const updateLinkMudatation = useUpdateLinkMutation()
 
   const handleAddLink = async (newLink?: LinkType) => {
     try {
@@ -42,7 +47,17 @@ const CreateLinkModal: React.FC<CreateLinkModalProps> = ({
       message.success(`[${newLink?.title}] 링크를 등록했습니다`, 2)
       onConfirm()
     } catch (error) {
-      message.warn('링크를 등록을 실패했습니다', 2)
+      message.warn('링크 등록을 실패했습니다', 2)
+    }
+  }
+
+  const handleUpdateLink = async (newLink: Partial<LinkType>) => {
+    try {
+      await updateLinkMudatation.mutateAsync({ link: newLink })
+      message.success(`[${newLink?.title}] 링크를 수정했습니다`, 2)
+      onConfirm()
+    } catch (error) {
+      message.warn('링크 수정을 실패했습니다', 2)
     }
   }
 
@@ -60,13 +75,7 @@ const CreateLinkModal: React.FC<CreateLinkModalProps> = ({
     }
   }
 
-  const handleUpdateLink = ({
-    name,
-    value
-  }: {
-    name: string
-    value: string
-  }) => {
+  const handleSetLink = ({ name, value }: { name: string; value: string }) => {
     setLink({
       ...link,
       [name]: value || undefined
@@ -85,7 +94,7 @@ const CreateLinkModal: React.FC<CreateLinkModalProps> = ({
     <WLModal
       title={
         <>
-          <span>링크 등록</span>
+          <span>{isUpdate ? '링크 수정' : '링크 등록'}</span>
           <SubLabel className={isEditing() ? 'editing' : ''}>- 편집됨</SubLabel>
         </>
       }
@@ -99,8 +108,17 @@ const CreateLinkModal: React.FC<CreateLinkModalProps> = ({
           key="confirm-button"
           type="primary"
           disabled={isDisabled()}
-          loading={addLinkMutation.isLoading}
-          onClick={() =>
+          loading={addLinkMutation.isLoading || updateLinkMudatation.isLoading}
+          onClick={() => {
+            if (isUpdate) {
+              handleUpdateLink({
+                ...link,
+                id: link?.id,
+                url: link?.url || '',
+                createdAt: dayjs().format('YYYY-MM-DD HH:mm:ss')
+              })
+              return
+            }
             // eslint-disable-next-line implicit-arrow-linebreak
             handleAddLink({
               ...link,
@@ -108,9 +126,9 @@ const CreateLinkModal: React.FC<CreateLinkModalProps> = ({
               url: link?.url || '',
               createdAt: dayjs().format('YYYY-MM-DD HH:mm:ss')
             })
-          }
+          }}
         >
-          등록
+          {isUpdate ? '저장' : '등록'}
         </WLButton>
       ]}
     >
@@ -126,7 +144,7 @@ const CreateLinkModal: React.FC<CreateLinkModalProps> = ({
             allowClear
             placeholder="링크 제목을 입력하세요."
             onChange={({ target: { name, value } }) => {
-              handleUpdateLink({ name, value })
+              handleSetLink({ name, value })
             }}
           />
         </Vertical>
@@ -149,7 +167,7 @@ const CreateLinkModal: React.FC<CreateLinkModalProps> = ({
             allowClear
             placeholder="링크를 입력하세요."
             onChange={({ target: { name, value } }) => {
-              handleUpdateLink({ name, value })
+              handleSetLink({ name, value })
             }}
           />
           <WarnText
@@ -169,7 +187,7 @@ const CreateLinkModal: React.FC<CreateLinkModalProps> = ({
             allowClear
             placeholder="팀을 입력하세요."
             onChange={({ target: { name, value } }) => {
-              handleUpdateLink({ name, value })
+              handleSetLink({ name, value })
             }}
           />
         </Vertical>
@@ -206,4 +224,4 @@ const CreateLinkModal: React.FC<CreateLinkModalProps> = ({
     </WLModal>
   )
 }
-export default CreateLinkModal
+export default HandleLinkModal

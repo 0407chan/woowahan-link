@@ -1,11 +1,14 @@
 /* eslint-disable react/jsx-one-expression-per-line */
-import React from 'react'
+import { message } from 'antd'
+import React, { useState } from 'react'
 import Highlighter from 'react-highlight-words'
 import LinkBlock from '../../components/LinkBlock'
+import HandleLinkModal from '../../components/modals/HandleLinkModal'
 import Text from '../../components/Text'
 import Vertical from '../../components/Vertical'
 import WLButton from '../../components/WLButton'
 import { IMAGES } from '../../constants/image'
+import useBoolean from '../../hooks/useBoolean'
 import { ModeType } from '../../hooks/useDarkMode'
 import { LinkType, TeamType } from '../../types/link'
 import * as S from './style'
@@ -13,6 +16,8 @@ import * as S from './style'
 type LinkContainerProps = {
   linkList: LinkType[]
   searchKeys: string[]
+  onRefetch: () => void
+
   // eslint-disable-next-line no-unused-vars
   handleSearch: (newSearchKeys: string[]) => void
   theme: ModeType
@@ -21,9 +26,27 @@ type LinkContainerProps = {
 const LinkContainer: React.FC<LinkContainerProps> = ({
   linkList,
   searchKeys,
+  onRefetch,
   handleSearch,
   theme
 }) => {
+  const [showUpdateModal, onOpenUpdateModal, onCloseUpdateModal] = useBoolean()
+  const [currentLink, setCurrentLink] = useState<LinkType>()
+
+  const handleConfirmModal = () => {
+    try {
+      onRefetch()
+      onCloseUpdateModal()
+    } catch (error) {
+      message.warn('링크를 수정을 실패했습니다', 2)
+    }
+  }
+
+  const handleOpenModal = (link: LinkType) => {
+    setCurrentLink(link)
+    onOpenUpdateModal()
+  }
+
   const getListByTeam = () => {
     const result = new Map<TeamType, LinkType[]>()
 
@@ -99,17 +122,25 @@ const LinkContainer: React.FC<LinkContainerProps> = ({
                 />
               </S.TeamName>
             </div>
-            {list.map((url) => (
+            {list.map((link) => (
               <LinkBlock
-                key={url.id}
-                link={url}
+                key={link.id}
+                link={link}
                 theme={theme}
+                onUpdateClick={() => handleOpenModal(link)}
                 searchKeys={searchKeys}
               />
             ))}
           </div>
         )
       })}
+      {showUpdateModal ? (
+        <HandleLinkModal
+          currentLink={currentLink}
+          onConfirm={handleConfirmModal}
+          onCancel={onCloseUpdateModal}
+        />
+      ) : null}
     </S.Container>
   )
 }

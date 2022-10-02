@@ -153,6 +153,7 @@ const AppContainer: React.FC = () => {
           <LinkContainer
             linkList={getFilterdList()}
             handleSearch={handleSearch}
+            onRefetch={refetch}
             searchKeys={searchKeys}
             theme={theme}
           />

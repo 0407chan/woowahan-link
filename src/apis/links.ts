@@ -94,3 +94,44 @@ export const useAddLinkMutation = (): UseMutationResult<
 > => {
   return useMutation(({ link }) => addLink(link))
 }
+
+const updateLink = async (link: Partial<LinkType>): Promise<void> => {
+  try {
+    const doc = new GoogleSpreadsheet(
+      process.env.REACT_APP_GOOGLE_SHEETS_ID || ''
+    )
+    await doc.useServiceAccountAuth({
+      client_email: process.env.REACT_APP_CLIENT_EMAIL || '',
+      private_key:
+        process.env.REACT_APP_PRIVATE_KEY?.replace(/\\n/g, '\n') || ''
+    })
+    await doc.loadInfo()
+    const sheets = doc.sheetsByIndex[0]
+
+    const rows = await sheets.getRows()
+
+    const currentRow = rows.find((row) => row.id === link.id)
+    if (currentRow) {
+      currentRow.createdAt = link?.createdAt || ''
+      currentRow.service = link?.service || ''
+      currentRow.tags = link?.tags?.join(',') || ''
+      currentRow.team = link?.team || ''
+      currentRow.title = link?.title || ''
+      currentRow.url = link?.url || ''
+      await currentRow.save()
+    }
+    return Promise.resolve()
+  } catch (error) {
+    return Promise.reject(error)
+  }
+}
+
+export const useUpdateLinkMutation = (): UseMutationResult<
+  // GoogleSpreadsheetRow,
+  void,
+  unknown,
+  { link: Partial<LinkType> },
+  unknown
+> => {
+  return useMutation(({ link }) => updateLink(link))
+}

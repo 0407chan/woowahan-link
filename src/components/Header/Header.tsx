@@ -6,7 +6,7 @@ import { ModeType } from '../../hooks/useDarkMode'
 import useWindowSize from '../../hooks/useWindowSize'
 import DarkModeButton from '../DarkModeButton'
 import GridBlock from '../GridBlock'
-import CreateLinkModal from '../modals/CreateLinkModal'
+import HandleLinkModal from '../modals/HandleLinkModal'
 import WLButton from '../WLButton'
 import * as S from './style'
 
@@ -77,7 +77,7 @@ const Header: React.FC<Props> = ({
         </WLButton>
       </GridBlock>
       {showAddModal ? (
-        <CreateLinkModal
+        <HandleLinkModal
           onConfirm={handleConfirmModal}
           onCancel={onCloseAddModal}
         />

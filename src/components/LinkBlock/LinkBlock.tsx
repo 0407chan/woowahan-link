@@ -11,28 +11,15 @@ type Props = {
   link: LinkType
   searchKeys: string[]
   theme: ModeType
+  onUpdateClick: () => void
 }
 
-const LinkBlock: React.FC<Props> = ({ link, searchKeys, theme }) => {
-  // const copyRef = useRef<HTMLInputElement>(null)
-  // const [isClipCopied, setIsClipCopied] = useState<boolean>(false)
-
-  // const handleCopyUrl = (
-  //   event: React.MouseEvent<HTMLButtonElement, MouseEvent>
-  // ) => {
-  //   event.stopPropagation()
-  //   if (copyRef.current) {
-  //     console.log(isClipCopied)
-  //     copyRef.current.focus()
-  //     copyRef.current.select()
-  //     document.execCommand('copy')
-  //     setIsClipCopied(true)
-  //     setTimeout(() => {
-  //       setIsClipCopied(false)
-  //     }, 800)
-  //   }
-  // }
-
+const LinkBlock: React.FC<Props> = ({
+  link,
+  searchKeys,
+  theme,
+  onUpdateClick
+}) => {
   return (
     <S.Container
       onClick={() => {
@@ -105,7 +92,11 @@ const LinkBlock: React.FC<Props> = ({ link, searchKeys, theme }) => {
         className="button-wrapper"
         onClick={(event) => event.stopPropagation()}
       >
-        <ManageButtons link={link} theme={theme} />
+        <ManageButtons
+          link={link}
+          theme={theme}
+          onUpdateClick={onUpdateClick}
+        />
       </S.ButtonWrapper>
     </S.Container>
   )

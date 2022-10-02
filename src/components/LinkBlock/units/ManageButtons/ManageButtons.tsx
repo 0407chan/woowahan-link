@@ -10,9 +10,10 @@ import * as S from './style'
 type Props = {
   link: LinkType
   theme: ModeType
+  onUpdateClick: () => void
 }
 
-const ManageButtons: React.FC<Props> = ({ link, theme }) => {
+const ManageButtons: React.FC<Props> = ({ link, theme, onUpdateClick }) => {
   const [isCopied, setIsCopied] = useState<boolean>(false)
 
   const handleCopyUrl = () => {
@@ -54,6 +55,14 @@ const ManageButtons: React.FC<Props> = ({ link, theme }) => {
           alt="copy-button"
           src={isCopied ? IMAGES.CONFIRM : IMAGES.ICON.COPY[theme]}
           onClick={handleCopyUrl}
+        />
+      </WLPopover>
+      <WLPopover content="링크 수정">
+        <S.ImageButton
+          draggable
+          alt="update-button"
+          src={IMAGES.ICON.UPDATE[theme]}
+          onClick={onUpdateClick}
         />
       </WLPopover>
     </Vertical>
