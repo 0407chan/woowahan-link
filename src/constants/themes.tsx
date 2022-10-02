@@ -2,7 +2,7 @@ export const lightTheme = {
   // background: '#F6F7FB',
   background: '#f3f4f7',
   backgroundSecond: '#ffffff',
-  wapperBackground: '#e7e9ed87',
+  wapperBackground: '#EDEDED87',
   text: '#000000',
   textSecondary: '#7b8595',
   brightness: 'brightness(0.6)',
