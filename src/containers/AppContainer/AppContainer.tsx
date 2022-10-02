@@ -38,7 +38,7 @@ const AppContainer: React.FC = () => {
       const newList = links[0].data.map((item: any): LinkType => {
         return {
           ...(item as LinkType),
-          tags: (item.tags as string).split(',')
+          tags: (item.tags as string).split(',').filter((tag) => tag !== '')
         }
       })
       setLinkList(newList)
