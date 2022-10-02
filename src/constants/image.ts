@@ -2,6 +2,7 @@ export const IMAGES = {
   logo: `${process.env.PUBLIC_URL}/logo512.png`,
   addRound: `${process.env.PUBLIC_URL}/images/Add_round.png`,
   copy: `${process.env.PUBLIC_URL}/images/Copy.png`,
+  CONFIRM: `${process.env.PUBLIC_URL}/images/confirm.png`,
 
   // DarkMode
   MOON_FILL: `${process.env.PUBLIC_URL}/images/Moon_fill.png`,
