@@ -16,9 +16,9 @@ export const Container = styled.div`
     max-width: calc(${LINKBLOCK_WIDTH}px*3 + ${GAP}px*2);
   }
   @media (min-width: calc(${LINKBLOCK_WIDTH}px*4 + ${GAP}px*3 + ${BODY_PADDING}px*2)) {
-    max-width: calc(${LINKBLOCK_WIDTH}px*4 + ${GAP}px*3 + ${BODY_PADDING}px*2);
+    max-width: calc(${LINKBLOCK_WIDTH}px*4 + ${GAP}px*3);
   }
-  width: calc(100% - ${BODY_PADDING}px);
+  width: calc(100% - ${BODY_PADDING}px*2);
   height: fit-content;
   gap: ${GAP}px;
   /* overflow: hidden; */
