@@ -46,23 +46,6 @@ const LinkContainer: React.FC<LinkContainerProps> = ({
     onOpenUpdateModal()
   }
 
-  // const getListByTeam = () => {
-  //   const result = new Map<TeamType, LinkType[]>()
-
-  //   linkList.forEach((link) => {
-  //     if (!link.team) {
-  //       const others = [...(result.get('기타') || []), link]
-  //       result.set('기타', others)
-  //       return
-  //     }
-
-  //     const list = [...(result.get(link.team) || []), link]
-  //     result.set(link.team, list)
-  //   })
-
-  //   return Array.from(result)
-  // }
-
   const getErrorImage = () => {
     const images = [
       // IMAGES.error_her,
@@ -115,53 +98,6 @@ const LinkContainer: React.FC<LinkContainerProps> = ({
         />
       ) : null}
     </S.Container>
-    // return (
-    //   <S.Container>
-    //     {getListByTeam().map((team) => {
-    //       const title = team[0]
-    //       const list = team[1]
-    //         .sort((a, b) => (a.title || '').localeCompare(b.title || ''))
-    //         .sort((a, b) => (b.count ?? 0) - (a.count ?? 0))
-    //       return (
-    //         <div
-    //           key={title}
-    //           style={{
-    //             display: 'flex',
-    //             flexWrap: 'wrap',
-    //             marginTop: 30,
-    //             gap: 20
-    //           }}
-    //         >
-    //           <div style={{ width: '100%' }}>
-    //             <S.TeamName>
-    //               <Highlighter
-    //                 highlightClassName="highlight"
-    //                 searchWords={searchKeys}
-    //                 autoEscape
-    //                 textToHighlight={title}
-    //               />
-    //             </S.TeamName>
-    //           </div>
-    //           {list.map((link) => (
-    //             <LinkBlock
-    //               key={link.id}
-    //               link={link}
-    //               theme={theme}
-    //               onUpdateClick={() => handleOpenModal(link)}
-    //               searchKeys={searchKeys}
-    //             />
-    //           ))}
-    //         </div>
-    //       )
-    //     })}
-    //     {showUpdateModal ? (
-    //       <HandleLinkModal
-    //         currentLink={currentLink}
-    //         onConfirm={handleConfirmModal}
-    //         onCancel={onCloseUpdateModal}
-    //       />
-    //     ) : null}
-    //   </S.Container>
   )
 }
 
