@@ -1,7 +1,6 @@
 /* eslint-disable react/jsx-one-expression-per-line */
 import { message } from 'antd'
 import React, { useState } from 'react'
-import Highlighter from 'react-highlight-words'
 import LinkBlock from '../../components/LinkBlock'
 import HandleLinkModal from '../../components/modals/HandleLinkModal'
 import Text from '../../components/Text'
@@ -10,7 +9,7 @@ import WLButton from '../../components/WLButton'
 import { IMAGES } from '../../constants/image'
 import useBoolean from '../../hooks/useBoolean'
 import { ModeType } from '../../hooks/useDarkMode'
-import { LinkType, TeamType } from '../../types/link'
+import { LinkType } from '../../types/link'
 import * as S from './style'
 
 type LinkContainerProps = {
@@ -47,22 +46,22 @@ const LinkContainer: React.FC<LinkContainerProps> = ({
     onOpenUpdateModal()
   }
 
-  const getListByTeam = () => {
-    const result = new Map<TeamType, LinkType[]>()
+  // const getListByTeam = () => {
+  //   const result = new Map<TeamType, LinkType[]>()
 
-    linkList.forEach((link) => {
-      if (!link.team) {
-        const others = [...(result.get('기타') || []), link]
-        result.set('기타', others)
-        return
-      }
+  //   linkList.forEach((link) => {
+  //     if (!link.team) {
+  //       const others = [...(result.get('기타') || []), link]
+  //       result.set('기타', others)
+  //       return
+  //     }
 
-      const list = [...(result.get(link.team) || []), link]
-      result.set(link.team, list)
-    })
+  //     const list = [...(result.get(link.team) || []), link]
+  //     result.set(link.team, list)
+  //   })
 
-    return Array.from(result)
-  }
+  //   return Array.from(result)
+  // }
 
   const getErrorImage = () => {
     const images = [
@@ -99,43 +98,15 @@ const LinkContainer: React.FC<LinkContainerProps> = ({
 
   return (
     <S.Container>
-      {getListByTeam().map((team) => {
-        const title = team[0]
-        const list = team[1]
-          .sort((a, b) => (a.title || '').localeCompare(b.title || ''))
-          .sort((a, b) => (b.count ?? 0) - (a.count ?? 0))
-        return (
-          <div
-            key={title}
-            style={{
-              display: 'flex',
-              flexWrap: 'wrap',
-              marginTop: 30,
-              gap: 20
-            }}
-          >
-            <div style={{ width: '100%' }}>
-              <S.TeamName>
-                <Highlighter
-                  highlightClassName="highlight"
-                  searchWords={searchKeys}
-                  autoEscape
-                  textToHighlight={title}
-                />
-              </S.TeamName>
-            </div>
-            {list.map((link) => (
-              <LinkBlock
-                key={link.id}
-                link={link}
-                theme={theme}
-                onUpdateClick={() => handleOpenModal(link)}
-                searchKeys={searchKeys}
-              />
-            ))}
-          </div>
-        )
-      })}
+      {linkList.map((link) => (
+        <LinkBlock
+          key={link.id}
+          link={link}
+          theme={theme}
+          onUpdateClick={() => handleOpenModal(link)}
+          searchKeys={searchKeys}
+        />
+      ))}
       {showUpdateModal ? (
         <HandleLinkModal
           currentLink={currentLink}
@@ -144,6 +115,53 @@ const LinkContainer: React.FC<LinkContainerProps> = ({
         />
       ) : null}
     </S.Container>
+    // return (
+    //   <S.Container>
+    //     {getListByTeam().map((team) => {
+    //       const title = team[0]
+    //       const list = team[1]
+    //         .sort((a, b) => (a.title || '').localeCompare(b.title || ''))
+    //         .sort((a, b) => (b.count ?? 0) - (a.count ?? 0))
+    //       return (
+    //         <div
+    //           key={title}
+    //           style={{
+    //             display: 'flex',
+    //             flexWrap: 'wrap',
+    //             marginTop: 30,
+    //             gap: 20
+    //           }}
+    //         >
+    //           <div style={{ width: '100%' }}>
+    //             <S.TeamName>
+    //               <Highlighter
+    //                 highlightClassName="highlight"
+    //                 searchWords={searchKeys}
+    //                 autoEscape
+    //                 textToHighlight={title}
+    //               />
+    //             </S.TeamName>
+    //           </div>
+    //           {list.map((link) => (
+    //             <LinkBlock
+    //               key={link.id}
+    //               link={link}
+    //               theme={theme}
+    //               onUpdateClick={() => handleOpenModal(link)}
+    //               searchKeys={searchKeys}
+    //             />
+    //           ))}
+    //         </div>
+    //       )
+    //     })}
+    //     {showUpdateModal ? (
+    //       <HandleLinkModal
+    //         currentLink={currentLink}
+    //         onConfirm={handleConfirmModal}
+    //         onCancel={onCloseUpdateModal}
+    //       />
+    //     ) : null}
+    //   </S.Container>
   )
 }
 

@@ -6,6 +6,9 @@ const BODY_PADDING = 20
 
 export const Container = styled.div`
   display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+
   @media (max-width: calc(${LINKBLOCK_WIDTH}px*2 + ${GAP}px*1 + ${BODY_PADDING}px*2)) {
     max-width: ${LINKBLOCK_WIDTH}px;
   }
@@ -22,8 +25,6 @@ export const Container = styled.div`
   height: fit-content;
   gap: ${GAP}px;
   /* overflow: hidden; */
-  flex-direction: column;
-  flex-wrap: wrap;
 `
 
 export const TeamName = styled.div`

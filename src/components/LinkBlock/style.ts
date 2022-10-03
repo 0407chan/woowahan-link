@@ -24,7 +24,8 @@ export const Container = styled.div`
 
 export const Title = styled.span`
   padding-left: 5px;
-  font-size: 17px;
+  font-size: 16px;
+  font-weight: 500;
   color: ${({ theme }) => theme.text};
 `
 
@@ -34,7 +35,15 @@ export const TagContainer = styled.div`
   flex-wrap: wrap;
   margin-left: 5px;
   gap: 8px;
-  font-size: 13px;
+  font-size: 12px;
+  color: ${({ theme }) => theme.textSecondary};
+`
+export const TeamText = styled.span`
+  font-weight: 500;
+  color: ${({ theme }) => theme.text};
+`
+
+export const TagText = styled.span`
   color: ${({ theme }) => theme.textSecondary};
 `
 
