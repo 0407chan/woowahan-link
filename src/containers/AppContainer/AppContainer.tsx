@@ -1,5 +1,5 @@
 import { Button, Spin } from 'antd'
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { ThemeProvider } from 'styled-components'
 import useGoogleSheets from 'use-google-sheets'
 import Header from '../../components/Header'
@@ -12,11 +12,15 @@ import { LinkType } from '../../types/link'
 import LinkContainer from '../LinkContainer'
 import * as S from './style'
 
+const MAX_LENGTH = 60
 const AppContainer: React.FC = () => {
   const { theme, themeToggler } = useDarkMode()
 
+  const scrollRef = useRef<HTMLDivElement>(null)
   const [searchKeys, setSearchKeys] = useState<string[]>([])
   const [linkList, setLinkList] = useState<LinkType[]>([])
+  const [isEnd, setIsEnd] = useState<boolean>(false)
+  const [maxLength, setMaxLength] = useState<number>(MAX_LENGTH)
 
   const {
     data: links,
@@ -44,10 +48,6 @@ const AppContainer: React.FC = () => {
       setLinkList(newList)
     }
   }, [links])
-
-  const handleSearch = (newSearchKeys: string[]) => {
-    setSearchKeys(newSearchKeys)
-  }
 
   const getFilterdList = () => {
     if (searchKeys.length === 0) {
@@ -88,6 +88,45 @@ const AppContainer: React.FC = () => {
 
     return result.sort((a, b) => (b.count ?? 0) - (a.count ?? 0))
   }
+
+  const getTotalElements = () => {
+    if (searchKeys.length === 0) {
+      return linkList.length
+    }
+
+    return getFilterdList().length
+  }
+
+  const handleScroll = () => {
+    if (!scrollRef.current) return
+
+    const isBottom =
+      scrollRef.current.scrollHeight - scrollRef.current.scrollTop ===
+      scrollRef.current.clientHeight
+
+    if (getTotalElements() < maxLength) {
+      setIsEnd(true)
+    }
+
+    if (isBottom && !isEnd) {
+      setMaxLength(maxLength + MAX_LENGTH)
+    }
+
+    const isTop = scrollRef.current.scrollTop === 0
+
+    if (isTop) {
+      setMaxLength(MAX_LENGTH)
+      setIsEnd(false)
+    }
+  }
+
+  const handleSearch = (newSearchKeys: string[]) => {
+    scrollRef.current?.scrollTo({ top: 0, behavior: 'smooth' })
+    setSearchKeys(newSearchKeys)
+    setMaxLength(MAX_LENGTH)
+  }
+
+  console.log('몇개냐', getTotalElements(), maxLength, isEnd)
 
   if (loading) {
     return (
@@ -144,18 +183,18 @@ const AppContainer: React.FC = () => {
       <S.Container>
         <Header
           searchKeys={searchKeys}
-          onSearch={handleSearch}
           theme={theme}
-          onRefetch={refetch}
           themeToggler={themeToggler}
+          onSearch={handleSearch}
+          onRefetch={refetch}
         />
-        <S.Body>
+        <S.Body ref={scrollRef} onScroll={handleScroll}>
           <LinkContainer
-            linkList={getFilterdList()}
-            handleSearch={handleSearch}
-            onRefetch={refetch}
+            linkList={getFilterdList().slice(0, maxLength)}
             searchKeys={searchKeys}
             theme={theme}
+            onSearch={handleSearch}
+            onRefetch={refetch}
           />
         </S.Body>
       </S.Container>
