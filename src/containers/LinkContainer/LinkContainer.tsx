@@ -18,7 +18,7 @@ type LinkContainerProps = {
   onRefetch: () => void
 
   // eslint-disable-next-line no-unused-vars
-  handleSearch: (newSearchKeys: string[]) => void
+  onSearch: (newSearchKeys: string[]) => void
   theme: ModeType
 }
 
@@ -26,7 +26,7 @@ const LinkContainer: React.FC<LinkContainerProps> = ({
   linkList,
   searchKeys,
   onRefetch,
-  handleSearch,
+  onSearch,
   theme
 }) => {
   const [showUpdateModal, onOpenUpdateModal, onCloseUpdateModal] = useBoolean()
@@ -71,7 +71,7 @@ const LinkContainer: React.FC<LinkContainerProps> = ({
             헉! [{searchKeys.join(', ')}] 검색결과가 없습니다.
           </Text>
           <Text>다른 검색어를 입력해보세요.</Text>
-          <WLButton size="large" onClick={() => handleSearch([])}>
+          <WLButton size="large" onClick={() => onSearch([])}>
             검색어 초기화
           </WLButton>
         </Vertical>
