@@ -8,19 +8,28 @@ import Vertical from '../../components/Vertical'
 import { IMAGES } from '../../constants/image'
 import { darkTheme, lightTheme } from '../../constants/themes'
 import { useDarkMode } from '../../hooks/useDarkMode'
+import useWindowSize, { WindowType } from '../../hooks/useWindowSize'
 import { LinkType } from '../../types/link'
 import LinkContainer from '../LinkContainer'
 import * as S from './style'
 
-const MAX_LENGTH = 60
+const MAX_LENGTH: Record<WindowType, number> = {
+  DESKTOP: 32,
+  LABTOP: 24,
+  TABLET: 16,
+  MOBILE: 8
+}
 const AppContainer: React.FC = () => {
   const { theme, themeToggler } = useDarkMode()
+  const { getCurrentWindow } = useWindowSize()
 
   const scrollRef = useRef<HTMLDivElement>(null)
   const [searchKeys, setSearchKeys] = useState<string[]>([])
   const [linkList, setLinkList] = useState<LinkType[]>([])
   const [isEnd, setIsEnd] = useState<boolean>(false)
-  const [maxLength, setMaxLength] = useState<number>(MAX_LENGTH)
+  const [maxLength, setMaxLength] = useState<number>(
+    MAX_LENGTH[getCurrentWindow()] * 2
+  )
 
   const {
     data: links,
@@ -101,32 +110,29 @@ const AppContainer: React.FC = () => {
     if (!scrollRef.current) return
 
     const isBottom =
-      scrollRef.current.scrollHeight - scrollRef.current.scrollTop ===
-      scrollRef.current.clientHeight
-
-    if (getTotalElements() < maxLength) {
-      setIsEnd(true)
-    }
+      scrollRef.current.scrollHeight - scrollRef.current.scrollTop <=
+      scrollRef.current.clientHeight + 38 + 20
 
     if (isBottom && !isEnd) {
-      setMaxLength(maxLength + MAX_LENGTH)
+      setMaxLength(maxLength + MAX_LENGTH[getCurrentWindow()])
     }
 
     const isTop = scrollRef.current.scrollTop === 0
 
     if (isTop) {
-      setMaxLength(MAX_LENGTH)
-      setIsEnd(false)
+      setMaxLength(MAX_LENGTH.DESKTOP)
     }
   }
+
+  useEffect(() => {
+    setIsEnd(getTotalElements() < maxLength)
+  }, [getTotalElements(), maxLength])
 
   const handleSearch = (newSearchKeys: string[]) => {
     scrollRef.current?.scrollTo({ top: 0, behavior: 'smooth' })
     setSearchKeys(newSearchKeys)
-    setMaxLength(MAX_LENGTH)
+    setMaxLength(MAX_LENGTH.DESKTOP)
   }
-
-  console.log('몇개냐', getTotalElements(), maxLength, isEnd)
 
   if (loading) {
     return (
@@ -193,6 +199,7 @@ const AppContainer: React.FC = () => {
             linkList={getFilterdList().slice(0, maxLength)}
             searchKeys={searchKeys}
             theme={theme}
+            isEnd={isEnd}
             onSearch={handleSearch}
             onRefetch={refetch}
           />

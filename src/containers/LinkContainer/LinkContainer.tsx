@@ -1,6 +1,7 @@
 /* eslint-disable react/jsx-one-expression-per-line */
-import { message } from 'antd'
+import { message, Spin } from 'antd'
 import React, { useState } from 'react'
+import Horizontal from '../../components/Horizontal'
 import LinkBlock from '../../components/LinkBlock'
 import HandleLinkModal from '../../components/modals/HandleLinkModal'
 import Text from '../../components/Text'
@@ -15,19 +16,20 @@ import * as S from './style'
 type LinkContainerProps = {
   linkList: LinkType[]
   searchKeys: string[]
+  isEnd: boolean
+  theme: ModeType
   onRefetch: () => void
-
   // eslint-disable-next-line no-unused-vars
   onSearch: (newSearchKeys: string[]) => void
-  theme: ModeType
 }
 
 const LinkContainer: React.FC<LinkContainerProps> = ({
   linkList,
   searchKeys,
+  isEnd,
+  theme,
   onRefetch,
-  onSearch,
-  theme
+  onSearch
 }) => {
   const [showUpdateModal, onOpenUpdateModal, onCloseUpdateModal] = useBoolean()
   const [currentLink, setCurrentLink] = useState<LinkType>()
@@ -90,6 +92,13 @@ const LinkContainer: React.FC<LinkContainerProps> = ({
           searchKeys={searchKeys}
         />
       ))}
+      <Horizontal style={{ justifyContent: 'center' }}>
+        {isEnd ? (
+          <Text>Looks like you&#39;ve reached the end</Text>
+        ) : (
+          <Spin size="large" spinning />
+        )}
+      </Horizontal>
       {showUpdateModal ? (
         <HandleLinkModal
           currentLink={currentLink}
