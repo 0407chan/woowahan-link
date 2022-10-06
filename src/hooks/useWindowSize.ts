@@ -31,7 +31,7 @@ const useWindowSize = (): {
 
   const isMobile = () => {
     if (windowSize.width === undefined) return false
-    return windowSize.width <= 660
+    return windowSize.width <= 670
   }
 
   const getCurrentWindow = (): WindowType => {

@@ -6,6 +6,9 @@ export const Container = styled.div`
   @media (max-width: 990px) {
     gap: 20px;
   }
+  @media (max-width: 670px) {
+    padding: 0 20px;
+  }
   background-color: ${({ theme }) => theme.backgroundSecond};
   display: flex;
   width: 100%;
@@ -72,7 +75,7 @@ export const SearchInput = styled.input`
 
 export const AddButton = styled(Button)`
   border: unset;
-  @media (max-width: 660px) {
+  @media (max-width: 670px) {
     width: 38px;
     padding: unset;
   }

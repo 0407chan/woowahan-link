@@ -2,7 +2,7 @@ import styled from 'styled-components'
 
 export const Container = styled.button`
   border: unset;
-  @media (max-width: 660px) {
+  @media (max-width: 670px) {
     width: 40px;
     padding: unset;
   }
@@ -14,20 +14,20 @@ export const Container = styled.button`
   border-radius: 20px;
   background-color: ${({ theme }) => theme.background};
   transition: all 0.2s ease;
-  &:hover{
+  &:hover {
     filter: ${({ theme }) => theme.hoverFilter};
   }
-  &:active{
+  &:active {
     filter: ${({ theme }) => theme.activeFilter};
   }
 
-  &:disabled{
+  &:disabled {
     box-shadow: 0px 2px 6px 1px rgba(0, 0, 0, 0.25);
     filter: grayscale(1);
     cursor: not-allowed;
   }
 
-  img{
+  img {
     position: relative;
     filter: ${({ theme }) => theme.brightness};
     border-radius: 6px;
