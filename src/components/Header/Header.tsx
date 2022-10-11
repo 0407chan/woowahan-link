@@ -1,8 +1,9 @@
-import { message } from 'antd'
+import { message, Popover } from 'antd'
 import React from 'react'
 import { IMAGES } from '../../constants/image'
 import useBoolean from '../../hooks/useBoolean'
 import { ModeType } from '../../hooks/useDarkMode'
+import useUser from '../../hooks/useUser'
 import useWindowSize from '../../hooks/useWindowSize'
 import DarkModeButton from '../DarkModeButton'
 import GridBlock from '../GridBlock'
@@ -28,6 +29,7 @@ const Header: React.FC<Props> = ({
 }) => {
   const [showAddModal, onOpenAddModal, onCloseAddModal] = useBoolean()
   const { isMobile } = useWindowSize()
+  const { user, onRemoveUser } = useUser()
 
   const handleConfirmModal = () => {
     try {
@@ -75,6 +77,19 @@ const Header: React.FC<Props> = ({
             '새 링크 추가'
           )}
         </WLButton>
+        {user ? (
+          <Popover
+            content={<WLButton onClick={onRemoveUser}>로그아웃</WLButton>}
+            placement="bottomRight"
+          >
+            <img
+              alt="user-round"
+              width={40}
+              style={{ borderRadius: 20 }}
+              src={user?.picture}
+            />
+          </Popover>
+        ) : null}
       </GridBlock>
       {showAddModal ? (
         <HandleLinkModal
