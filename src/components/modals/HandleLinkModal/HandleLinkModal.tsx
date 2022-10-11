@@ -3,20 +3,24 @@
 import { message, Select } from 'antd'
 import dayjs from 'dayjs'
 import fastDeepEqual from 'fast-deep-equal'
-import { useState } from 'react'
+import jwtDecode from 'jwt-decode'
+import { useEffect, useRef, useState } from 'react'
 import { v4 as uuid } from 'uuid'
 import isURL from 'validator/lib/isURL'
 import { useAddLinkMutation, useUpdateLinkMutation } from '../../../apis/links'
+import useUser from '../../../hooks/useUser'
 import { LinkType } from '../../../types/link'
+import { WLUserType } from '../../../types/user'
 import MandaoDialog from '../../../utils/mandao-dialog'
 import Horizontal from '../../Horizontal'
+import Text from '../../Text'
 import Vertical from '../../Vertical'
 import WarnText from '../../WarnText'
 import WLButton from '../../WLButton'
 import WLInput from '../../WLInput'
 import WLModal from '../../WLModal'
 import WLSelect from '../../WLSelect'
-import { SubLabel, Text, Title } from './style'
+import { SubLabel, Title } from './style'
 
 export type HandleLinkModalProps = {
   currentLink?: LinkType | undefined
@@ -29,6 +33,11 @@ const HandleLinkModal: React.FC<HandleLinkModalProps> = ({
   onConfirm,
   onCancel
 }) => {
+  const { user, onSetUser } = useUser()
+  const loginRef = useRef<HTMLDivElement>(null)
+
+  // eslint-disable-next-line no-undef
+  type CredentialResponse = google.accounts.id.CredentialResponse
   const isUpdate = currentLink !== undefined
 
   const [link, setLink] = useState<Partial<LinkType> | undefined>(currentLink)
@@ -90,6 +99,35 @@ const HandleLinkModal: React.FC<HandleLinkModalProps> = ({
     )
   }
 
+  const handleCallbackResponse = (response: CredentialResponse) => {
+    const currentUser = jwtDecode(response.credential) as WLUserType
+
+    if (currentUser.hd !== 'woowahan.com') {
+      message.warn(
+        '앗, 우아한 형제들 구성원이 아니시군요! 계정을 확인해주세요.',
+        2
+      )
+      return
+    }
+
+    message.success(`어서오세요! ${currentUser.name}님!`, 2)
+    onSetUser(currentUser)
+  }
+
+  useEffect(() => {
+    window.google?.accounts.id.initialize({
+      client_id: process.env.REACT_APP_CLIENT_ID || '',
+      callback: handleCallbackResponse
+    })
+    if (loginRef.current) {
+      window.google?.accounts.id.renderButton(loginRef.current, {
+        type: 'standard',
+        theme: 'outline',
+        size: 'large'
+      })
+    }
+  }, [loginRef.current])
+
   return (
     <WLModal
       title={
@@ -104,123 +142,134 @@ const HandleLinkModal: React.FC<HandleLinkModalProps> = ({
         <WLButton key="close-button" onClick={handleCloseModal}>
           취소
         </WLButton>,
-        <WLButton
-          key="confirm-button"
-          type="primary"
-          disabled={isDisabled()}
-          loading={addLinkMutation.isLoading || updateLinkMudatation.isLoading}
-          onClick={() => {
-            if (isUpdate) {
-              handleUpdateLink({
+        user && (
+          <WLButton
+            key="confirm-button"
+            type="primary"
+            disabled={isDisabled()}
+            loading={
+              addLinkMutation.isLoading || updateLinkMudatation.isLoading
+            }
+            onClick={() => {
+              if (isUpdate) {
+                handleUpdateLink({
+                  ...link,
+                  id: link?.id,
+                  url: link?.url || '',
+                  createdAt: dayjs().format('YYYY-MM-DD HH:mm:ss')
+                })
+                return
+              }
+              // eslint-disable-next-line implicit-arrow-linebreak
+              handleAddLink({
                 ...link,
-                id: link?.id,
+                id: uuid(),
                 url: link?.url || '',
                 createdAt: dayjs().format('YYYY-MM-DD HH:mm:ss')
               })
-              return
-            }
-            // eslint-disable-next-line implicit-arrow-linebreak
-            handleAddLink({
-              ...link,
-              id: uuid(),
-              url: link?.url || '',
-              createdAt: dayjs().format('YYYY-MM-DD HH:mm:ss')
-            })
-          }}
-        >
-          {isUpdate ? '저장' : '등록'}
-        </WLButton>
+            }}
+          >
+            {isUpdate ? '저장' : '등록'}
+          </WLButton>
+        )
       ]}
     >
-      <Vertical gap={16}>
-        <Vertical gap={4}>
-          <Title required>링크 제목</Title>
-          <WLInput
-            value={link?.title}
-            size="large"
-            name="title"
-            showCount
-            maxLength={20}
-            allowClear
-            placeholder="링크 제목을 입력하세요."
-            onChange={({ target: { name, value } }) => {
-              handleSetLink({ name, value })
-            }}
-          />
+      {user ? (
+        <Vertical gap={16}>
+          <Vertical gap={4}>
+            <Title required>링크 제목</Title>
+            <WLInput
+              value={link?.title}
+              size="large"
+              name="title"
+              showCount
+              maxLength={20}
+              allowClear
+              placeholder="링크 제목을 입력하세요."
+              onChange={({ target: { name, value } }) => {
+                handleSetLink({ name, value })
+              }}
+            />
+          </Vertical>
+          <Vertical gap={4}>
+            <Title required>링크</Title>
+            <WLInput
+              value={link?.url}
+              name="url"
+              size="large"
+              showCount
+              status={
+                // eslint-disable-next-line no-nested-ternary
+                link?.url === undefined
+                  ? undefined
+                  : link?.url && isURL(link.url)
+                  ? undefined
+                  : 'error'
+              }
+              maxLength={100}
+              allowClear
+              placeholder="링크를 입력하세요."
+              onChange={({ target: { name, value } }) => {
+                handleSetLink({ name, value })
+              }}
+            />
+            <WarnText
+              warn={link?.url === undefined ? false : !isURL(link?.url || '')}
+            >
+              url 형식을 확인해주세요.
+            </WarnText>
+          </Vertical>
+          <Vertical gap={4}>
+            <Title>팀</Title>
+            <WLInput
+              value={link?.team}
+              name="team"
+              size="large"
+              showCount
+              maxLength={20}
+              allowClear
+              placeholder="팀을 입력하세요."
+              onChange={({ target: { name, value } }) => {
+                handleSetLink({ name, value })
+              }}
+            />
+          </Vertical>
+          <Vertical gap={4}>
+            <Title>태그</Title>
+            <WLSelect
+              style={{ width: '100%' }}
+              mode="tags"
+              size="large"
+              placeholder="태그를 입력하세요."
+              dropdownStyle={{ display: 'none' }}
+              onChange={(value) => {
+                const tags = value as string[]
+                setLink({
+                  ...link,
+                  tags: tags.length === 0 ? undefined : tags.splice(0, 10)
+                })
+              }}
+              value={link?.tags}
+              tokenSeparators={[',', ' ']}
+              allowClear
+            >
+              {link?.tags?.map((tag) => (
+                <Select.Option key={tag} value={tag} name={tag}>
+                  {tag}
+                </Select.Option>
+              ))}
+            </WLSelect>
+            <Horizontal style={{ justifyContent: 'flex-end' }}>
+              <Text secondary>{`${link?.tags?.length ?? 0} / 10`}</Text>
+            </Horizontal>
+          </Vertical>
         </Vertical>
-        <Vertical gap={4}>
-          <Title required>링크</Title>
-          <WLInput
-            value={link?.url}
-            name="url"
-            size="large"
-            showCount
-            status={
-              // eslint-disable-next-line no-nested-ternary
-              link?.url === undefined
-                ? undefined
-                : link?.url && isURL(link.url)
-                ? undefined
-                : 'error'
-            }
-            maxLength={100}
-            allowClear
-            placeholder="링크를 입력하세요."
-            onChange={({ target: { name, value } }) => {
-              handleSetLink({ name, value })
-            }}
-          />
-          <WarnText
-            warn={link?.url === undefined ? false : !isURL(link?.url || '')}
-          >
-            url 형식을 확인해주세요.
-          </WarnText>
+      ) : (
+        <Vertical style={{ alignItems: 'center' }}>
+          <Text>링크는 우아한 형제들 계정으로 로그인해야만 등록 가능해요.</Text>
+          <div ref={loginRef} />
         </Vertical>
-        <Vertical gap={4}>
-          <Title>팀</Title>
-          <WLInput
-            value={link?.team}
-            name="team"
-            size="large"
-            showCount
-            maxLength={20}
-            allowClear
-            placeholder="팀을 입력하세요."
-            onChange={({ target: { name, value } }) => {
-              handleSetLink({ name, value })
-            }}
-          />
-        </Vertical>
-        <Vertical gap={4}>
-          <Title>태그</Title>
-          <WLSelect
-            style={{ width: '100%' }}
-            mode="tags"
-            size="large"
-            placeholder="태그를 입력하세요."
-            dropdownStyle={{ display: 'none' }}
-            onChange={(value) => {
-              const tags = value as string[]
-              setLink({
-                ...link,
-                tags: tags.length === 0 ? undefined : tags.splice(0, 10)
-              })
-            }}
-            value={link?.tags}
-            tokenSeparators={[',', ' ']}
-            allowClear
-          >
-            {link?.tags?.map((tag) => (
-              <Select.Option key={tag} value={tag} name={tag}>
-                {tag}
-              </Select.Option>
-            ))}
-          </WLSelect>
-          <Horizontal style={{ justifyContent: 'flex-end' }}>
-            <Text>{`${link?.tags?.length ?? 0} / 10`}</Text>
-          </Horizontal>
-        </Vertical>
-      </Vertical>
+      )}
     </WLModal>
   )
 }
