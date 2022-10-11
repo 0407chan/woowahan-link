@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { IMAGES } from '../../../../constants/image'
 import { ModeType } from '../../../../hooks/useDarkMode'
+import useUser from '../../../../hooks/useUser'
 import { LinkType } from '../../../../types/link'
 import Horizontal from '../../../Horizontal'
 import Vertical from '../../../Vertical'
@@ -14,6 +15,7 @@ type Props = {
 }
 
 const ManageButtons: React.FC<Props> = ({ link, theme, onUpdateClick }) => {
+  const { user } = useUser()
   const [isCopied, setIsCopied] = useState<boolean>(false)
 
   const handleCopyUrl = () => {
@@ -57,14 +59,16 @@ const ManageButtons: React.FC<Props> = ({ link, theme, onUpdateClick }) => {
           onClick={handleCopyUrl}
         />
       </WLPopover>
-      <WLPopover content="링크 수정">
-        <S.ImageButton
-          draggable
-          alt="update-button"
-          src={IMAGES.ICON.UPDATE[theme]}
-          onClick={onUpdateClick}
-        />
-      </WLPopover>
+      {user ? (
+        <WLPopover content="링크 수정">
+          <S.ImageButton
+            draggable
+            alt="update-button"
+            src={IMAGES.ICON.UPDATE[theme]}
+            onClick={onUpdateClick}
+          />
+        </WLPopover>
+      ) : null}
     </Vertical>
   )
 }
