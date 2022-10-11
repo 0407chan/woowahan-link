@@ -59,7 +59,7 @@ const ManageButtons: React.FC<Props> = ({ link, theme, onUpdateClick }) => {
           onClick={handleCopyUrl}
         />
       </WLPopover>
-      {user ? (
+      {link.createdBy === user?.email ? (
         <WLPopover content="링크 수정">
           <S.ImageButton
             draggable

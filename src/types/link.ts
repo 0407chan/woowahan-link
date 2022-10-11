@@ -10,6 +10,7 @@ export type LinkType = {
   team?: TeamType
   service?: string
   createdAt?: string
+  createdBy?: string
 
   count?: number
 }

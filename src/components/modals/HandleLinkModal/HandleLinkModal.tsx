@@ -165,7 +165,8 @@ const HandleLinkModal: React.FC<HandleLinkModalProps> = ({
                 ...link,
                 id: uuid(),
                 url: link?.url || '',
-                createdAt: dayjs().format('YYYY-MM-DD HH:mm:ss')
+                createdAt: dayjs().format('YYYY-MM-DD HH:mm:ss'),
+                createdBy: user.email
               })
             }}
           >

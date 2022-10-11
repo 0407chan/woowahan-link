@@ -74,6 +74,7 @@ const addLink = async (link?: LinkType): Promise<GoogleSpreadsheetRow> => {
     const result = await sheets.addRow({
       id: link?.id || '',
       createdAt: link?.createdAt || '',
+      createdBy: link?.createdBy || '',
       service: link?.service || '',
       tags: link?.tags?.join(',') || '',
       team: link?.team || '',
@@ -118,6 +119,7 @@ const updateLink = async (link: Partial<LinkType>): Promise<void> => {
       currentRow.team = link?.team || ''
       currentRow.title = link?.title || ''
       currentRow.url = link?.url || ''
+
       await currentRow.save()
     }
     return Promise.resolve()
