@@ -16,3 +16,10 @@ export type WLUserType = {
   picture: string
   sub: string
 }
+
+export type AuthUser = {
+  uid: string
+  email?: string
+  photoURL?: string
+  displayName?: string
+}
