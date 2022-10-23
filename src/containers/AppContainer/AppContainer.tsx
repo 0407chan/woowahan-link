@@ -28,7 +28,7 @@ const AppContainer: React.FC = () => {
   const [linkList, setLinkList] = useState<LinkType[]>([])
   const [isEnd, setIsEnd] = useState<boolean>(false)
   const [maxLength, setMaxLength] = useState<number>(
-    MAX_LENGTH[getCurrentWindow()] * 2
+    (MAX_LENGTH[getCurrentWindow()] * 3) / 2
   )
 
   const {
@@ -120,9 +120,18 @@ const AppContainer: React.FC = () => {
     const isTop = scrollRef.current.scrollTop === 0
 
     if (isTop) {
-      setMaxLength(MAX_LENGTH.DESKTOP)
+      setMaxLength((MAX_LENGTH[getCurrentWindow()] * 3) / 2)
     }
   }
+
+  useEffect(() => {
+    if (
+      isEnd === false &&
+      maxLength < (MAX_LENGTH[getCurrentWindow()] * 3) / 2
+    ) {
+      setMaxLength(maxLength + MAX_LENGTH[getCurrentWindow()])
+    }
+  }, [getCurrentWindow()])
 
   useEffect(() => {
     setIsEnd(getTotalElements() < maxLength)
@@ -131,7 +140,7 @@ const AppContainer: React.FC = () => {
   const handleSearch = (newSearchKeys: string[]) => {
     scrollRef.current?.scrollTo({ top: 0, behavior: 'smooth' })
     setSearchKeys(newSearchKeys)
-    setMaxLength(MAX_LENGTH.DESKTOP)
+    setMaxLength((MAX_LENGTH[getCurrentWindow()] * 3) / 2)
   }
 
   if (loading) {
