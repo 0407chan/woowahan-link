@@ -1,9 +1,10 @@
-import { message, Popover } from 'antd'
+/* eslint-disable no-nested-ternary */
+import { message, Popover, Spin } from 'antd'
 import React from 'react'
 import { IMAGES } from '../../constants/image'
 import useBoolean from '../../hooks/useBoolean'
 import { ModeType } from '../../hooks/useDarkMode'
-import useUser from '../../hooks/useUser'
+import useFirebaseAuth from '../../hooks/useFirebaseAuth'
 import useWindowSize from '../../hooks/useWindowSize'
 import DarkModeButton from '../DarkModeButton'
 import GridBlock from '../GridBlock'
@@ -29,7 +30,7 @@ const Header: React.FC<Props> = ({
 }) => {
   const [showAddModal, onOpenAddModal, onCloseAddModal] = useBoolean()
   const { isMobile } = useWindowSize()
-  const { user, onRemoveUser } = useUser()
+  const { authUser, signInWithGoogle, signOut, loading } = useFirebaseAuth()
 
   const handleConfirmModal = () => {
     try {
@@ -38,6 +39,29 @@ const Header: React.FC<Props> = ({
     } catch (error) {
       message.warn('링크를 등록을 실패했습니다', 2)
     }
+  }
+
+  const handleLogin = async () => {
+    try {
+      const currentUser = await signInWithGoogle()
+      message.success(`어서오세요! ${currentUser?.displayName}님!`, 2)
+    } catch (error) {
+      console.error(error)
+    }
+  }
+
+  const handleOpenAddModal = () => {
+    if (!authUser) {
+      handleLogin()
+      return
+    }
+
+    onOpenAddModal()
+  }
+
+  const handleSignOut = () => {
+    signOut()
+    message.success(`고생하셨어요! ${authUser?.displayName}님!`, 2)
   }
 
   return (
@@ -69,7 +93,7 @@ const Header: React.FC<Props> = ({
           type="primary"
           size="large"
           style={{ padding: isMobile() ? 6 : '' }}
-          onClick={onOpenAddModal}
+          onClick={handleOpenAddModal}
         >
           {isMobile() ? (
             <img alt="add-round" width={26} src={IMAGES.addRound} />
@@ -77,18 +101,22 @@ const Header: React.FC<Props> = ({
             '새 링크 추가'
           )}
         </WLButton>
-        {user ? (
+
+        {authUser ? (
           <Popover
-            content={<WLButton onClick={onRemoveUser}>로그아웃</WLButton>}
+            content={<WLButton onClick={handleSignOut}>로그아웃</WLButton>}
             placement="bottomRight"
           >
             <img
               alt="user-round"
               width={40}
               style={{ borderRadius: 20 }}
-              src={user?.picture}
+              src={authUser.photoURL}
+              referrerPolicy="no-referrer"
             />
           </Popover>
+        ) : loading ? (
+          <Spin spinning />
         ) : null}
       </GridBlock>
       {showAddModal ? (
