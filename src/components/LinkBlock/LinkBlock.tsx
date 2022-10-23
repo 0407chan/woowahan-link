@@ -1,8 +1,11 @@
 /* eslint-disable react/no-array-index-key */
+import { message, Spin } from 'antd'
 import React from 'react'
 import Highlighter from 'react-highlight-words'
+import { useDeleteLinkMutation } from '../../apis/links'
 import { ModeType } from '../../hooks/useDarkMode'
 import { LinkType } from '../../types/link'
+import MandaoDialog from '../../utils/mandao-dialog'
 import Horizontal from '../Horizontal'
 import Vertical from '../Vertical'
 import * as S from './style'
@@ -12,6 +15,7 @@ type Props = {
   link: LinkType
   searchKeys: string[]
   theme: ModeType
+  onRefetch: () => void
   onUpdateClick: () => void
 }
 
@@ -19,8 +23,40 @@ const LinkBlock: React.FC<Props> = ({
   link,
   searchKeys,
   theme,
+  onRefetch,
   onUpdateClick
 }) => {
+  const deleteLinkMutation = useDeleteLinkMutation()
+
+  const handleDeleteLink = async () => {
+    const confirm = await new MandaoDialog().confirm(
+      `링크 [${link.title}]을(를) 삭제하시겠습니까?.`,
+      '데이터는 복구되지 않습니다.'
+    )
+    if (!confirm) {
+      return
+    }
+
+    await deleteLinkMutation.mutateAsync({ link })
+    onRefetch()
+    message.success(`링크 [${link.title}]을 삭제했습니다.`, 2)
+  }
+
+  if (deleteLinkMutation.isLoading) {
+    return (
+      <S.Container style={{ cursor: 'not-allowed' }}>
+        <Vertical style={{ justifyContent: 'center', alignItems: 'center' }}>
+          <Spin />
+          <S.Title>
+            링크[
+            {link.title}
+            ]를 삭제중이에요.
+          </S.Title>
+        </Vertical>
+      </S.Container>
+    )
+  }
+
   return (
     <S.Container
       onClick={() => {
@@ -108,6 +144,7 @@ const LinkBlock: React.FC<Props> = ({
         <ManageButtons
           link={link}
           theme={theme}
+          onDeleteLink={handleDeleteLink}
           onUpdateClick={onUpdateClick}
         />
       </S.ButtonWrapper>

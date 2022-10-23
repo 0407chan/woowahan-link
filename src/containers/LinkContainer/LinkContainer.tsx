@@ -88,6 +88,7 @@ const LinkContainer: React.FC<LinkContainerProps> = ({
           key={link.id}
           link={link}
           theme={theme}
+          onRefetch={onRefetch}
           onUpdateClick={() => handleOpenModal(link)}
           searchKeys={searchKeys}
         />

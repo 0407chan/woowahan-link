@@ -143,7 +143,7 @@ const AppContainer: React.FC = () => {
     setMaxLength((MAX_LENGTH[getCurrentWindow()] * 3) / 2)
   }
 
-  if (loading) {
+  if (links === undefined && loading) {
     return (
       <ThemeProvider theme={theme === 'LIGHT' ? lightTheme : darkTheme}>
         <S.Container>

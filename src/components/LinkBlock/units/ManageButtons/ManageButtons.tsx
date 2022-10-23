@@ -11,12 +11,20 @@ import * as S from './style'
 type Props = {
   link: LinkType
   theme: ModeType
+  onDeleteLink: () => void
   onUpdateClick: () => void
 }
 
-const ManageButtons: React.FC<Props> = ({ link, theme, onUpdateClick }) => {
+const ManageButtons: React.FC<Props> = ({
+  link,
+  theme,
+  onDeleteLink,
+  onUpdateClick
+}) => {
   const { user } = useUser()
   const [isCopied, setIsCopied] = useState<boolean>(false)
+
+  const isMyLink = () => user !== undefined && user.email === link.createdBy
 
   const handleCopyUrl = () => {
     window.navigator.clipboard.writeText(link.url)
@@ -59,13 +67,23 @@ const ManageButtons: React.FC<Props> = ({ link, theme, onUpdateClick }) => {
           onClick={handleCopyUrl}
         />
       </WLPopover>
-      {link.createdBy === user?.email ? (
+      {isMyLink() ? (
         <WLPopover content="링크 수정">
           <S.ImageButton
             draggable
             alt="update-button"
             src={IMAGES.ICON.UPDATE[theme]}
             onClick={onUpdateClick}
+          />
+        </WLPopover>
+      ) : null}
+      {isMyLink() ? (
+        <WLPopover content="링크 삭제">
+          <S.ImageButton
+            draggable
+            alt="remove-button"
+            src={IMAGES.ICON.REMOVE[theme]}
+            onClick={onDeleteLink}
           />
         </WLPopover>
       ) : null}

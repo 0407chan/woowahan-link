@@ -137,3 +137,37 @@ export const useUpdateLinkMutation = (): UseMutationResult<
 > => {
   return useMutation(({ link }) => updateLink(link))
 }
+
+const deleteLink = async (link: Partial<LinkType>): Promise<void> => {
+  try {
+    const doc = new GoogleSpreadsheet(
+      process.env.REACT_APP_GOOGLE_SHEETS_ID || ''
+    )
+    await doc.useServiceAccountAuth({
+      client_email: process.env.REACT_APP_CLIENT_EMAIL || '',
+      private_key:
+        process.env.REACT_APP_PRIVATE_KEY?.replace(/\\n/g, '\n') || ''
+    })
+    await doc.loadInfo()
+    const sheets = doc.sheetsByIndex[0]
+
+    const rows = await sheets.getRows()
+
+    const currentRow = rows.find((row) => row.id === link.id)
+    if (currentRow) {
+      await currentRow.delete()
+    }
+    return Promise.resolve()
+  } catch (error) {
+    return Promise.reject(error)
+  }
+}
+
+export const useDeleteLinkMutation = (): UseMutationResult<
+  void,
+  unknown,
+  { link: Partial<LinkType> },
+  unknown
+> => {
+  return useMutation(({ link }) => deleteLink(link))
+}
