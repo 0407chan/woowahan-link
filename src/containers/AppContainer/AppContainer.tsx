@@ -37,7 +37,7 @@ const AppContainer: React.FC = () => {
     loading,
     refetch
   } = useGoogleSheets({
-    apiKey: process.env.REACT_APP_GOOGLE_API_KEY || '',
+    apiKey: process.env.REACT_APP_FIREBASE_API_KEY || '',
     sheetId: process.env.REACT_APP_GOOGLE_SHEETS_ID || '',
     sheetsOptions: [
       {
@@ -143,7 +143,7 @@ const AppContainer: React.FC = () => {
     setMaxLength((MAX_LENGTH[getCurrentWindow()] * 3) / 2)
   }
 
-  if (links === undefined && loading) {
+  if (linkList.length === 0 && loading) {
     return (
       <ThemeProvider theme={theme === 'LIGHT' ? lightTheme : darkTheme}>
         <S.Container>

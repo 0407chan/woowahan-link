@@ -10,6 +10,7 @@ import WLButton from '../../components/WLButton'
 import { IMAGES } from '../../constants/image'
 import useBoolean from '../../hooks/useBoolean'
 import { ModeType } from '../../hooks/useDarkMode'
+import useFirebaseAuth from '../../hooks/useFirebaseAuth'
 import { LinkType } from '../../types/link'
 import * as S from './style'
 
@@ -33,6 +34,7 @@ const LinkContainer: React.FC<LinkContainerProps> = ({
 }) => {
   const [showUpdateModal, onOpenUpdateModal, onCloseUpdateModal] = useBoolean()
   const [currentLink, setCurrentLink] = useState<LinkType>()
+  const { authUser, signInWithGoogle } = useFirebaseAuth()
 
   const handleConfirmModal = () => {
     try {
@@ -43,7 +45,21 @@ const LinkContainer: React.FC<LinkContainerProps> = ({
     }
   }
 
+  const handleLogin = async () => {
+    try {
+      const currentUser = await signInWithGoogle()
+      message.success(`어서오세요! ${currentUser?.displayName}님!`, 2)
+    } catch (error) {
+      console.error(error)
+    }
+  }
+
   const handleOpenModal = (link: LinkType) => {
+    if (!authUser) {
+      handleLogin()
+      return
+    }
+
     setCurrentLink(link)
     onOpenUpdateModal()
   }

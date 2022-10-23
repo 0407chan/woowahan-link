@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { IMAGES } from '../../../../constants/image'
 import { ModeType } from '../../../../hooks/useDarkMode'
-import useUser from '../../../../hooks/useUser'
+import useFirebaseAuth from '../../../../hooks/useFirebaseAuth'
 import { LinkType } from '../../../../types/link'
 import Horizontal from '../../../Horizontal'
 import Vertical from '../../../Vertical'
@@ -21,10 +21,10 @@ const ManageButtons: React.FC<Props> = ({
   onDeleteLink,
   onUpdateClick
 }) => {
-  const { user } = useUser()
+  const { authUser } = useFirebaseAuth()
   const [isCopied, setIsCopied] = useState<boolean>(false)
 
-  const isMyLink = () => user !== undefined && user.email === link.createdBy
+  const isMyLink = () => authUser !== null && authUser.email === link.createdBy
 
   const handleCopyUrl = () => {
     window.navigator.clipboard.writeText(link.url)

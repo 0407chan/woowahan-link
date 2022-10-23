@@ -8,6 +8,7 @@ import { useEffect, useRef, useState } from 'react'
 import { v4 as uuid } from 'uuid'
 import isURL from 'validator/lib/isURL'
 import { useAddLinkMutation, useUpdateLinkMutation } from '../../../apis/links'
+import useFirebaseAuth from '../../../hooks/useFirebaseAuth'
 import useUser from '../../../hooks/useUser'
 import { LinkType } from '../../../types/link'
 import { WLUserType } from '../../../types/user'
@@ -33,7 +34,8 @@ const HandleLinkModal: React.FC<HandleLinkModalProps> = ({
   onConfirm,
   onCancel
 }) => {
-  const { user, onSetUser } = useUser()
+  const { onSetUser } = useUser()
+  const { authUser } = useFirebaseAuth()
   const loginRef = useRef<HTMLDivElement>(null)
 
   // eslint-disable-next-line no-undef
@@ -114,11 +116,13 @@ const HandleLinkModal: React.FC<HandleLinkModalProps> = ({
     onSetUser(currentUser)
   }
 
+  // 로그인 버튼
   useEffect(() => {
     window.google?.accounts.id.initialize({
       client_id: process.env.REACT_APP_CLIENT_ID || '',
       callback: handleCallbackResponse
     })
+
     if (loginRef.current) {
       window.google?.accounts.id.renderButton(loginRef.current, {
         type: 'standard',
@@ -142,7 +146,7 @@ const HandleLinkModal: React.FC<HandleLinkModalProps> = ({
         <WLButton key="close-button" onClick={handleCloseModal}>
           취소
         </WLButton>,
-        user && (
+        authUser && (
           <WLButton
             key="confirm-button"
             type="primary"
@@ -166,7 +170,7 @@ const HandleLinkModal: React.FC<HandleLinkModalProps> = ({
                 id: uuid(),
                 url: link?.url || '',
                 createdAt: dayjs().format('YYYY-MM-DD HH:mm:ss'),
-                createdBy: user.email
+                createdBy: authUser.email
               })
             }}
           >
@@ -175,7 +179,7 @@ const HandleLinkModal: React.FC<HandleLinkModalProps> = ({
         )
       ]}
     >
-      {user ? (
+      {authUser ? (
         <Vertical gap={16}>
           <Vertical gap={4}>
             <Title required>링크 제목</Title>
