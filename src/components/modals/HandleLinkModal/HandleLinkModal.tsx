@@ -211,7 +211,7 @@ const HandleLinkModal: React.FC<HandleLinkModalProps> = ({
                   ? undefined
                   : 'error'
               }
-              maxLength={100}
+              maxLength={200}
               allowClear
               placeholder="링크를 입력하세요."
               onChange={({ target: { name, value } }) => {
