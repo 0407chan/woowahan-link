@@ -43,7 +43,7 @@ const LinkBlock: React.FC<Props> = ({
     onRefetch()
     logEvent(
       FirebaseAuthClient.getInstance().Analytics,
-      `[링크 삭제] ${link.name}`
+      `[링크 삭제] ${link.title}`
     )
     message.success(`링크 [${link.title}]을 삭제했습니다.`, 2)
   }
@@ -68,7 +68,7 @@ const LinkBlock: React.FC<Props> = ({
       onClick={() => {
         logEvent(
           FirebaseAuthClient.getInstance().Analytics,
-          `[링크 이동] ${link.name}`
+          `[링크 이동] ${link.title}`
         )
         window.open(link.url, '_blank')
         return null

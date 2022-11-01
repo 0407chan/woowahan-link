@@ -30,7 +30,7 @@ const ManageButtons: React.FC<Props> = ({
   const handleCopyUrl = () => {
     logEvent(
       FirebaseAuthClient.getInstance().Analytics,
-      `[링크 복사] ${link.name}`
+      `[링크 복사] ${link.title}`
     )
 
     window.navigator.clipboard.writeText(link.url)
@@ -52,7 +52,7 @@ const ManageButtons: React.FC<Props> = ({
             window.open(link.url, '_blank')
             logEvent(
               FirebaseAuthClient.getInstance().Analytics,
-              `[링크 이동] ${link.name}`
+              `[링크 이동] ${link.title}`
             )
             return null
           }}

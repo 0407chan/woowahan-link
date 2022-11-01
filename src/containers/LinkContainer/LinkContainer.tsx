@@ -64,7 +64,7 @@ const LinkContainer: React.FC<LinkContainerProps> = ({
 
     logEvent(
       FirebaseAuthClient.getInstance().Analytics,
-      currentLink ? `[링크 수정 모달] ${link.name}` : '[링크 등록 모달['
+      currentLink ? `[링크 수정 모달] ${link.title}` : '[링크 등록 모달['
     )
     setCurrentLink(link)
     onOpenUpdateModal()
