@@ -21,13 +21,14 @@ export default class FirebaseAuthClient {
 
   public constructor() {
     const apps = getApps()
-    this.analytics = getAnalytics()
 
     if (!!apps.length === false) {
       console.log('firebase initializeApp')
       const app = initializeApp(FirebaseCredentials)
       this.analytics = getAnalytics(app)
       logEvent(this.analytics, '사용자 접속!')
+    } else {
+      this.analytics = getAnalytics(apps.at(-1))
     }
 
     this.auth = getAuth()
