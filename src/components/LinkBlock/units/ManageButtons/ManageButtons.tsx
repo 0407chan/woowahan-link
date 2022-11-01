@@ -4,7 +4,6 @@ import { ModeType } from '../../../../hooks/useDarkMode'
 import useFirebaseAuth from '../../../../hooks/useFirebaseAuth'
 import { LinkType } from '../../../../types/link'
 import Horizontal from '../../../Horizontal'
-import Vertical from '../../../Vertical'
 import WLPopover from '../../../WLPopover'
 import * as S from './style'
 
@@ -36,7 +35,7 @@ const ManageButtons: React.FC<Props> = ({
   }
 
   return (
-    <Vertical gap={4}>
+    <Horizontal gap={4}>
       <WLPopover content="링크 이동">
         <S.ImageButton
           draggable
@@ -87,7 +86,7 @@ const ManageButtons: React.FC<Props> = ({
           />
         </WLPopover>
       ) : null}
-    </Vertical>
+    </Horizontal>
   )
 }
 

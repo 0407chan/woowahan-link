@@ -13,9 +13,9 @@ export const StyledPopover = styled(Popover)`
     background-color: ${({ theme }) => theme.text};
     color: ${({ theme }) => theme.backgroundSecond};
     position: absolute;
-    top: 50%;
-    left: calc(100% + 5px);
-    transform: translateX(0px) translateY(-50%);
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%) translateY(-25px);
     font-size: 14px;
     line-height: 1;
     pointer-events: none;
@@ -24,7 +24,7 @@ export const StyledPopover = styled(Popover)`
     z-index: 105;
   }
   &:hover .content {
-    transform: translateX(2px) translateY(-50%);
+    transform: translateX(-50%) translateY(-30px);
     opacity: 1;
     /* transition-delay: 0.7s; */
   }

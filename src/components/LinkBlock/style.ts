@@ -132,7 +132,7 @@ export const ButtonWrapper = styled.div`
   background-color: ${({ theme }) => theme.wapperBackground};
   color: ${({ theme }) => theme.text};
   backdrop-filter: blur(3px) saturate(1.7);
-  transform: translateX(15%);
+  transform: translateX(0);
   /* z-index: 1; */
   transition: 0.2s all ease;
 `
