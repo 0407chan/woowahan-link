@@ -188,7 +188,7 @@ const HandleLinkModal: React.FC<HandleLinkModalProps> = ({
               size="large"
               name="title"
               showCount
-              maxLength={20}
+              maxLength={100}
               allowClear
               placeholder="링크 제목을 입력하세요."
               onChange={({ target: { name, value } }) => {
@@ -231,7 +231,7 @@ const HandleLinkModal: React.FC<HandleLinkModalProps> = ({
               name="team"
               size="large"
               showCount
-              maxLength={20}
+              maxLength={30}
               allowClear
               placeholder="팀을 입력하세요."
               onChange={({ target: { name, value } }) => {
