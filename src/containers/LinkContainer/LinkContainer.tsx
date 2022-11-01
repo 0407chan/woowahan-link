@@ -1,7 +1,8 @@
 /* eslint-disable react/jsx-one-expression-per-line */
+import autoAnimate from '@formkit/auto-animate'
 import { message, Spin } from 'antd'
 import { logEvent } from 'firebase/analytics'
-import React, { useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import Horizontal from '../../components/Horizontal'
 import LinkBlock from '../../components/LinkBlock'
 import HandleLinkModal from '../../components/modals/HandleLinkModal'
@@ -37,6 +38,14 @@ const LinkContainer: React.FC<LinkContainerProps> = ({
   const [showUpdateModal, onOpenUpdateModal, onCloseUpdateModal] = useBoolean()
   const [currentLink, setCurrentLink] = useState<LinkType>()
   const { authUser, signInWithGoogle } = useFirebaseAuth()
+
+  const parent = useRef(null)
+
+  useEffect(() => {
+    if (parent.current) {
+      autoAnimate(parent.current)
+    }
+  }, [parent])
 
   const handleConfirmModal = () => {
     try {
@@ -104,7 +113,7 @@ const LinkContainer: React.FC<LinkContainerProps> = ({
   }
 
   return (
-    <S.Container>
+    <S.Container ref={parent}>
       {linkList.map((link) => (
         <LinkBlock
           key={link.id}
