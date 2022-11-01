@@ -1,18 +1,18 @@
 {
   "files": {
     "main.css": "/woowahan-link/static/css/main.9540a095.chunk.css",
-    "main.js": "/woowahan-link/static/js/main.a92a942d.chunk.js",
+    "main.js": "/woowahan-link/static/js/main.fbba92b5.chunk.js",
     "runtime-main.js": "/woowahan-link/static/js/runtime-main.256cd03f.js",
     "static/css/2.69f68a85.chunk.css": "/woowahan-link/static/css/2.69f68a85.chunk.css",
-    "static/js/2.43ab2951.chunk.js": "/woowahan-link/static/js/2.43ab2951.chunk.js",
+    "static/js/2.6e0c6dea.chunk.js": "/woowahan-link/static/js/2.6e0c6dea.chunk.js",
     "index.html": "/woowahan-link/index.html",
-    "static/js/2.43ab2951.chunk.js.LICENSE.txt": "/woowahan-link/static/js/2.43ab2951.chunk.js.LICENSE.txt"
+    "static/js/2.6e0c6dea.chunk.js.LICENSE.txt": "/woowahan-link/static/js/2.6e0c6dea.chunk.js.LICENSE.txt"
   },
   "entrypoints": [
     "static/js/runtime-main.256cd03f.js",
     "static/css/2.69f68a85.chunk.css",
-    "static/js/2.43ab2951.chunk.js",
+    "static/js/2.6e0c6dea.chunk.js",
     "static/css/main.9540a095.chunk.css",
-    "static/js/main.a92a942d.chunk.js"
+    "static/js/main.fbba92b5.chunk.js"
   ]
 }
