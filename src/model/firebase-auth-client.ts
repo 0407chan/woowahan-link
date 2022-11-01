@@ -1,5 +1,5 @@
 import { getApps, initializeApp } from 'firebase/app'
-import { getAnalytics, logEvent } from 'firebase/analytics'
+import { Analytics, getAnalytics, logEvent } from 'firebase/analytics'
 import { Auth, getAuth } from 'firebase/auth'
 
 const FirebaseCredentials = {
@@ -17,15 +17,19 @@ export default class FirebaseAuthClient {
 
   private auth: Auth
 
+  private analytics: Analytics
+
   public constructor() {
     const apps = getApps()
+    this.analytics = getAnalytics()
+
     if (!!apps.length === false) {
       console.log('firebase initializeApp')
       const app = initializeApp(FirebaseCredentials)
-      const analytics = getAnalytics(app)
-      logEvent(analytics, '사용자 접속!')
-      console.log(analytics, '사용자 접속!')
+      this.analytics = getAnalytics(app)
+      logEvent(this.analytics, '사용자 접속!')
     }
+
     this.auth = getAuth()
     console.log('firebase auth client constructor')
   }
@@ -39,5 +43,9 @@ export default class FirebaseAuthClient {
 
   public get Auth(): Auth {
     return this.auth
+  }
+
+  public get Analytics(): Analytics {
+    return this.analytics
   }
 }

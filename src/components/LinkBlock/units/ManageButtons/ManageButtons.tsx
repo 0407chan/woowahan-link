@@ -1,7 +1,9 @@
+import { logEvent } from 'firebase/analytics'
 import { useState } from 'react'
 import { IMAGES } from '../../../../constants/image'
 import { ModeType } from '../../../../hooks/useDarkMode'
 import useFirebaseAuth from '../../../../hooks/useFirebaseAuth'
+import FirebaseAuthClient from '../../../../model/firebase-auth-client'
 import { LinkType } from '../../../../types/link'
 import Horizontal from '../../../Horizontal'
 import WLPopover from '../../../WLPopover'
@@ -26,6 +28,11 @@ const ManageButtons: React.FC<Props> = ({
   const isMyLink = () => authUser !== null && authUser.email === link.createdBy
 
   const handleCopyUrl = () => {
+    logEvent(
+      FirebaseAuthClient.getInstance().Analytics,
+      `[링크 복사] ${link.name}`
+    )
+
     window.navigator.clipboard.writeText(link.url)
 
     setIsCopied(true)
@@ -43,6 +50,10 @@ const ManageButtons: React.FC<Props> = ({
           src={IMAGES.ICON.LINK[theme]}
           onClick={() => {
             window.open(link.url, '_blank')
+            logEvent(
+              FirebaseAuthClient.getInstance().Analytics,
+              `[링크 이동] ${link.name}`
+            )
             return null
           }}
         />

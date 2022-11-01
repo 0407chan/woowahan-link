@@ -1,5 +1,6 @@
 /* eslint-disable react/jsx-one-expression-per-line */
 import { message, Spin } from 'antd'
+import { logEvent } from 'firebase/analytics'
 import React, { useState } from 'react'
 import Horizontal from '../../components/Horizontal'
 import LinkBlock from '../../components/LinkBlock'
@@ -11,6 +12,7 @@ import { IMAGES } from '../../constants/image'
 import useBoolean from '../../hooks/useBoolean'
 import { ModeType } from '../../hooks/useDarkMode'
 import useFirebaseAuth from '../../hooks/useFirebaseAuth'
+import FirebaseAuthClient from '../../model/firebase-auth-client'
 import { LinkType } from '../../types/link'
 import * as S from './style'
 
@@ -60,6 +62,10 @@ const LinkContainer: React.FC<LinkContainerProps> = ({
       return
     }
 
+    logEvent(
+      FirebaseAuthClient.getInstance().Analytics,
+      currentLink ? `[링크 수정 모달] ${link.name}` : '[링크 등록 모달['
+    )
     setCurrentLink(link)
     onOpenUpdateModal()
   }

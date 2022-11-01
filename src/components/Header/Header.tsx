@@ -1,11 +1,13 @@
 /* eslint-disable no-nested-ternary */
 import { message, Popover, Spin } from 'antd'
+import { logEvent } from 'firebase/analytics'
 import React from 'react'
 import { IMAGES } from '../../constants/image'
 import useBoolean from '../../hooks/useBoolean'
 import { ModeType } from '../../hooks/useDarkMode'
 import useFirebaseAuth from '../../hooks/useFirebaseAuth'
 import useWindowSize from '../../hooks/useWindowSize'
+import FirebaseAuthClient from '../../model/firebase-auth-client'
 import DarkModeButton from '../DarkModeButton'
 import GridBlock from '../GridBlock'
 import HandleLinkModal from '../modals/HandleLinkModal'
@@ -83,6 +85,10 @@ const Header: React.FC<Props> = ({
           onChange={(value) => {
             const keys = value as string[]
             onSearch(keys.splice(0, 5))
+            logEvent(
+              FirebaseAuthClient.getInstance().Analytics,
+              `[링크 검색] ${keys.splice(0, 5).join(', ')}`
+            )
           }}
           tokenSeparators={[',', ' ']}
         />

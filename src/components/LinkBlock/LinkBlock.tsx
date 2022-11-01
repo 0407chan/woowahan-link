@@ -1,9 +1,11 @@
 /* eslint-disable react/no-array-index-key */
 import { message, Spin } from 'antd'
+import { logEvent } from 'firebase/analytics'
 import React from 'react'
 import Highlighter from 'react-highlight-words'
 import { useDeleteLinkMutation } from '../../apis/links'
 import { ModeType } from '../../hooks/useDarkMode'
+import FirebaseAuthClient from '../../model/firebase-auth-client'
 import { LinkType } from '../../types/link'
 import MandaoDialog from '../../utils/mandao-dialog'
 import Horizontal from '../Horizontal'
@@ -39,6 +41,10 @@ const LinkBlock: React.FC<Props> = ({
 
     await deleteLinkMutation.mutateAsync({ link })
     onRefetch()
+    logEvent(
+      FirebaseAuthClient.getInstance().Analytics,
+      `[링크 삭제] ${link.name}`
+    )
     message.success(`링크 [${link.title}]을 삭제했습니다.`, 2)
   }
 
@@ -60,6 +66,10 @@ const LinkBlock: React.FC<Props> = ({
   return (
     <S.Container
       onClick={() => {
+        logEvent(
+          FirebaseAuthClient.getInstance().Analytics,
+          `[링크 이동] ${link.name}`
+        )
         window.open(link.url, '_blank')
         return null
       }}
