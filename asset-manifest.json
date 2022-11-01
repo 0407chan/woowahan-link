@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/woowahan-link/static/css/main.9540a095.chunk.css",
-    "main.js": "/woowahan-link/static/js/main.69d5d4bc.chunk.js",
+    "main.js": "/woowahan-link/static/js/main.4ab1a3bc.chunk.js",
     "runtime-main.js": "/woowahan-link/static/js/runtime-main.256cd03f.js",
     "static/css/2.69f68a85.chunk.css": "/woowahan-link/static/css/2.69f68a85.chunk.css",
     "static/js/2.71f777fd.chunk.js": "/woowahan-link/static/js/2.71f777fd.chunk.js",
@@ -13,6 +13,6 @@
     "static/css/2.69f68a85.chunk.css",
     "static/js/2.71f777fd.chunk.js",
     "static/css/main.9540a095.chunk.css",
-    "static/js/main.69d5d4bc.chunk.js"
+    "static/js/main.4ab1a3bc.chunk.js"
   ]
 }
