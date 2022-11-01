@@ -1,4 +1,5 @@
 import { getApps, initializeApp } from 'firebase/app'
+import { getAnalytics, logEvent } from 'firebase/analytics'
 import { Auth, getAuth } from 'firebase/auth'
 
 const FirebaseCredentials = {
@@ -20,7 +21,10 @@ export default class FirebaseAuthClient {
     const apps = getApps()
     if (!!apps.length === false) {
       console.log('firebase initializeApp')
-      initializeApp(FirebaseCredentials)
+      const app = initializeApp(FirebaseCredentials)
+      const analytics = getAnalytics(app)
+      logEvent(analytics, '사용자 접속!')
+      console.log(analytics, '사용자 접속!')
     }
     this.auth = getAuth()
     console.log('firebase auth client constructor')
