@@ -33,3 +33,7 @@ export const IMAGES = {
     }
   }
 }
+
+export const SVGS = {
+  ADD_ROUND: `${process.env.PUBLIC_URL}/images/svg/Add_round.svg`
+}

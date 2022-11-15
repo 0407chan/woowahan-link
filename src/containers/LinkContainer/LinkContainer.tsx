@@ -3,6 +3,7 @@ import autoAnimate from '@formkit/auto-animate'
 import { message, Spin } from 'antd'
 import { logEvent } from 'firebase/analytics'
 import React, { useEffect, useRef, useState } from 'react'
+import AddLinkBlock from '../../components/AddLinkBlock'
 import Horizontal from '../../components/Horizontal'
 import LinkBlock from '../../components/LinkBlock'
 import HandleLinkModal from '../../components/modals/HandleLinkModal'
@@ -114,6 +115,8 @@ const LinkContainer: React.FC<LinkContainerProps> = ({
 
   return (
     <S.Container ref={parent}>
+      <AddLinkBlock />
+
       {linkList.map((link) => (
         <LinkBlock
           key={link.id}
