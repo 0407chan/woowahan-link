@@ -1,5 +1,5 @@
 import { Button, Spin } from 'antd'
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useEffect, useMemo, useRef, useState } from 'react'
 import { ThemeProvider } from 'styled-components'
 import useGoogleSheets from 'use-google-sheets'
 import Header from '../../components/Header'
@@ -25,7 +25,6 @@ const AppContainer: React.FC = () => {
 
   const scrollRef = useRef<HTMLDivElement>(null)
   const [searchKeys, setSearchKeys] = useState<string[]>([])
-  const [linkList, setLinkList] = useState<LinkType[]>([])
   const [isEnd, setIsEnd] = useState<boolean>(false)
   const [maxLength, setMaxLength] = useState<number>(
     (MAX_LENGTH[getCurrentWindow()] * 3) / 2
@@ -46,7 +45,7 @@ const AppContainer: React.FC = () => {
     ]
   })
 
-  useEffect(() => {
+  const linkList = useMemo(() => {
     if (links.length > 0) {
       const newList = links[0].data.map((item: any): LinkType => {
         return {
@@ -54,8 +53,10 @@ const AppContainer: React.FC = () => {
           tags: (item.tags as string).split(',').filter((tag) => tag !== '')
         }
       })
-      setLinkList(newList)
+      return newList
     }
+
+    return []
   }, [links])
 
   const getFilterdList = () => {
